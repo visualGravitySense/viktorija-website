@@ -59,36 +59,36 @@ export default function SelectContent() {
       <ListSubheader sx={{ pt: 0 }}>Production</ListSubheader>
       <MenuItem value="">
         <ListItemAvatar>
-          <Avatar alt="Sitemark web">
+          <Avatar alt="Viktorija web">
             <DevicesRoundedIcon sx={{ fontSize: '1rem' }} />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Sitemark-web" secondary="Web app" />
+        <ListItemText primary="Viktorija-web" secondary="Web app" />
       </MenuItem>
       <MenuItem value={10}>
         <ListItemAvatar>
-          <Avatar alt="Sitemark App">
+          <Avatar alt="Viktorija App">
             <SmartphoneRoundedIcon sx={{ fontSize: '1rem' }} />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Sitemark-app" secondary="Mobile application" />
+        <ListItemText primary="Viktorija-app" secondary="Mobile application" />
       </MenuItem>
       <MenuItem value={20}>
         <ListItemAvatar>
-          <Avatar alt="Sitemark Store">
+          <Avatar alt="Viktorija Store">
             <DevicesRoundedIcon sx={{ fontSize: '1rem' }} />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Sitemark-Store" secondary="Web app" />
+        <ListItemText primary="Viktorija-Store" secondary="Web app" />
       </MenuItem>
       <ListSubheader>Development</ListSubheader>
       <MenuItem value={30}>
         <ListItemAvatar>
-          <Avatar alt="Sitemark Store">
+          <Avatar alt="Viktorija Store">
             <ConstructionRoundedIcon sx={{ fontSize: '1rem' }} />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Sitemark-Admin" secondary="Web app" />
+        <ListItemText primary="Viktorija-Admin" secondary="Web app" />
       </MenuItem>
       <Divider sx={{ mx: -1 }} />
       <MenuItem value={40}>
