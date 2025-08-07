@@ -59,7 +59,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
   }, [t]);
 
   const ogImageUrl = import.meta.env.PROD 
-    ? 'https://visualgravitysense.github.io/viktorija-base' + mainHeroImg
+    ? 'https://visualgravitysense.github.io/viktorija-website' + mainHeroImg
     : mainHeroImg;
 
   return (
