@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Salon POS - Appointment Booking</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 220px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+        }
+        .logo {
+            padding: 0 20px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 1px solid #465b70;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .menu li {
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+        .menu li.active {
+            background-color: #34495e;
+            border-left: 4px solid #e74c3c;
+        }
+        .menu li:hover {
+            background-color: #34495e;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 10px;
+        }
+        .calendar-container {
+            display: flex;
+            gap: 20px;
+        }
+        .calendar {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        .calendar-nav button {
+            background-color: #f5f5f5;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .calendar-view {
+            display: flex;
+            gap: 10px;
+        }
+        .view-option {
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .view-option.active {
+            background-color: #3498db;
+            color: white;
+        }
+        .time-slots {
+            display: grid;
+            grid-template-columns: 80px repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+        }
+        .time-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+        .time-slot {
+            padding: 10px 5px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            text-align: center;
+            font-size: 14px;
+        }
+        .time-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .booking-form {
+            flex: 0 0 300px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .form-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        .appointment {
+            background-color: #3498db;
+            color: white;
+            border-radius: 4px;
+            padding: 5px;
+            font-size: 12px;
+            margin: 2px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">BeautySalon POS</div>
+            <ul class="menu">
+                <li>Dashboard</li>
+                <li class="active">Appointments</li>
+                <li>Clients</li>
+                <li>Services</li>
+                <li>Employees</li>
+                <li>Reports</li>
+                <li>Settings</li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <div class="header">
+                <div class="page-title">Appointments</div>
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div>Admin</div>
+                </div>
+            </div>
+            
+            <!-- Calendar and Booking Form -->
+            <div class="calendar-container">
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <div class="calendar-nav">
+                            <button>&lt; Previous</button>
+                            <div>April 29 - May 5, 2025</div>
+                            <button>Next &gt;</button>
+                        </div>
+                        <div class="calendar-view">
+                            <div class="view-option">Day</div>
+                            <div class="view-option active">Week</div>
+                            <div class="view-option">Month</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Time Slots -->
+                    <div class="time-slots">
+                        <div class="time-header">Time</div>
+                        <div class="time-header">Mon 4/29</div>
+                        <div class="time-header">Tue 4/30</div>
+                        <div class="time-header">Wed 5/1</div>
+                        <div class="time-header">Thu 5/2</div>
+                        <div class="time-header">Fri 5/3</div>
+                        <div class="time-header">Sat 5/4</div>
+                        <div class="time-header">Sun 5/5</div>
+                        
+                        <!-- 9:00 AM Row -->
+                        <div class="time-label">9:00 AM</div>
+                        <div class="time-slot">
+                            <div class="appointment">Sarah J. - Haircut</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot">
+                            <div class="appointment">Mike T. - Coloring</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot">
+                            <div class="appointment">Lisa R. - Manicure</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot"></div>
+                        
+                        <!-- 10:00 AM Row -->
+                        <div class="time-label">10:00 AM</div>
+                        <div class="time-slot">
+                            <div class="appointment">John D. - Haircut</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="appointment">Emma W. - Styling</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot">
+                            <div class="appointment">Robert K. - Facial</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot">
+                            <div class="appointment">Kate M. - Full Set</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        
+                        <!-- 11:00 AM Row -->
+                        <div class="time-label">11:00 AM</div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot">
+                            <div class="appointment">Jane S. - Coloring</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot">
+                            <div class="appointment">Mark L. - Haircut</div>
+                        </div>
+                        <div class="time-slot">
+                            <div class="appointment">Nancy P. - Pedicure</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        
+                        <!-- 12:00 PM Row -->
+                        <div class="time-label">12:00 PM</div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot">
+                            <div class="appointment">Tim R. - Beard Trim</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot"></div>
+                        
+                        <!-- 1:00 PM Row -->
+                        <div class="time-label">1:00 PM</div>
+                        <div class="time-slot">
+                            <div class="appointment">Laura B. - Manicure</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot">
+                            <div class="appointment">Chris M. - Haircut</div>
+                        </div>
+                        <div class="time-slot"></div>
+                        <div class="time-slot">
+                            <div class="appointment">Olivia L. - Facial</div>
+                        </div>
+                        <div class="time-slot"></div>
+                    </div>
+                </div>
+                
+                <!-- Booking Form -->
+                <div class="booking-form">
+                    <div class="form-title">New Appointment</div>
+                    <div class="form-group">
+                        <label for="client">Client</label>
+                        <select id="client">
+                            <option value="">Select Client</option>
+                            <option value="1">Anna Johnson</option>
+                            <option value="2">Michael Smith</option>
+                            <option value="3">Elizabeth Taylor</option>
+                            <option value="4">David Brown</option>
+                            <option value="5">+ Add New Client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service</label>
+                        <select id="service">
+                            <option value="">Select Service</option>
+                            <option value="1">Haircut - $45</option>
+                            <option value="2">Hair Coloring - $85</option>
+                            <option value="3">Manicure - $35</option>
+                            <option value="4">Pedicure - $45</option>
+                            <option value="5">Facial - $60</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="stylist">Stylist</label>
+                        <select id="stylist">
+                            <option value="">Select Stylist</option>
+                            <option value="1">Jennifer (Hair Specialist)</option>
+                            <option value="2">Carlos (Hair Specialist)</option>
+                            <option value="3">Maria (Nail Technician)</option>
+                            <option value="4">Paul (Esthetician)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" value="2025-04-29">
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Time</label>
+                        <select id="time">
+                            <option value="">Select Time</option>
+                            <option value="9:00">9:00 AM</option>
+                            <option value="9:30">9:30 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="10:30">10:30 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="11:30">11:30 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Notes</label>
+                        <input type="text" id="notes" placeholder="Any special requests or notes">
+                    </div>
+                    <button class="btn">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Salon POS - Employee Schedule</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 220px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+        }
+        .logo {
+            padding: 0 20px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 1px solid #465b70;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .menu li {
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+        .menu li.active {
+            background-color: #34495e;
+            border-left: 4px solid #e74c3c;
+        }
+        .menu li:hover {
+            background-color: #34495e;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 10px;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .filter-group select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        .btn-secondary {
+            background-color: #3498db;
+        }
+        .btn-secondary:hover {
+            background-color: #2980b9;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .calendar-nav button {
+            background-color: #f5f5f5;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .view-options {
+            display: flex;
+            gap: 10px;
+        }
+        .view-option {
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #f5f5f5;
+        }
+        .view-option.active {
+            background-color: #3498db;
+            color: white;
+        }
+        .schedule-container {
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0 0 20px 0;
+            overflow-x: auto;
+        }
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 150px repeat(7, 1fr);
+            min-width: 900px;
+        }
+        .grid-header {
+            background-color: #f9f9f9;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+        }
+        .employee-row {
+            display: contents;
+        }
+        .employee-name {
+            padding: 10px;
+            font-weight: 500;
+            border-right: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+        .employee-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 10px;
+        }
+        .day-cell {
+            min-height: 60px;
+            padding: 5px;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            position: relative;
+        }
+        .schedule-block {
+            background-color: #3498db;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            margin: 2px 0;
+            font-size: 12px;
+        }
+        .schedule-off {
+            background-color: #e74c3c;
+        }
+        .time-off-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background-color: #f8d7da;
+            opacity: 0.5;
+            z-index: 0;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            padding: 20px;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .employee-stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            flex: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .stat-title {
+            font-size: 14px;
+            color: #666;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .legend {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 0 15px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+        .working-hours {
+            background-color: #3498db;
+        }
+        .time-off {
+            background-color: #e74c3c;
+        }
+        .training {
+            background-color: #f39c12;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">BeautySalon POS</div>
+            <ul class="menu">
+                <li>Dashboard</li>
+                <li>Appointments</li>
+                <li>Clients</li>
+                <li>Services</li>
+                <li class="active">Employees</li>
+                <li>Reports</li>
+                <li>Settings</li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <div class="header">
+                <div class="page-title">Employee Schedule</div>
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div>Admin</div>
+                </div>
+            </div>
+            
+            <!-- Employee Stats -->
+            <div class="employee-stats">
+                <div class="stat-card">
+                    <div class="stat-title">Total Employees</div>
+                    <div class="stat-value">8</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Working Today</div>
+                    <div class="stat-value">6</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">On Time Off</div>
+                    <div class="stat-value">1</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Fully Booked</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+            
+            <!-- Actions Bar -->
+            <div class="actions">
+                <div class="filter-group">
+                    <select>
+                        <option>All Employees</option>
+                        <option>Hair Stylists</option>
+                        <option>Nail Technicians</option>
+                        <option>Estheticians</option>
+                    </select>
+                    <select>
+                        <option>All Status</option>
+                        <option>Working</option>
+                        <option>Time Off</option>
+                        <option>Training</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="btn btn-secondary">Request Time Off</button>
+                    <button class="btn">Add Shift</button>
+                </div>
+            </div>
+            
+            <!-- Schedule Calendar -->
+            <div class="calendar-header">
+                <div class="calendar-nav">
+                    <button>&lt; Previous</button>
+                    <div>April 29 - May 5, 2025</div>
+                    <button>Next &gt;</button>
+                </div>
+                <div class="view-options">
+                    <div class="view-option">Day</div>
+                    <div class="view-option active">Week</div>
+                    <div class="view-option">Month</div>
+                </div>
+            </div>
+            
+            <div class="schedule-container">
+                <!-- Legend -->
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color working-hours"></div>
+                        <div>Working Hours</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color time-off"></div>
+                        <div>Time Off</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color training"></div>
+                        <div>Training</div>
+                    </div>
+                </div>
+                
+                <!-- Schedule Grid -->
+                <div class="schedule-grid">
+                    <!-- Headers -->
+                    <div class="grid-header">Employee</div>
+                    <div class="grid-header">Monday<br>4/29</div>
+                    <div class="grid-header">Tuesday<br>4/30</div>
+                    <div class="grid-header">Wednesday<br>5/1</div>
+                    <div class="grid-header">Thursday<br>5/2</div>
+                    <div class="grid-header">Friday<br>5/3</div>
+                    <div class="grid-header">Saturday<br>5/4</div>
+                    <div class="grid-header">Sunday<br>5/5</div>
+                    
+                    <!-- Jennifer Row -->
+                    <div class="employee-row">
+                        <div class="employee-name">
+                            <div class="employee-avatar"></div>
+                            <div>Jennifer</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">9:00 AM - 5:00 PM</div>
+                            <div class="schedule-block" style="background-color: #f39c12;">Training 2-3 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">10:00 AM - 6:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">9:00 AM - 5:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">9:00 AM - 5:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">10:00 AM - 6:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">8:00 AM - 4:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block schedule-off">OFF</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carlos Row -->
+                    <div class="employee-row">
+                        <div class="employee-name">
+                            <div class="employee-avatar"></div>
+                            <div>Carlos</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">10:00 AM - 6:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">10:00 AM - 6:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">10:00 AM - 6:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block schedule-off">OFF</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block schedule-off">OFF</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">9:00 AM - 5:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">9:00 AM - 5:00 PM</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Maria Row -->
+                    <div class="employee-row">
+                        <div class="employee-name">
+                            <div class="employee-avatar"></div>
+                            <div>Maria</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="time-off-indicator"></div>
+                            <div class="schedule-block schedule-off">Vacation</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="time-off-indicator"></div>
+                            <div class="schedule-block schedule-off">Vacation</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="time-off-indicator"></div>
+                            <div class="schedule-block schedule-off">Vacation</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">1:00 PM - 9:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">1:00 PM - 9:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">10:00 AM - 6:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">10:00 AM - 6:00 PM</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Paul Row -->
+                    <div class="employee-row">
+                        <div class="employee-name">
+                            <div class="employee-avatar"></div>
+                            <div>Paul</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block schedule-off">OFF</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">9:00 AM - 5:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">9:00 AM - 5:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">10:00 AM - 6:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">10:00 AM - 6:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">8:00 AM - 4:00 PM</div>
+                            <div class="schedule-block" style="background-color: #f39c12;">Training 5-6 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block schedule-off">OFF</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Linda Row -->
+                    <div class="employee-row">
+                        <div class="employee-name">
+                            <div class="employee-avatar"></div>
+                            <div>Linda</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">12:00 PM - 8:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">12:00 PM - 8:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block schedule-off">OFF</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">9:00 AM - 5:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">9:00 AM - 5:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block">10:00 AM - 6:00 PM</div>
+                        </div>
+                        <div class="day-cell">
+                            <div class="schedule-block schedule-off">OFF</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Shift Modal (Hidden by default, would be shown via JavaScript) -->
+    <div class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Add New Shift</div>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="employee">Employee</label>
+                <select id="employee">
+                    <option value="">Select Employee</option>
+                    <option value="1">Jennifer</option>
+                    <option value="2">Carlos</option>
+                    <option value="3">Maria</option>
+                    <option value="4">Paul</option>
+                    <option value="5">Linda</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="shift-date">Date</label>
+                <input type="date" id="shift-date">
+            </div>
+            <div class="form-group">
+                <label for="start-time">Start Time</label>
+                <input type="time" id="start-time">
+            </div>
+            <div class="form-group">
+                <label for="end-time">End Time</label>
+                <input type="time" id="end-time">
+            </div>
+            <div class="form-group">
+                <label for="shift-type">Shift Type</label>
+                <select id="shift-type">
+                    <option value="regular">Regular Shift</option>
+                    <option value="training">Training</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea id="notes" rows="3"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" style="background-color: #95a5a6;">Cancel</button>
+                <button class="btn">Save Shift</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
