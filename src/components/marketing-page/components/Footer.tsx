@@ -160,7 +160,7 @@ export default function Footer() {
           <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
             {t('footer.product')}
           </Typography>
-          <Link color="text.secondary" variant="body2" href="/viktorija-website/#/features">
+          <Link color="text.secondary" variant="body2" href="/#/features">
             {t('navigation.services')}
           </Link>
           <Link color="text.secondary" variant="body2" href="#testimonials">
@@ -188,7 +188,7 @@ export default function Footer() {
           <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
             {t('footer.company')}
           </Typography>
-          <Link color="text.secondary" variant="body2" href="/viktorija-website/#/about">
+          <Link color="text.secondary" variant="body2" href="/#/about">
             {t('navigation.about')}
           </Link>
           <Link color="text.secondary" variant="body2" href="#">

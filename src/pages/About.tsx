@@ -106,12 +106,12 @@ export default function MarketingPage(props: { disableCustomTheme?: boolean, tog
         <PhotoGallery
           title={t('about.gallery.title')}
           images={[
-                { src: '/viktorija-website/a-kategooria-22.jpg', alt: t('about.gallery.images.motorcycle_practice'), caption: t('about.gallery.captions.1') },
-    { src: '/viktorija-website/kool-1-1024x581.jpg', alt: t('about.gallery.images.classroom_1'), caption: t('about.gallery.captions.2') },
-    { src: '/viktorija-website/kool-2-1024x581.jpg', alt: t('about.gallery.images.classroom_2'), caption: t('about.gallery.captions.3') },
-    { src: '/viktorija-website/kool-3.jpg', alt: t('about.gallery.images.classroom_3'), caption: t('about.gallery.captions.4') },
-    { src: '/viktorija-website/loppastmekoolitus-libedasoit-7.jpg', alt: t('about.gallery.images.ice_area_1'), caption: t('about.gallery.captions.5') },
-    { src: '/viktorija-website/loppastmekoolitus-libedasoit-12.jpg', alt: t('about.gallery.images.ice_area_2'), caption: t('about.gallery.captions.6') },
+                { src: '/a-kategooria-22.jpg', alt: t('about.gallery.images.motorcycle_practice'), caption: t('about.gallery.captions.1') },
+    { src: '/kool-1-1024x581.jpg', alt: t('about.gallery.images.classroom_1'), caption: t('about.gallery.captions.2') },
+    { src: '/kool-2-1024x581.jpg', alt: t('about.gallery.images.classroom_2'), caption: t('about.gallery.captions.3') },
+    { src: '/kool-3.jpg', alt: t('about.gallery.images.classroom_3'), caption: t('about.gallery.captions.4') },
+    { src: '/loppastmekoolitus-libedasoit-7.jpg', alt: t('about.gallery.images.ice_area_1'), caption: t('about.gallery.captions.5') },
+    { src: '/loppastmekoolitus-libedasoit-12.jpg', alt: t('about.gallery.images.ice_area_2'), caption: t('about.gallery.captions.6') },
           ]}
         />
 

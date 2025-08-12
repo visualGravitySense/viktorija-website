@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://visualgravitysense.github.io/viktorija-website",
+  "homepage": "https://viktorijaautokool.ee",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

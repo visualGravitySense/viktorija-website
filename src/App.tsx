@@ -12,7 +12,7 @@ interface AppProps {
 }
 
 function App({ toggleColorMode }: AppProps) {
-  const basename = import.meta.env.PROD ? '/viktorija-website' : '';
+  const basename = '';
   
   return (
     <Box sx={{ 

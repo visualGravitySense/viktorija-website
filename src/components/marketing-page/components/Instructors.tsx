@@ -78,35 +78,35 @@ export default function Instructors({
       id: "igor",
       name: t('about.instructors_component.instructors.igor.name', 'Игорь Нагорский'),
       description: t('about.instructors_component.instructors.igor.description', 'Основатель и руководитель автошколы "Viktorija", опытный инструктор по вождению. Автомобиль: Toyota Corolla'),
-              imageUrl: "/viktorija-website/igor-ready.png",
+              imageUrl: "/igor-ready.png",
       car: "Honda CRV"
     },
     {
       id: "maksim",
       name: t('about.instructors_component.instructors.maksim.name', 'Максим Федоренко'),
       description: t('about.instructors_component.instructors.maksim.description', 'Инструктор по вождению, терпеливый и заботливый учитель. Автомобиль: Volkswagen Golf'),
-              imageUrl: "/viktorija-website/maksim-ready.png",
+              imageUrl: "/maksim-ready.png",
       car: "Volkswagen Golf"
     },
     {
       id: "stanislav",
       name: t('about.instructors_component.instructors.stanislav.name', 'Станислав Зигадло'),
       description: t('about.instructors_component.instructors.stanislav.description', 'Инструктор по вождению, педагогический стаж 18 лет. Автомобиль: Skoda Octavia'),
-              imageUrl: "/viktorija-website/stas-ready.png",
+              imageUrl: "/stas-ready.png",
       car: "Skoda Octavia"
     },
     {
       id: "ivan",
       name: t('about.instructors_component.instructors.ivan.name', 'Иван Скоробогатов'),
       description: t('about.instructors_component.instructors.ivan.description', 'Опытный инструктор, работал экзаменатором АРК более 2,5 лет. Автомобиль: Toyota Yaris'),
-              imageUrl: "/viktorija-website/ivan-ready.png",
+              imageUrl: "/ivan-ready.png",
       car: "Toyota Yaris"
     },
     {
       id: "andrei",
       name: t('about.instructors_component.instructors.andrei.name', 'Андрей Наан'),
       description: t('about.instructors_component.instructors.andrei.description', 'Высококвалифицированный инструктор по вождению категорий В и А. Автомобиль: Volkswagen Polo'),
-              imageUrl: "/viktorija-website/andrei-ready.png",
+              imageUrl: "/andrei-ready.png",
       car: "Volkswagen Polo"
     }
   ];
