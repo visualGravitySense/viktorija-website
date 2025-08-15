@@ -32,7 +32,16 @@
     "questions": "Questions",
     "signin": "Sign in",
     "signup": "Sign up",
-    "contacts": "Contacts"
+    "contacts": "Contacts",
+    "call_now": "Contact us",
+    "book_lesson": "Book a lesson",
+    "schedule": "Schedule",
+    "theory": "Theory",
+    "practical": "Practice",
+    "exam_preparation": "Exam preparation",
+    "view_schedule": "View all",
+    "packages": "Packages",
+    "payment": "Payment methods"
   },
   "footer": {
     "subscribe": "Subscribe to newsletter",

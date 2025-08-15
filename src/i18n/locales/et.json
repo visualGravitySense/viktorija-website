@@ -32,7 +32,16 @@
     "questions": "Küsimused",
     "signin": "Logi sisse",
     "signup": "Registreeri",
-    "contacts": "Kontaktid"
+    "contacts": "Kontaktid",
+    "call_now": "Võta meiega ühendust",
+    "book_lesson": "Broneeri aeg tunniks",
+    "schedule": "Tunniplaan",
+    "theory": "Teooria",
+    "practical": "Praktika",
+    "exam_preparation": "Eksami ettevalmistus",
+    "view_schedule": "Vaata kõiki",
+    "packages": "Paketid",
+    "payment": "Makseviisid"
   },
   "footer": {
     "subscribe": "Tellige uudiskiri",

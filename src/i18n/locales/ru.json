@@ -32,7 +32,16 @@
     "questions": "Вопросы",
     "signin": "Войти",
     "signup": "Регистрация",
-    "contacts": "Контакты"
+    "contacts": "Контакты",
+    "call_now": "Свяжитесь с нами",
+    "book_lesson": "Забронировать время для урока",
+    "schedule": "Расписание",
+    "theory": "Теория",
+    "practical": "Практика",
+    "exam_preparation": "Подготовка к экзамену",
+    "view_schedule": "Посмотреть всё",
+    "packages": "Пакеты",
+    "payment": "Способы оплаты"
   },
   "footer": {
     "subscribe": "Подпишитесь на рассылку",
