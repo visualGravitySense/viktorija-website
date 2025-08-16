@@ -29,6 +29,10 @@ function Copyright() {
       </Link>
       &nbsp;
       {new Date().getFullYear()}
+      {' • '}
+      <Link color="text.secondary" href="https://github.com/visualGravitySense" target="_blank" rel="noopener noreferrer">
+        Created by Dmitri Gornakov
+      </Link>
     </Typography>
   );
 }
@@ -295,6 +299,20 @@ export default function Footer() {
             }}
           >
             <PhoneIcon />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            size="small"
+            href="https://github.com/visualGravitySense"
+            aria-label="GitHub"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{ 
+              alignSelf: 'center',
+              '& svg': { fontSize: { xs: '1.5rem', sm: '1.25rem' } }
+            }}
+          >
+            <GitHubIcon />
           </IconButton>
         </Stack>
       </Box>
