@@ -14,9 +14,10 @@ import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import { useTranslation } from 'react-i18next';
 
-// Replace with your actual Stripe publishable key
-// NOTE: This should come from environment variables in a real production app
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+// Load Stripe from environment variable or fallback to test key
+const stripePromise = loadStripe(
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
+);
 
 const CARD_ELEMENT_OPTIONS: CardElementProps['options'] = {
   style: {

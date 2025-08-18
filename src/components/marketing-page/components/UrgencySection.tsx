@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { styled } from '@mui/material/styles';
+import PaymentButton from '../../shared/PaymentButton.tsx';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   marginTop: theme.spacing(4),
@@ -31,6 +32,8 @@ interface UrgencySectionProps {
   buttonText: string;
   buttonLink?: string;
   limitText?: string;
+  category?: 'category-a' | 'category-b' | 'category-c';
+  transmissionType?: 'manual' | 'automatic';
 }
 
 export default function UrgencySection({
@@ -43,7 +46,9 @@ export default function UrgencySection({
   offerText,
   buttonText,
   buttonLink = "#",
-  limitText
+  limitText,
+  category = 'category-a',
+  transmissionType = 'manual'
 }: UrgencySectionProps) {
   return (
     <Container id="urgency" sx={{ py: { xs: 8, sm: 16 } }}>
@@ -82,15 +87,15 @@ export default function UrgencySection({
           </Box>
 
           <Box sx={{ textAlign: 'center' }}>
-            <Button
+            <PaymentButton
               variant="contained"
-              color="primary"
               size="large"
-              href={buttonLink}
+              category={category}
+              transmissionType={transmissionType}
               sx={{ px: 4, py: 1.5 }}
             >
               {buttonText}
-            </Button>
+            </PaymentButton>
             {limitText && (
               <Typography variant="caption" display="block" sx={{ mt: 2, color: 'text.secondary' }}>
                 {limitText}

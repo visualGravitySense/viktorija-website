@@ -86,10 +86,10 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
         telephone="+37253464508"
         email="viktorijaautokool@hot.ee"
         address={{
-          streetAddress: "Õie 14",
+          streetAddress: "Jaama tn 1",
           addressLocality: "Tallinn",
           addressRegion: "Harjumaa",
-          postalCode: "12616",
+          postalCode: "11615",
           addressCountry: "Estonia"
         }}
         geo={{

@@ -21,6 +21,7 @@ import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlin
 import { useTranslation } from 'react-i18next';
 import { StripePaymentProvider, CardForm, usePaymentProcessor } from '../services/StripePaymentService';
 import { useCheckoutContext } from '../Checkout.tsx';
+import BankTransferPayment from './BankTransferPayment.tsx';
 
 interface CardProps {
   selected?: boolean;
@@ -96,6 +97,11 @@ export default function PaymentForm() {
   const [cvv, setCvv] = React.useState('');
   const [expirationDate, setExpirationDate] = React.useState('');
   const [savePaymentMethod, setSavePaymentMethod] = React.useState(false);
+  const [bankTransferInitiated, setBankTransferInitiated] = React.useState(false);
+  
+  // Check if we're in test mode
+  const isTestMode = !import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 
+    import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY.includes('pk_test_');
   
   const { 
     paymentStatus, 
@@ -107,6 +113,26 @@ export default function PaymentForm() {
   
   // Get the checkout context to share payment state
   const { setPaymentData, setPaymentSuccess } = useCheckoutContext();
+  
+  // Get total price from URL parameters or use default
+  const searchParams = new URLSearchParams(window.location.search);
+  const category = searchParams.get('category') || 'default';
+  const transmissionType = searchParams.get('transmissionType') || 'manual';
+  
+  const getPriceByCategory = () => {
+    switch(category) {
+      case 'category-a':
+        return '570€';
+      case 'category-b':
+        return transmissionType === 'manual' ? '700€' : '840€';
+      case 'category-c':
+        return '150€';
+      default:
+        return '570€';
+    }
+  };
+  
+  const totalPrice = getPriceByCategory();
 
   const handlePaymentTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentType(event.target.value as PaymentType);
@@ -151,8 +177,41 @@ export default function PaymentForm() {
       });
   };
 
+  const handleBankTransferInitiated = () => {
+    setBankTransferInitiated(true);
+    // Simulate successful bank transfer initiation
+    const bankTransferData = {
+      id: `bt_${Math.random().toString(36).substring(2, 15)}`,
+      amount: totalPrice,
+      currency: 'eur',
+      status: 'pending',
+      created: Date.now(),
+      paymentMethod: 'bank_transfer',
+      reference: `VIK${Date.now().toString().slice(-8)}${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
+    };
+    
+    setPaymentData(bankTransferData);
+    setPaymentSuccess(true);
+  };
+
   return (
     <Stack spacing={{ xs: 3, sm: 6 }} useFlexGap>
+      {/* Test Mode Warning */}
+      {isTestMode && paymentType === 'stripeCard' && (
+        <Alert 
+          severity="warning" 
+          icon={<WarningRoundedIcon />}
+          sx={{ mb: 2 }}
+        >
+          <Typography variant="body2" sx={{ fontWeight: 'medium', mb: 1 }}>
+            Test Mode Active
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            This is a test environment. Use test card number: <strong>4242 4242 4242 4242</strong> with any future expiry date and 3-digit CVC. No real money will be charged.
+          </Typography>
+        </Alert>
+      )}
+      
       <FormControl component="fieldset" fullWidth>
         <RadioGroup
           aria-label="Payment options"
@@ -420,52 +479,10 @@ export default function PaymentForm() {
       )}
       
       {paymentType === 'bankTransfer' && (
-        <Stack spacing={2} useFlexGap>
-          <Alert
-            severity="info"
-            icon={<WarningRoundedIcon fontSize="small" />}
-            sx={{ mb: 2 }}
-          >
-            {t('checkout.payment.bank_info_message')}
-          </Alert>
-          <FormGrid>
-            <FormLabel htmlFor="account-name" required>
-              {t('checkout.payment.account_name')}
-            </FormLabel>
-            <OutlinedInput
-              id="account-name"
-              placeholder={t('checkout.payment.account_name_placeholder')}
-              required
-              size="small"
-            />
-          </FormGrid>
-          <FormGrid>
-            <FormLabel htmlFor="account-number" required>
-              {t('checkout.payment.account_number')}
-            </FormLabel>
-            <OutlinedInput
-              id="account-number"
-              placeholder={t('checkout.payment.account_number_placeholder')}
-              required
-              size="small"
-            />
-          </FormGrid>
-          <FormGrid>
-            <FormLabel htmlFor="routing-number" required>
-              {t('checkout.payment.routing_number')}
-            </FormLabel>
-            <OutlinedInput
-              id="routing-number"
-              placeholder={t('checkout.payment.routing_number_placeholder')}
-              required
-              size="small"
-            />
-          </FormGrid>
-          <FormControlLabel
-            control={<Checkbox name="saveAccount" value="yes" />}
-            label={t('checkout.payment.save_account_info')}
-          />
-        </Stack>
+        <BankTransferPayment 
+          amount={totalPrice}
+          onPaymentInitiated={handleBankTransferInitiated}
+        />
       )}
     </Stack>
   );

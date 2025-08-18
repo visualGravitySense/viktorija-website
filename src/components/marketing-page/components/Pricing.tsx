@@ -14,6 +14,7 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+import PaymentButton from '../../shared/PaymentButton.tsx';
 
 export interface PricingTier {
   title: string;
@@ -224,15 +225,14 @@ export default function Pricing({
                 ))}
               </CardContent>
               <CardActions>
-                <Button
+                <PaymentButton
                   fullWidth
                   variant={tier.buttonVariant}
-                  color={tier.buttonColor}
-                  component={RouterLink}
-                  to={`/checkout?category=${tier.categoryId || 'category-a'}`}
+                  category={tier.categoryId as 'category-a' | 'category-b' | 'category-c'}
+                  transmissionType="manual"
                 >
                   {tier.buttonText}
-                </Button>
+                </PaymentButton>
               </CardActions>
             </Card>
           </Grid>
