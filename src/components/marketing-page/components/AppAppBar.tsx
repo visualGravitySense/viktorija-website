@@ -44,11 +44,9 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
   backdropFilter: 'blur(24px)',
   border: '1px solid',
-  borderColor: (theme.vars || theme).palette.divider,
-  backgroundColor: theme.vars
-    ? `rgba(${theme.vars.palette.background.defaultChannel} / 0.8)`
-    : alpha(theme.palette.background.default, 0.8),
-  boxShadow: (theme.vars || theme).shadows[1],
+  borderColor: theme.palette.divider,
+  backgroundColor: alpha(theme.palette.background.default, 0.8),
+  boxShadow: theme.shadows[1],
   padding: '8px 12px',
   [theme.breakpoints.down('sm')]: {
     padding: '8px 10px',
@@ -272,10 +270,17 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
             <LanguageSwitcher />
             <Button 
               color="primary" 
-              variant="text" 
+              variant="outlined" 
               size="small"
               component={RouterLink}
               to="/checkout?category=category-c"
+              sx={{
+                fontWeight: 600,
+                '&:hover': {
+                  transform: 'translateY(-1px)',
+                  transition: 'all 0.2s ease-in-out'
+                }
+              }}
             >
               {t('navigation.signin')}
             </Button>
@@ -285,6 +290,16 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
               size="small"
               component={RouterLink}
               to="/checkout?category=category-b"
+              sx={{
+                fontWeight: 600,
+                background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
+                  transform: 'translateY(-1px)',
+                  boxShadow: '0 2px 10px rgba(25, 118, 210, 0.3)',
+                  transition: 'all 0.2s ease-in-out'
+                }
+              }}
             >
               {t('navigation.signup')}
             </Button>
@@ -336,7 +351,23 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     fullWidth
                     startIcon={<PhoneIcon />}
                     href="tel:+37253464508"
-                    sx={{ mb: 1 }}
+                    sx={{ 
+                      mb: 1,
+                      fontWeight: 600,
+                      minHeight: 48,
+                      fontSize: '1rem',
+                      background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
+                      '&:hover': {
+                        background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
+                        transform: 'translateY(-1px)',
+                        boxShadow: '0 2px 10px rgba(25, 118, 210, 0.3)',
+                        transition: 'all 0.2s ease-in-out'
+                      },
+                      '&:active': {
+                        transform: 'translateY(0px)',
+                        transition: 'all 0.1s ease-in-out'
+                      }
+                    }}
                   >
                     {t('navigation.call_now')}
                   </Button>
@@ -347,6 +378,19 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     startIcon={<EventIcon />}
                     component={RouterLink}
                     to="/book"
+                    sx={{
+                      fontWeight: 600,
+                      minHeight: 48,
+                      fontSize: '1rem',
+                      '&:hover': {
+                        transform: 'translateY(-1px)',
+                        transition: 'all 0.2s ease-in-out'
+                      },
+                      '&:active': {
+                        transform: 'translateY(0px)',
+                        transition: 'all 0.1s ease-in-out'
+                      }
+                    }}
                   >
                     {t('navigation.book_lesson')}
                   </Button>
@@ -359,11 +403,11 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                   {menuItems.map((section) => (
                     <React.Fragment key={section.title}>
                       <ListItem
-                        button
                         onClick={() => handleSectionClick(section.title)}
                         sx={{
                           borderRadius: 1,
                           mb: 0.5,
+                          cursor: 'pointer',
                           '&:hover': {
                             backgroundColor: alpha(theme.palette.primary.main, 0.08),
                           },
@@ -453,6 +497,19 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     fullWidth
                     component={RouterLink}
                     to="/checkout?category=category-c"
+                    sx={{
+                      fontWeight: 600,
+                      minHeight: 48,
+                      fontSize: '1rem',
+                      '&:hover': {
+                        transform: 'translateY(-1px)',
+                        transition: 'all 0.2s ease-in-out'
+                      },
+                      '&:active': {
+                        transform: 'translateY(0px)',
+                        transition: 'all 0.1s ease-in-out'
+                      }
+                    }}
                   >
                     {t('navigation.signin')}
                   </Button>
@@ -462,6 +519,22 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     fullWidth
                     component={RouterLink}
                     to="/checkout?category=category-b"
+                    sx={{
+                      fontWeight: 600,
+                      minHeight: 48,
+                      fontSize: '1rem',
+                      background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
+                      '&:hover': {
+                        background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
+                        transform: 'translateY(-1px)',
+                        boxShadow: '0 2px 10px rgba(25, 118, 210, 0.3)',
+                        transition: 'all 0.2s ease-in-out'
+                      },
+                      '&:active': {
+                        transform: 'translateY(0px)',
+                        transition: 'all 0.1s ease-in-out'
+                      }
+                    }}
                   >
                     {t('navigation.signup')}
                   </Button>

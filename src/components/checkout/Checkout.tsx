@@ -14,6 +14,14 @@ import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import LinearProgress from '@mui/material/LinearProgress';
+import Alert from '@mui/material/Alert';
+import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
+import StarIcon from '@mui/icons-material/Star';
+import SecurityIcon from '@mui/icons-material/Security';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import SupportIcon from '@mui/icons-material/Support';
 import AddressForm from './components/AddressForm.tsx';
 import Info from './components/Info.tsx';
 import InfoMobile from './components/InfoMobile.tsx';
@@ -101,7 +109,18 @@ export default function Checkout(props: { disableCustomTheme?: boolean }) {
       return () => clearTimeout(timer);
     }
   }, [paymentSuccess, activeStep]);
-  
+
+  // Calculate progress percentage
+  const progressPercentage = ((activeStep + 1) / steps.length) * 100;
+
+  // Social proof data
+  const socialProof = [
+    { text: "4.9/5", icon: <StarIcon sx={{ color: 'warning.main' }} />, label: "Hindamine" },
+    { text: "1998", icon: <LocalShippingIcon sx={{ color: 'primary.main' }} />, label: "Aastast" },
+    { text: "1000+", icon: <SupportIcon sx={{ color: 'success.main' }} />, label: "Õpilast" },
+    { text: "Turvaline", icon: <SecurityIcon sx={{ color: 'info.main' }} />, label: "Makse" }
+  ];
+
   function getStepContent(step: number) {
     switch (step) {
       case 0:
@@ -129,11 +148,49 @@ export default function Checkout(props: { disableCustomTheme?: boolean }) {
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
-      <Box sx={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 1100 }}>
+      
+      {/* Progress Bar - Always visible */}
+      <Box sx={{ 
+        position: 'fixed', 
+        top: 0, 
+        left: 0, 
+        right: 0, 
+        zIndex: 1200,
+        bgcolor: 'background.paper',
+        borderBottom: 1,
+        borderColor: 'divider'
+      }}>
+        <LinearProgress 
+          variant="determinate" 
+          value={progressPercentage} 
+          sx={{ 
+            height: 4,
+            '& .MuiLinearProgress-bar': {
+              transition: 'transform 0.5s ease-in-out'
+            }
+          }} 
+        />
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          px: 2,
+          py: 1
+        }}>
+          <Typography variant="caption" color="text.secondary">
+            Samm {activeStep + 1} / {steps.length}
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            {Math.round(progressPercentage)}% valmis
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{ position: 'fixed', top: '4rem', right: '1rem', zIndex: 1100 }}>
         <ColorModeIconDropdown />
       </Box>
 
-      <Box sx={{ position: 'fixed', top: '1rem', left: '1rem', zIndex: 1100 }}>
+      <Box sx={{ position: 'fixed', top: '4rem', left: '1rem', zIndex: 1100 }}>
         <IconButton
           onClick={handleClose}
           aria-label={t('common.close') || 'Close'}
@@ -159,8 +216,8 @@ export default function Checkout(props: { disableCustomTheme?: boolean }) {
                 sm: 'calc(100dvh - var(--template-frame-height, 0px))',
               },
               mt: {
-                xs: 4,
-                sm: 0,
+                xs: 8,
+                sm: 8,
               },
             }}
           >
@@ -179,6 +236,64 @@ export default function Checkout(props: { disableCustomTheme?: boolean }) {
               }}
             >
               <SitemarkIcon />
+              
+              {/* Social Proof Section */}
+              <Box sx={{ width: '100%' }}>
+                <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                  Miks valida Viktorija Autokool?
+                </Typography>
+                <Grid container spacing={2}>
+                  {socialProof.map((item, index) => (
+                    <Grid item xs={6} key={index}>
+                      <Box sx={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        p: 1
+                      }}>
+                        {item.icon}
+                        <Typography variant="h6" sx={{ fontWeight: 'bold', mt: 0.5 }}>
+                          {item.text}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {item.label}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+
+              <Divider sx={{ width: '100%' }} />
+
+              {/* Trust Indicators */}
+              <Box sx={{ width: '100%' }}>
+                <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                  Turvaline ja usaldusväärne
+                </Typography>
+                <Stack spacing={2}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <SecurityIcon color="success" />
+                    <Typography variant="body2">
+                      SSL krüptitud makse
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <SupportIcon color="primary" />
+                    <Typography variant="body2">
+                      24/7 klienditugi
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <LocalShippingIcon color="info" />
+                    <Typography variant="body2">
+                      Kiire registreerimine
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Box>
+
               <Box
                 sx={{
                   display: 'flex',
@@ -244,6 +359,8 @@ export default function Checkout(props: { disableCustomTheme?: boolean }) {
                   </Stepper>
                 </Box>
               </Box>
+
+              {/* Mobile Product Info Card */}
               <Card sx={{ display: { xs: 'flex', md: 'none' }, width: '100%' }}>
                 <CardContent
                   sx={{
@@ -269,6 +386,8 @@ export default function Checkout(props: { disableCustomTheme?: boolean }) {
                   />
                 </CardContent>
               </Card>
+
+              {/* Main Content Area */}
               <Box
                 sx={{
                   display: 'flex',
@@ -280,6 +399,7 @@ export default function Checkout(props: { disableCustomTheme?: boolean }) {
                   gap: { xs: 5, md: 'none' },
                 }}
               >
+                {/* Mobile Stepper */}
                 <Stepper
                   id="mobile-stepper"
                   activeStep={activeStep}
@@ -299,50 +419,121 @@ export default function Checkout(props: { disableCustomTheme?: boolean }) {
                     </Step>
                   ))}
                 </Stepper>
+
+                {/* Step Content */}
                 <React.Fragment>
                   {getStepContent(activeStep)}
+                  
+                  {/* Enhanced Navigation Buttons */}
                   <Box
                     sx={{
                       mt: { xs: 8, sm: 8 },
                       display: 'flex',
                       justifyContent: activeStep !== 0 ? 'space-between' : 'flex-end',
                       width: '100%',
+                      gap: 2,
                     }}
                   >
                     {activeStep !== 0 && (
                       <Button
                         startIcon={<ChevronLeftRoundedIcon />}
                         onClick={handleBack}
-                        variant="text"
+                        variant="outlined"
+                        size="large"
+                        sx={{ 
+                          minWidth: 120,
+                          '&:hover': {
+                            transform: 'translateX(-2px)',
+                            transition: 'transform 0.2s ease-in-out'
+                          }
+                        }}
                       >
                         {t('checkout.back')}
                       </Button>
                     )}
+                    
                     {activeStep === steps.length - 1 ? (
                       <Button
                         variant="contained"
+                        size="large"
                         endIcon={<ChevronRightRoundedIcon />}
                         onClick={() => {
                           // Handle order placement/completion here
                           window.location.href = '/';
                         }}
-                        sx={{ ml: 'auto' }}
+                        sx={{ 
+                          ml: 'auto',
+                          minWidth: 180,
+                          height: 48,
+                          fontSize: '1.1rem',
+                          fontWeight: 'bold',
+                          background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
+                          '&:hover': {
+                            background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
+                            transform: 'translateY(-2px)',
+                            boxShadow: '0 4px 20px rgba(25, 118, 210, 0.3)',
+                            transition: 'all 0.3s ease-in-out'
+                          }
+                        }}
                       >
                         {t('checkout.place_order')}
                       </Button>
                     ) : (
                       <Button
                         variant="contained"
+                        size="large"
                         endIcon={<ChevronRightRoundedIcon />}
                         onClick={handleNext}
-                        sx={{ ml: 'auto' }}
                         disabled={activeStep === 1 && !paymentSuccess}
+                        sx={{ 
+                          ml: 'auto',
+                          minWidth: 180,
+                          height: 48,
+                          fontSize: '1.1rem',
+                          fontWeight: 'bold',
+                          background: 'linear-gradient(45deg, #2e7d32 30%, #4caf50 90%)',
+                          '&:hover': {
+                            background: 'linear-gradient(45deg, #1b5e20 30%, #2e7d32 90%)',
+                            transform: 'translateY(-2px)',
+                            boxShadow: '0 4px 20px rgba(46, 125, 50, 0.3)',
+                            transition: 'all 0.3s ease-in-out'
+                          },
+                          '&:disabled': {
+                            background: 'linear-gradient(45deg, #757575 30%, #9e9e9e 90%)',
+                            transform: 'none',
+                            boxShadow: 'none'
+                          }
+                        }}
                       >
                         {activeStep === steps.length - 2
                           ? t('checkout.proceed_to_review')
                           : t('checkout.next')}
                       </Button>
                     )}
+                  </Box>
+
+                  {/* Progress Indicator */}
+                  <Box sx={{ mt: 3, width: '100%' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                      <Typography variant="caption" color="text.secondary">
+                        Samm {activeStep + 1} / {steps.length}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {Math.round(progressPercentage)}% valmis
+                      </Typography>
+                    </Box>
+                    <LinearProgress 
+                      variant="determinate" 
+                      value={progressPercentage} 
+                      sx={{ 
+                        height: 6,
+                        borderRadius: 3,
+                        '& .MuiLinearProgress-bar': {
+                          borderRadius: 3,
+                          background: 'linear-gradient(90deg, #1976d2 0%, #42a5f5 100%)'
+                        }
+                      }} 
+                    />
                   </Box>
                 </React.Fragment>
               </Box>

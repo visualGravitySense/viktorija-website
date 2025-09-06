@@ -4,6 +4,10 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Chip from '@mui/material/Chip';
+import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import {
@@ -14,6 +18,9 @@ import {
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import StarIcon from '@mui/icons-material/Star';
+import SecurityIcon from '@mui/icons-material/Security';
+import SupportIcon from '@mui/icons-material/Support';
 import { useTranslation } from 'react-i18next';
 
 const PainPointsContent = styled(Box)(({ theme }) => ({
@@ -118,6 +125,21 @@ export default function PainPoints({
   items = []
 }: PainPointsProps) {
   const { t } = useTranslation();
+
+  // Social proof data
+  const socialProof = [
+    { text: "4.9/5", icon: <StarIcon sx={{ color: 'warning.main' }} />, label: "Hindamine" },
+    { text: "1998", icon: <AccessTimeIcon sx={{ color: 'primary.main' }} />, label: "Aastast" },
+    { text: "1000+", icon: <SupportIcon sx={{ color: 'success.main' }} />, label: "Õpilast" },
+    { text: "95%", icon: <TrendingUpIcon sx={{ color: 'info.main' }} />, label: "Edu" }
+  ];
+
+  // Trust indicators
+  const trustIndicators = [
+    { icon: <SecurityIcon color="success" />, text: "SSL turvaline" },
+    { icon: <CheckCircleIcon color="primary" />, text: "Garantitud tulemus" },
+    { icon: <SupportIcon color="info" />, text: "24/7 tugi" }
+  ];
   
   const defaultItems: PainPointItem[] = [
     {
@@ -181,13 +203,99 @@ export default function PainPoints({
           <FloatingIcon color="green" sx={{ bottom: 30, left: '40%', animationDelay: '2s' }}>
             <TrendingUpIcon sx={{ color: 'white', fontSize: 30 }} />
           </FloatingIcon>
-          <Box sx={{ textAlign: 'center', mb: 6, position: 'relative', zIndex: 1 }}>
-            <GradientText variant="h2" gutterBottom>
+
+          {/* Social Proof Banner */}
+          <Card sx={{ 
+            mb: { xs: 3, sm: 4 }, 
+            bgcolor: 'primary.50', 
+            border: '2px solid', 
+            borderColor: 'primary.200',
+            maxWidth: '800px',
+            width: '100%',
+            mx: { xs: 1, sm: 0 }
+          }}>
+            <CardContent sx={{ py: { xs: 1.5, sm: 2 }, px: { xs: 2, sm: 3 } }}>
+              <Grid container spacing={{ xs: 1, sm: 2 }} alignItems="center">
+                {socialProof.map((item, index) => (
+                  <Grid item xs={6} sm={3} key={index}>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      alignItems: 'center',
+                      textAlign: 'center',
+                      py: { xs: 1, sm: 0 }
+                    }}>
+                      <Box sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }}>
+                        {item.icon}
+                      </Box>
+                      <Typography variant="h6" sx={{ 
+                        fontWeight: 'bold', 
+                        mt: 0.5,
+                        fontSize: { xs: '1rem', sm: '1.25rem' }
+                      }}>
+                        {item.text}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary" sx={{
+                        fontSize: { xs: '0.7rem', sm: '0.75rem' }
+                      }}>
+                        {item.label}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </CardContent>
+          </Card>
+
+          <Box sx={{ 
+            textAlign: 'center', 
+            mb: { xs: 4, sm: 6 }, 
+            position: 'relative', 
+            zIndex: 1,
+            px: { xs: 2, sm: 0 }
+          }}>
+            <GradientText variant="h2" gutterBottom sx={{
+              fontSize: { xs: '1.8rem', sm: '2.5rem', md: '3rem' },
+              lineHeight: { xs: 1.2, sm: 1.3 }
+            }}>
               {title}
             </GradientText>
-            <AntiDesignTypography variant="h4" sx={{ mb: 4 }}>
+            <AntiDesignTypography variant="h4" sx={{ 
+              mb: { xs: 3, sm: 4 },
+              fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.75rem' },
+              lineHeight: { xs: 1.3, sm: 1.4 }
+            }}>
               {subtitle}
             </AntiDesignTypography>
+            
+            {/* Trust Indicators */}
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              flexWrap: 'wrap', 
+              gap: { xs: 1, sm: 2 },
+              mt: 3,
+              px: { xs: 1, sm: 0 }
+            }}>
+              {trustIndicators.map((indicator, index) => (
+                <Chip
+                  key={index}
+                  icon={indicator.icon}
+                  label={indicator.text}
+                  variant="outlined"
+                  size="small"
+                  sx={{ 
+                    bgcolor: 'background.paper',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    height: { xs: 28, sm: 32 },
+                    '&:hover': {
+                      bgcolor: 'primary.50',
+                      borderColor: 'primary.main'
+                    }
+                  }}
+                />
+              ))}
+            </Box>
           </Box>
           <Box
             sx={{
@@ -197,12 +305,13 @@ export default function PainPoints({
                 sm: 'repeat(2, 1fr)',
                 md: 'repeat(3, 1fr)'
               },
-              gap: 3,
+              gap: { xs: 2, sm: 3 },
               width: '100%',
               justifyItems: 'center',
               alignItems: 'start',
               maxWidth: '1200px',
-              mx: 'auto'
+              mx: 'auto',
+              px: { xs: 2, sm: 0 }
             }}
           >
             {displayItems.length === 0 ? (
@@ -216,11 +325,12 @@ export default function PainPoints({
                   sx={{ 
                     width: '100%',
                     maxWidth: '400px',
-                    minHeight: '500px',
-                    p: { xs: 2, md: 3 }, 
+                    minHeight: { xs: '450px', sm: '500px' },
+                    p: { xs: 2, sm: 2.5, md: 3 }, 
                     display: 'flex', 
                     flexDirection: 'column', 
-                    justifyContent: 'space-between' 
+                    justifyContent: 'space-between',
+                    mx: { xs: 1, sm: 0 }
                   }}
                 >
                   <Box
@@ -237,10 +347,20 @@ export default function PainPoints({
                       borderRadius: 2 
                     }}
                   />
-                  <Typography variant="h5" sx={{ mb: 2, fontSize: { xs: '1.2rem', md: '1.3rem' }, color: 'text.primary' }}>
+                  <Typography variant="h5" sx={{ 
+                    mb: 2, 
+                    fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' }, 
+                    color: 'text.primary',
+                    lineHeight: { xs: 1.3, sm: 1.4 }
+                  }}>
                     {item.title}
                   </Typography>
-                  <Typography variant="body1" sx={{ mb: 2, color: 'text.secondary' }}>
+                  <Typography variant="body1" sx={{ 
+                    mb: 2, 
+                    color: 'text.secondary',
+                    fontSize: { xs: '0.9rem', sm: '1rem' },
+                    lineHeight: { xs: 1.4, sm: 1.5 }
+                  }}>
                     {item.description}
                   </Typography>
                   <Box sx={{ fontWeight: 600, mb: 2 }}>
@@ -273,7 +393,26 @@ export default function PainPoints({
                     <StyledButton 
                       variant="contained" 
                       size="large" 
-                      sx={{ mt: 'auto', fontSize: '1.1rem', py: 1.5, px: 3, width: '100%' }}
+                      sx={{ 
+                        mt: 'auto', 
+                        fontSize: { xs: '1rem', sm: '1.1rem' }, 
+                        py: { xs: 1.5, sm: 1.5 }, 
+                        px: { xs: 2, sm: 3 }, 
+                        width: '100%',
+                        minHeight: { xs: 48, sm: 56 },
+                        fontWeight: 600,
+                        background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
+                        '&:hover': {
+                          background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
+                          transform: 'translateY(-2px)',
+                          boxShadow: '0 4px 20px rgba(25, 118, 210, 0.3)',
+                          transition: 'all 0.3s ease-in-out'
+                        },
+                        '&:active': {
+                          transform: 'translateY(0px)',
+                          transition: 'all 0.1s ease-in-out'
+                        }
+                      }}
                     >
                       {item.buttonText}
                     </StyledButton>
