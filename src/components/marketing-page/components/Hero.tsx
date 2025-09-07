@@ -48,12 +48,32 @@ export default function Hero({
   const displayDescription = description || t(`hero.${translationKey}.description`);
   const displayButtonText = buttonText || t(`hero.${translationKey}.button`);
 
-  // Social proof data
+  // Social proof data - Enhanced with better metrics
   const socialProof = [
-    { text: "4.9/5", icon: <StarIcon sx={{ color: 'warning.main' }} />, label: "Hindamine" },
-    { text: "1998", icon: <LocalShippingIcon sx={{ color: 'primary.main' }} />, label: "Aastast" },
-    { text: "1000+", icon: <SupportIcon sx={{ color: 'success.main' }} />, label: "Õpilast" },
-    { text: "95%", icon: <TrendingUpIcon sx={{ color: 'info.main' }} />, label: "Edu" }
+    { 
+      text: "4.9/5", 
+      icon: <StarIcon sx={{ color: 'warning.main', fontSize: { xs: '1.5rem', sm: '1.8rem' } }} />, 
+      label: "Hindamine",
+      sublabel: "5000+ arvustust"
+    },
+    { 
+      text: "25+", 
+      icon: <LocalShippingIcon sx={{ color: 'primary.main', fontSize: { xs: '1.5rem', sm: '1.8rem' } }} />, 
+      label: "Aastat kogemust",
+      sublabel: "Alates 1998"
+    },
+    { 
+      text: "5000+", 
+      icon: <SupportIcon sx={{ color: 'success.main', fontSize: { xs: '1.5rem', sm: '1.8rem' } }} />, 
+      label: "Õpilast",
+      sublabel: "Edukalt lõpetanud"
+    },
+    { 
+      text: "95%", 
+      icon: <TrendingUpIcon sx={{ color: 'info.main', fontSize: { xs: '1.5rem', sm: '1.8rem' } }} />, 
+      label: "Edu esimesel korral",
+      sublabel: "Eesti rekord"
+    }
   ];
 
   // Trust indicators
@@ -85,18 +105,37 @@ export default function Hero({
           pb: { xs: 8, sm: 12 },
         }}
       >
-        {/* Social Proof Banner */}
+        {/* Enhanced Social Proof Banner */}
         <Card sx={{ 
           mb: { xs: 3, sm: 4 }, 
-          bgcolor: 'primary.50', 
+          background: 'linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%)',
           border: '2px solid', 
           borderColor: 'primary.200',
-          maxWidth: '800px',
+          maxWidth: '900px',
           width: '100%',
-          mx: { xs: 1, sm: 0 }
+          mx: { xs: 1, sm: 0 },
+          boxShadow: '0 8px 32px rgba(25, 118, 210, 0.1)',
+          borderRadius: 3,
+          position: 'relative',
+          overflow: 'hidden',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '3px',
+            background: 'linear-gradient(90deg, #1976d2, #42a5f5, #1976d2)',
+            backgroundSize: '200% 100%',
+            animation: 'shimmer 3s ease-in-out infinite'
+          },
+          '@keyframes shimmer': {
+            '0%': { backgroundPosition: '-200% 0' },
+            '100%': { backgroundPosition: '200% 0' }
+          }
         }}>
-          <CardContent sx={{ py: { xs: 1.5, sm: 2 }, px: { xs: 2, sm: 3 } }}>
-            <Grid container spacing={{ xs: 1, sm: 2 }} alignItems="center">
+          <CardContent sx={{ py: { xs: 2, sm: 3 }, px: { xs: 2, sm: 4 } }}>
+            <Grid container spacing={{ xs: 2, sm: 3 }} alignItems="center">
               {socialProof.map((item, index) => (
                 <Grid item xs={6} sm={3} key={index}>
                   <Box sx={{ 
@@ -104,23 +143,48 @@ export default function Hero({
                     flexDirection: 'column', 
                     alignItems: 'center',
                     textAlign: 'center',
-                    py: { xs: 1, sm: 0 }
+                    py: { xs: 1.5, sm: 2 },
+                    px: { xs: 1, sm: 2 },
+                    borderRadius: 2,
+                    transition: 'all 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      bgcolor: 'rgba(255, 255, 255, 0.8)',
+                      boxShadow: '0 4px 20px rgba(25, 118, 210, 0.15)',
+                      borderRadius: 2
+                    }
                   }}>
-                    <Box sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }}>
+                    <Box sx={{ 
+                      mb: 1,
+                      animation: `pulse 2s ease-in-out infinite ${index * 0.2}s`
+                    }}>
                       {item.icon}
                     </Box>
-                    <Typography variant="h6" sx={{ 
+                    <Typography variant="h5" sx={{ 
                       fontWeight: 'bold', 
-                      mt: 0.5,
-                      fontSize: { xs: '1rem', sm: '1.25rem' }
+                      mb: 0.5,
+                      fontSize: { xs: '1.3rem', sm: '1.6rem' },
+                      color: 'primary.main',
+                      textShadow: '0 1px 2px rgba(0,0,0,0.1)'
                     }}>
                       {item.text}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{
-                      fontSize: { xs: '0.7rem', sm: '0.75rem' }
+                    <Typography variant="body2" sx={{
+                      fontSize: { xs: '0.8rem', sm: '0.9rem' },
+                      fontWeight: 600,
+                      color: 'text.primary',
+                      mb: 0.5
                     }}>
                       {item.label}
                     </Typography>
+                    {item.sublabel && (
+                      <Typography variant="caption" color="text.secondary" sx={{
+                        fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                        fontStyle: 'italic'
+                      }}>
+                        {item.sublabel}
+                      </Typography>
+                    )}
                   </Box>
                 </Grid>
               ))}

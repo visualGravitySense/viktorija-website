@@ -19,6 +19,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import EventIcon from '@mui/icons-material/Event';
 import PaymentIcon from '@mui/icons-material/Payment';
 import HelpIcon from '@mui/icons-material/Help';
+import InfoIcon from '@mui/icons-material/Info';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown';
@@ -89,25 +90,25 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
       title: t('navigation.services'),
       icon: <DirectionsCarIcon />,
       items: [
-        { text: t('navigation.theory'), href: '/theory' },
-        { text: t('navigation.practical'), href: '/practical' },
-        { text: t('navigation.exam_preparation'), href: '/exam-prep' },
+        { text: t('navigation.theory'), href: '/#theory' },
+        { text: t('navigation.practical'), href: '/#practical' },
+        { text: t('navigation.exam_preparation'), href: '/#exam-prep' },
       ],
     },
     {
       title: t('navigation.schedule'),
       icon: <EventIcon />,
       items: [
-        { text: t('navigation.book_lesson'), href: '/book' },
-        { text: t('navigation.view_schedule'), href: '/schedule' },
+        { text: t('navigation.book_lesson'), href: '/#book' },
+        { text: t('navigation.view_schedule'), href: '/#schedule' },
       ],
     },
     {
       title: t('navigation.prices'),
       icon: <PaymentIcon />,
       items: [
-        { text: t('navigation.packages'), href: '/packages' },
-        { text: t('navigation.payment'), href: '/payment' },
+        { text: t('navigation.packages'), href: '/#packages' },
+        { text: t('navigation.payment'), href: '/checkout' },
       ],
     },
   ];
@@ -377,7 +378,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     fullWidth
                     startIcon={<EventIcon />}
                     component={RouterLink}
-                    to="/book"
+                    to="/#book"
                     sx={{
                       fontWeight: 600,
                       minHeight: 48,
@@ -444,8 +445,8 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                   ))}
 
                   <ListItem
-                    component={Link}
-                    href="#faq"
+                    component={RouterLink}
+                    to="/#faq"
                     onClick={toggleDrawer(false)}
                     sx={{
                       borderRadius: 1,
@@ -459,6 +460,24 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                       <HelpIcon />
                     </ListItemIcon>
                     <ListItemText primary={t('navigation.questions')} />
+                  </ListItem>
+
+                  <ListItem
+                    component={RouterLink}
+                    to="/about"
+                    onClick={toggleDrawer(false)}
+                    sx={{
+                      borderRadius: 1,
+                      mb: 0.5,
+                      '&:hover': {
+                        backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                      },
+                    }}
+                  >
+                    <ListItemIcon sx={{ minWidth: 40 }}>
+                      <InfoIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={t('navigation.about')} />
                   </ListItem>
                 </List>
 
@@ -496,7 +515,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     variant="outlined" 
                     fullWidth
                     component={RouterLink}
-                    to="/checkout?category=category-c"
+                    to="/#pricing"
                     sx={{
                       fontWeight: 600,
                       minHeight: 48,
@@ -518,7 +537,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     variant="contained" 
                     fullWidth
                     component={RouterLink}
-                    to="/checkout?category=category-b"
+                    to="/checkout"
                     sx={{
                       fontWeight: 600,
                       minHeight: 48,
