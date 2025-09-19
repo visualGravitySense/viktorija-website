@@ -515,6 +515,28 @@
       }
     }
   },
+  "social_proof": {
+    "rating": {
+      "value": "4.9/5",
+      "label": "Рейтинг",
+      "sublabel": "5000+ отзывов"
+    },
+    "experience": {
+      "value": "18+",
+      "label": "Лет опыта",
+      "sublabel": "С 1998 года"
+    },
+    "students": {
+      "value": "5000+",
+      "label": "Учеников",
+      "sublabel": "Успешно окончили"
+    },
+    "success_rate": {
+      "value": "95%",
+      "label": "Успех с первого раза",
+      "sublabel": "Эстонский рекорд"
+    }
+  },
   "checkout": {
     "steps": {
       "shipping": "Информация",
