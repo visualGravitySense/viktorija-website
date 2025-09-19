@@ -242,7 +242,7 @@
   },
   "painpoints": {
     "title": "Juhtimiskategooriad - vali oma tee vabaduseni!",
-    "subtitle": "Kui õpid meie instruktoritega parkima, ei ole paralleelparkimine enam sinu õudusunenägu, vaid hommikune soojendus. 25+ aastat kogemust, 5000+ õpilast ja 95% edu!",
+    "subtitle": "Kui õpid meie instruktoritega parkima, ei ole paralleelparkimine enam sinu õudusunenägu, vaid hommikune soojendus. 18+ aastat kogemust, 5000+ õpilast ja 95% edu!",
     "no_categories": "Kategooriad pole saadaval",
     "theory": "Teooria",
     "lesson": "Üks tund",
@@ -399,13 +399,13 @@
   },
   "highlights": {
     "title": "Meie eelised - Miks valida Viktorija Autokool?",
-    "subtitle": "25+ aastat kogemust, 5000+ õpilast, 95% edu esimesel korral!",
+    "subtitle": "18+ aastat kogemust, 5000+ õpilast, 95% edu esimesel korral!",
     "highlight1": "✅ 100% tagatud tulemus",
     "highlight1_desc": "Kui ei läbi eksami esimesel korral, õpetame tasuta kuni tulemuseni!",
     "highlight2": "🚗 Kaasaegsed autod",
     "highlight2_desc": "Uued, turvalised ja mugavad õppeautod kõigi kategooriate jaoks",
     "highlight3": "👨‍🏫 Kogenud instruktorid",
-    "highlight3_desc": "25+ aastat kogemust, sertifitseeritud professionaalid, individuaalne lähenemine",
+    "highlight3_desc": "18+ aastat kogemust, sertifitseeritud professionaalid, individuaalne lähenemine",
     "highlight4": "⏰ Paindlik ajakava",
     "highlight4_desc": "Õpi oma tempos - hommikul, õhtul või nädalavahetusel",
     "highlight5": "🏆 95% edu esimesel korral",
@@ -517,6 +517,28 @@
         "title": "🚚 C-kategooria",
         "description": "Pakume täielikku koolituskursust, mis sisaldab teoreetilisi tunde ja individuaalseid praktilisi õppetunde kaasaegsetel veoautodel kogenud instruktoritega."
       }
+    }
+  },
+  "social_proof": {
+    "rating": {
+      "value": "4.9/5",
+      "label": "Hindamine",
+      "sublabel": "5000+ arvustust"
+    },
+    "experience": {
+      "value": "18+",
+      "label": "Aastat kogemust",
+      "sublabel": "Alates 1998"
+    },
+    "students": {
+      "value": "5000+",
+      "label": "Õpilast",
+      "sublabel": "Edukalt lõpetanud"
+    },
+    "success_rate": {
+      "value": "95%",
+      "label": "Edu esimesel korral",
+      "sublabel": "Eesti rekord"
     }
   },
   "checkout": {

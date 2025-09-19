@@ -48,31 +48,31 @@ export default function Hero({
   const displayDescription = description || t(`hero.${translationKey}.description`);
   const displayButtonText = buttonText || t(`hero.${translationKey}.button`);
 
-  // Social proof data - Enhanced with better metrics
+  // Social proof data - Enhanced with better metrics and localization
   const socialProof = [
     { 
-      text: "4.9/5", 
+      text: t('social_proof.rating.value'), 
       icon: <StarIcon sx={{ color: 'warning.main', fontSize: { xs: '1.5rem', sm: '1.8rem' } }} />, 
-      label: "Hindamine",
-      sublabel: "5000+ arvustust"
+      label: t('social_proof.rating.label'),
+      sublabel: t('social_proof.rating.sublabel')
     },
     { 
-      text: "25+", 
+      text: t('social_proof.experience.value'), 
       icon: <LocalShippingIcon sx={{ color: 'primary.main', fontSize: { xs: '1.5rem', sm: '1.8rem' } }} />, 
-      label: "Aastat kogemust",
-      sublabel: "Alates 1998"
+      label: t('social_proof.experience.label'),
+      sublabel: t('social_proof.experience.sublabel')
     },
     { 
-      text: "5000+", 
+      text: t('social_proof.students.value'), 
       icon: <SupportIcon sx={{ color: 'success.main', fontSize: { xs: '1.5rem', sm: '1.8rem' } }} />, 
-      label: "Õpilast",
-      sublabel: "Edukalt lõpetanud"
+      label: t('social_proof.students.label'),
+      sublabel: t('social_proof.students.sublabel')
     },
     { 
-      text: "95%", 
+      text: t('social_proof.success_rate.value'), 
       icon: <TrendingUpIcon sx={{ color: 'info.main', fontSize: { xs: '1.5rem', sm: '1.8rem' } }} />, 
-      label: "Edu esimesel korral",
-      sublabel: "Eesti rekord"
+      label: t('social_proof.success_rate.label'),
+      sublabel: t('social_proof.success_rate.sublabel')
     }
   ];
 
@@ -135,17 +135,20 @@ export default function Hero({
           }
         }}>
           <CardContent sx={{ py: { xs: 2, sm: 3 }, px: { xs: 2, sm: 4 } }}>
-            <Grid container spacing={{ xs: 2, sm: 3 }} alignItems="center">
+            <Grid container spacing={{ xs: 1, sm: 2 }} alignItems="stretch" justifyContent="space-around">
               {socialProof.map((item, index) => (
-                <Grid item xs={6} sm={3} key={index}>
+                <Grid item xs={6} sm={3} key={index} sx={{ display: 'flex' }}>
                   <Box sx={{ 
                     display: 'flex', 
                     flexDirection: 'column', 
                     alignItems: 'center',
                     textAlign: 'center',
                     py: { xs: 1.5, sm: 2 },
-                    px: { xs: 1, sm: 2 },
+                    px: { xs: 0.5, sm: 1 },
                     borderRadius: 2,
+                    width: '100%',
+                    minHeight: { xs: '140px', sm: '160px' },
+                    justifyContent: 'space-between',
                     transition: 'all 0.3s ease-in-out',
                     '&:hover': {
                       transform: 'translateY(-4px)',
@@ -156,35 +159,41 @@ export default function Hero({
                   }}>
                     <Box sx={{ 
                       mb: 1,
-                      animation: `pulse 2s ease-in-out infinite ${index * 0.2}s`
+                      animation: `pulse 2s ease-in-out infinite ${index * 0.2}s`,
+                      flexShrink: 0
                     }}>
                       {item.icon}
                     </Box>
-                    <Typography variant="h5" sx={{ 
-                      fontWeight: 'bold', 
-                      mb: 0.5,
-                      fontSize: { xs: '1.3rem', sm: '1.6rem' },
-                      color: 'primary.main',
-                      textShadow: '0 1px 2px rgba(0,0,0,0.1)'
-                    }}>
-                      {item.text}
-                    </Typography>
-                    <Typography variant="body2" sx={{
-                      fontSize: { xs: '0.8rem', sm: '0.9rem' },
-                      fontWeight: 600,
-                      color: 'text.primary',
-                      mb: 0.5
-                    }}>
-                      {item.label}
-                    </Typography>
-                    {item.sublabel && (
-                      <Typography variant="caption" color="text.secondary" sx={{
-                        fontSize: { xs: '0.7rem', sm: '0.75rem' },
-                        fontStyle: 'italic'
+                    <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                      <Typography variant="h5" sx={{ 
+                        fontWeight: 'bold', 
+                        mb: 0.5,
+                        fontSize: { xs: '1.3rem', sm: '1.6rem' },
+                        color: 'primary.main',
+                        textShadow: '0 1px 2px rgba(0,0,0,0.1)',
+                        lineHeight: 1.2
                       }}>
-                        {item.sublabel}
+                        {item.text}
                       </Typography>
-                    )}
+                      <Typography variant="body2" sx={{
+                        fontSize: { xs: '0.8rem', sm: '0.9rem' },
+                        fontWeight: 600,
+                        color: 'text.primary',
+                        mb: 0.5,
+                        lineHeight: 1.3
+                      }}>
+                        {item.label}
+                      </Typography>
+                      {item.sublabel && (
+                        <Typography variant="caption" color="text.secondary" sx={{
+                          fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                          fontStyle: 'italic',
+                          lineHeight: 1.2
+                        }}>
+                          {item.sublabel}
+                        </Typography>
+                      )}
+                    </Box>
                   </Box>
                 </Grid>
               ))}

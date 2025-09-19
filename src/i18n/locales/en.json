@@ -517,6 +517,28 @@
       }
     }
   },
+  "social_proof": {
+    "rating": {
+      "value": "4.9/5",
+      "label": "Rating",
+      "sublabel": "5000+ reviews"
+    },
+    "experience": {
+      "value": "18+",
+      "label": "Years of experience",
+      "sublabel": "Since 1998"
+    },
+    "students": {
+      "value": "5000+",
+      "label": "Students",
+      "sublabel": "Successfully graduated"
+    },
+    "success_rate": {
+      "value": "95%",
+      "label": "Success on first try",
+      "sublabel": "Estonian record"
+    }
+  },
   "checkout": {
     "steps": {
       "shipping": "Shipping address",
@@ -652,14 +674,10 @@
       "total": "Total",
       "shipment_details": "Shipment details",
       "payment_details": "Payment details",
-      
       "products": "Products",
       "products_selected": "{{count}} selected",
       "shipping": "Shipping",
       "plus_taxes": "Plus taxes",
-      "total": "Total",
-      "shipment_details": "Shipment details",
-      "payment_details": "Payment details",
       "payment": {
         "card type": "Card type",
         "card holder": "Card holder",
