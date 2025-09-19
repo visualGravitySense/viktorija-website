@@ -90,8 +90,8 @@ export default function Hero({
         width: '100%',
         backgroundImage:
           theme.palette.mode === 'light'
-            ? 'linear-gradient(180deg, #CEE5FD, #FFF)'
-            : `linear-gradient(#02294F, ${alpha('#090E10', 0.95)})`,
+            ? 'linear-gradient(180deg,rgba(49, 130, 206, 0.20), #FCFCFC)'
+            : `linear-gradient(#1F3B60, ${alpha('#05070A', 0.95)})`,
         backgroundSize: '100% 20%',
         backgroundRepeat: 'no-repeat',
       })}
