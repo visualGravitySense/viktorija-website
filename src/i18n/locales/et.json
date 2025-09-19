@@ -242,7 +242,7 @@
   },
   "painpoints": {
     "title": "Juhtimiskategooriad - vali oma tee vabaduseni!",
-    "subtitle": "Kui õpid meie instruktoritega parkima, ei ole paralleelparkimine enam sinu õudusunenägu, vaid hommikune soojendus. 18+ aastat kogemust, 5000+ õpilast ja 95% edu!",
+    "subtitle": "Kui õpid meie instruktoritega parkima, ei ole paralleelparkimine enam sinu õudusunenägu, vaid hommikune soojendus. 18+ aastat kogemust, 1000+ õpilast ja 95% edu!",
     "no_categories": "Kategooriad pole saadaval",
     "theory": "Teooria",
     "lesson": "Üks tund",
@@ -377,7 +377,7 @@
     "view_report": "Vaata aruannet"
   },
   "testimonials": {
-    "title": "Mida meie õpilased ütlevad - 5000+ õpilast, 95% edu!",
+    "title": "Mida meie õpilased ütlevad - 1000+ õpilast, 95% edu!",
     "testimonial1": {
       "text": "Parim autokool linnas! Sooritasin eksami esimesel katsel tänu kannatlikele ja professionaalsetele instruktoritele. 30 päevaga juhiluba käes!",
       "author": "Maria K.",
@@ -399,7 +399,7 @@
   },
   "highlights": {
     "title": "Meie eelised - Miks valida Viktorija Autokool?",
-    "subtitle": "18+ aastat kogemust, 5000+ õpilast, 95% edu esimesel korral!",
+    "subtitle": "18+ aastat kogemust, 1000+ õpilast, 95% edu esimesel korral!",
     "highlight1": "✅ 100% tagatud tulemus",
     "highlight1_desc": "Kui ei läbi eksami esimesel korral, õpetame tasuta kuni tulemuseni!",
     "highlight2": "🚗 Kaasaegsed autod",
@@ -523,7 +523,7 @@
     "rating": {
       "value": "4.9/5",
       "label": "Hindamine",
-      "sublabel": "5000+ arvustust"
+      "sublabel": "1000+ arvustust"
     },
     "experience": {
       "value": "18+",
@@ -531,7 +531,7 @@
       "sublabel": "Alates 1998"
     },
     "students": {
-      "value": "5000+",
+      "value": "1000+",
       "label": "Õpilast",
       "sublabel": "Edukalt lõpetanud"
     },
