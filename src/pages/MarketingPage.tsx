@@ -147,7 +147,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
               },
               buttonText: t('painpoints.categories.a.button'),
               priceLabel: t('painpoints.categories.a.price_label'),
-              buttonLink: '/checkout'
+              buttonLink: 'https://buy.stripe.com/test_[CATEGORY_A_PAYMENT_LINK_ID]'
             },
             {
               id: 'category-b',
@@ -164,7 +164,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
               },
               buttonText: t('painpoints.categories.b.button'),
               priceLabel: t('painpoints.categories.b.price_label'),
-              buttonLink: '/checkout'
+              buttonLink: 'https://buy.stripe.com/test_[CATEGORY_B_PAYMENT_LINK_ID]'
             },
             {
               id: 'category-c',
@@ -178,7 +178,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
               buttonText: t('painpoints.categories.c.button'),
               priceLabel: t('painpoints.categories.c.price_label'),
               afterPrice: t('painpoints.categories.c.after_price'),
-              buttonLink: '/checkout'
+              buttonLink: 'https://buy.stripe.com/test_[CATEGORY_A_PAYMENT_LINK_ID]'
             }
           ]}
         />

@@ -7,7 +7,6 @@ import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Chip from '@mui/material/Chip';
-import Grid from '@mui/material/Grid';
 import StarIcon from '@mui/icons-material/Star';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
@@ -135,69 +134,73 @@ export default function Hero({
           }
         }}>
           <CardContent sx={{ py: { xs: 2, sm: 3 }, px: { xs: 2, sm: 4 } }}>
-            <Grid container spacing={{ xs: 1, sm: 2 }} alignItems="stretch" justifyContent="space-around">
+            <Box sx={{ 
+              display: 'grid', 
+              gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' },
+              gap: { xs: 1, sm: 2 },
+              alignItems: 'stretch',
+              justifyContent: 'space-around'
+            }}>
               {socialProof.map((item, index) => (
-                <Grid item xs={6} sm={3} key={index} sx={{ display: 'flex' }}>
+                <Box key={index} sx={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  py: { xs: 1.5, sm: 2 },
+                  px: { xs: 0.5, sm: 1 },
+                  borderRadius: 2,
+                  width: '100%',
+                  minHeight: { xs: '140px', sm: '160px' },
+                  justifyContent: 'space-between',
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    bgcolor: 'rgba(255, 255, 255, 0.8)',
+                    boxShadow: '0 4px 20px rgba(25, 118, 210, 0.15)',
+                    borderRadius: 2
+                  }
+                }}>
                   <Box sx={{ 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    py: { xs: 1.5, sm: 2 },
-                    px: { xs: 0.5, sm: 1 },
-                    borderRadius: 2,
-                    width: '100%',
-                    minHeight: { xs: '140px', sm: '160px' },
-                    justifyContent: 'space-between',
-                    transition: 'all 0.3s ease-in-out',
-                    '&:hover': {
-                      transform: 'translateY(-4px)',
-                      bgcolor: 'rgba(255, 255, 255, 0.8)',
-                      boxShadow: '0 4px 20px rgba(25, 118, 210, 0.15)',
-                      borderRadius: 2
-                    }
+                    mb: 1,
+                    animation: `pulse 2s ease-in-out infinite ${index * 0.2}s`,
+                    flexShrink: 0
                   }}>
-                    <Box sx={{ 
-                      mb: 1,
-                      animation: `pulse 2s ease-in-out infinite ${index * 0.2}s`,
-                      flexShrink: 0
+                    {item.icon}
+                  </Box>
+                  <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <Typography variant="h5" sx={{ 
+                      fontWeight: 'bold', 
+                      mb: 0.5,
+                      fontSize: { xs: '1.3rem', sm: '1.6rem' },
+                      color: 'primary.main',
+                      textShadow: '0 1px 2px rgba(0,0,0,0.1)',
+                      lineHeight: 1.2
                     }}>
-                      {item.icon}
-                    </Box>
-                    <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                      <Typography variant="h5" sx={{ 
-                        fontWeight: 'bold', 
-                        mb: 0.5,
-                        fontSize: { xs: '1.3rem', sm: '1.6rem' },
-                        color: 'primary.main',
-                        textShadow: '0 1px 2px rgba(0,0,0,0.1)',
+                      {item.text}
+                    </Typography>
+                    <Typography variant="body2" sx={{
+                      fontSize: { xs: '0.8rem', sm: '0.9rem' },
+                      fontWeight: 600,
+                      color: 'text.primary',
+                      mb: 0.5,
+                      lineHeight: 1.3
+                    }}>
+                      {item.label}
+                    </Typography>
+                    {item.sublabel && (
+                      <Typography variant="caption" color="text.secondary" sx={{
+                        fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                        fontStyle: 'italic',
                         lineHeight: 1.2
                       }}>
-                        {item.text}
+                        {item.sublabel}
                       </Typography>
-                      <Typography variant="body2" sx={{
-                        fontSize: { xs: '0.8rem', sm: '0.9rem' },
-                        fontWeight: 600,
-                        color: 'text.primary',
-                        mb: 0.5,
-                        lineHeight: 1.3
-                      }}>
-                        {item.label}
-                      </Typography>
-                      {item.sublabel && (
-                        <Typography variant="caption" color="text.secondary" sx={{
-                          fontSize: { xs: '0.7rem', sm: '0.75rem' },
-                          fontStyle: 'italic',
-                          lineHeight: 1.2
-                        }}>
-                          {item.sublabel}
-                        </Typography>
-                      )}
-                    </Box>
+                    )}
                   </Box>
-                </Grid>
+                </Box>
               ))}
-            </Grid>
+            </Box>
           </CardContent>
         </Card>
 
@@ -315,6 +318,35 @@ export default function Hero({
               }}
             >
               {displayButtonText}
+            </Button>
+            <Button
+              variant="contained"
+              color="success"
+              size="large"
+              href="https://buy.stripe.com/test_8x200ldeHg0R6b3h1C6J200"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                fontWeight: 600,
+                px: { xs: 3, sm: 4 },
+                py: { xs: 1.5, sm: 1.5 },
+                minHeight: { xs: 48, sm: 56 },
+                borderRadius: 2,
+                background: 'linear-gradient(45deg, #4caf50 30%, #66bb6a 90%)',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #388e3c 30%, #4caf50 90%)',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 4px 20px rgba(76, 175, 80, 0.3)',
+                  transition: 'all 0.3s ease-in-out'
+                },
+                '&:active': {
+                  transform: 'translateY(0px)',
+                  transition: 'all 0.1s ease-in-out'
+                }
+              }}
+            >
+              💳 Maksa kohe
             </Button>
             <Button
               variant="outlined"
