@@ -31,7 +31,7 @@ export default function SitemarkIcon() {
           fontWeight="bold"
           fill="#4876EE"
         >
-          Viktorija
+          Viktorija  
         </text>
       </svg>
     </SvgIcon>
