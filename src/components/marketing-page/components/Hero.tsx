@@ -34,7 +34,7 @@ export default function Hero({
   subtitle,
   description,
   buttonText,
-  buttonLink = '/checkout?category=category-b',
+  buttonLink = 'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00',
   imageUrl = mainHeroImg,
   imageAlt = 'Driving School Hero',
   translationKey = 'home'
@@ -104,105 +104,7 @@ export default function Hero({
           pb: { xs: 8, sm: 12 },
         }}
       >
-        {/* Enhanced Social Proof Banner */}
-        <Card sx={{ 
-          mb: { xs: 3, sm: 4 }, 
-          background: 'linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%)',
-          border: '2px solid', 
-          borderColor: 'primary.200',
-          maxWidth: '900px',
-          width: '100%',
-          mx: { xs: 1, sm: 0 },
-          boxShadow: '0 8px 32px rgba(25, 118, 210, 0.1)',
-          borderRadius: 3,
-          position: 'relative',
-          overflow: 'hidden',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '3px',
-            background: 'linear-gradient(90deg, #1976d2, #42a5f5, #1976d2)',
-            backgroundSize: '200% 100%',
-            animation: 'shimmer 3s ease-in-out infinite'
-          },
-          '@keyframes shimmer': {
-            '0%': { backgroundPosition: '-200% 0' },
-            '100%': { backgroundPosition: '200% 0' }
-          }
-        }}>
-          <CardContent sx={{ py: { xs: 2, sm: 3 }, px: { xs: 2, sm: 4 } }}>
-            <Box sx={{ 
-              display: 'grid', 
-              gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' },
-              gap: { xs: 1, sm: 2 },
-              alignItems: 'stretch',
-              justifyContent: 'space-around'
-            }}>
-              {socialProof.map((item, index) => (
-                <Box key={index} sx={{ 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  py: { xs: 1.5, sm: 2 },
-                  px: { xs: 0.5, sm: 1 },
-                  borderRadius: 2,
-                  width: '100%',
-                  minHeight: { xs: '140px', sm: '160px' },
-                  justifyContent: 'space-between',
-                  transition: 'all 0.3s ease-in-out',
-                  '&:hover': {
-                    transform: 'translateY(-4px)',
-                    bgcolor: 'rgba(255, 255, 255, 0.8)',
-                    boxShadow: '0 4px 20px rgba(25, 118, 210, 0.15)',
-                    borderRadius: 2
-                  }
-                }}>
-                  <Box sx={{ 
-                    mb: 1,
-                    animation: `pulse 2s ease-in-out infinite ${index * 0.2}s`,
-                    flexShrink: 0
-                  }}>
-                    {item.icon}
-                  </Box>
-                  <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <Typography variant="h5" sx={{ 
-                      fontWeight: 'bold', 
-                      mb: 0.5,
-                      fontSize: { xs: '1.3rem', sm: '1.6rem' },
-                      color: 'primary.main',
-                      textShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                      lineHeight: 1.2
-                    }}>
-                      {item.text}
-                    </Typography>
-                    <Typography variant="body2" sx={{
-                      fontSize: { xs: '0.8rem', sm: '0.9rem' },
-                      fontWeight: 600,
-                      color: 'text.primary',
-                      mb: 0.5,
-                      lineHeight: 1.3
-                    }}>
-                      {item.label}
-                    </Typography>
-                    {item.sublabel && (
-                      <Typography variant="caption" color="text.secondary" sx={{
-                        fontSize: { xs: '0.7rem', sm: '0.75rem' },
-                        fontStyle: 'italic',
-                        lineHeight: 1.2
-                      }}>
-                        {item.sublabel}
-                      </Typography>
-                    )}
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-          </CardContent>
-        </Card>
+        
 
         <Stack spacing={{ xs: 3, sm: 2 }} useFlexGap sx={{ width: { xs: '100%', sm: '70%' }, px: { xs: 2, sm: 0 } }}>
           <Typography
@@ -280,100 +182,7 @@ export default function Hero({
             ))}
           </Box>
 
-          <Stack 
-            direction={{ xs: 'column', sm: 'row' }} 
-            alignSelf="center" 
-            spacing={{ xs: 2, sm: 2 }} 
-            useFlexGap 
-            sx={{ 
-              pt: 2, 
-              width: { xs: '100%', sm: 'auto' },
-              px: { xs: 2, sm: 0 }
-            }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              component={Link}
-              to={buttonLink}
-              sx={{
-                fontSize: { xs: '1rem', sm: '1.1rem' },
-                fontWeight: 600,
-                px: { xs: 3, sm: 4 },
-                py: { xs: 1.5, sm: 1.5 },
-                minHeight: { xs: 48, sm: 56 },
-                borderRadius: 2,
-                background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 4px 20px rgba(25, 118, 210, 0.3)',
-                  transition: 'all 0.3s ease-in-out'
-                },
-                '&:active': {
-                  transform: 'translateY(0px)',
-                  transition: 'all 0.1s ease-in-out'
-                }
-              }}
-            >
-              {displayButtonText}
-            </Button>
-            <Button
-              variant="contained"
-              color="success"
-              size="large"
-              href="https://buy.stripe.com/test_8x200ldeHg0R6b3h1C6J200"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                fontSize: { xs: '1rem', sm: '1.1rem' },
-                fontWeight: 600,
-                px: { xs: 3, sm: 4 },
-                py: { xs: 1.5, sm: 1.5 },
-                minHeight: { xs: 48, sm: 56 },
-                borderRadius: 2,
-                background: 'linear-gradient(45deg, #4caf50 30%, #66bb6a 90%)',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #388e3c 30%, #4caf50 90%)',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 4px 20px rgba(76, 175, 80, 0.3)',
-                  transition: 'all 0.3s ease-in-out'
-                },
-                '&:active': {
-                  transform: 'translateY(0px)',
-                  transition: 'all 0.1s ease-in-out'
-                }
-              }}
-            >
-              💳 Maksa kohe
-            </Button>
-            <Button
-              variant="outlined"
-              color="primary"
-              size="large"
-              component={Link}
-              to="/about"
-              sx={{
-                fontSize: { xs: '1rem', sm: '1.1rem' },
-                fontWeight: 600,
-                px: { xs: 3, sm: 4 },
-                py: { xs: 1.5, sm: 1.5 },
-                minHeight: { xs: 48, sm: 56 },
-                borderRadius: 2,
-                '&:hover': {
-                  transform: 'translateY(-2px)',
-                  transition: 'all 0.3s ease-in-out'
-                },
-                '&:active': {
-                  transform: 'translateY(0px)',
-                  transition: 'all 0.1s ease-in-out'
-                }
-              }}
-            >
-              Loe rohkem
-            </Button>
-          </Stack>
+          
         </Stack>
         <Box
           id="image"

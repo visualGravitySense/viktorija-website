@@ -42,12 +42,15 @@ export default function PaymentButton({
   const navigate = useNavigate();
 
   const handlePaymentClick = () => {
-    const params = new URLSearchParams({
-      category,
-      transmissionType,
-    });
+    // Map categories to Stripe payment links
+    const stripeUrls = {
+      'category-a': 'https://buy.stripe.com/8x2aEYewiaJW94hdTa3ZK02',
+      'category-b': 'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00',
+      'category-c': 'https://buy.stripe.com/eVq5kEgEqcS4a8l5mE3ZK01',
+    };
     
-    navigate(`/checkout?${params.toString()}`);
+    const stripeUrl = stripeUrls[category] || stripeUrls['category-a'];
+    window.open(stripeUrl, '_blank');
   };
 
   const getPriceByCategory = () => {

@@ -168,8 +168,9 @@ export default function Instructors({
                 <StyledButton 
                   variant="contained" 
                   fullWidth
-                  component={RouterLink}
-                  to={`/checkout?category=category-b&instructor=${instructor.id}`}
+                  component="a"
+                  href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
+                  target="_blank"
                 >
                   {t('about.instructors_component.sign_up_button', 'Записаться на урок')}
                 </StyledButton>
