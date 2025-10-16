@@ -115,7 +115,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
         name={t('painpoints.categories.b.title')}
         description={t('painpoints.categories.b.description')}
         provider="Viktorija Autokool Nõmme"
-        url="https://viktorijaautokool.ee/checkout?category=category-b"
+        url="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
         image={bCatImg}
         price={700}
       />
@@ -125,7 +125,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
       <AppAppBar toggleColorMode={toggleColorMode} />
       <Hero 
         translationKey="home"
-        buttonLink="/checkout?category=category-b"
+        buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
         imageUrl={mainHeroImg}
         imageAlt="Educational Platform"
       />
@@ -147,7 +147,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
               },
               buttonText: t('painpoints.categories.a.button'),
               priceLabel: t('painpoints.categories.a.price_label'),
-              buttonLink: 'https://buy.stripe.com/test_[CATEGORY_A_PAYMENT_LINK_ID]'
+              buttonLink: 'https://buy.stripe.com/8x2aEYewiaJW94hdTa3ZK02'
             },
             {
               id: 'category-b',
@@ -164,7 +164,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
               },
               buttonText: t('painpoints.categories.b.button'),
               priceLabel: t('painpoints.categories.b.price_label'),
-              buttonLink: 'https://buy.stripe.com/test_[CATEGORY_B_PAYMENT_LINK_ID]'
+              buttonLink: 'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00'
             },
             {
               id: 'category-c',
@@ -178,7 +178,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
               buttonText: t('painpoints.categories.c.button'),
               priceLabel: t('painpoints.categories.c.price_label'),
               afterPrice: t('painpoints.categories.c.after_price'),
-              buttonLink: 'https://buy.stripe.com/test_[CATEGORY_A_PAYMENT_LINK_ID]'
+              buttonLink: 'https://buy.stripe.com/eVq5kEgEqcS4a8l5mE3ZK01'
             }
           ]}
         />

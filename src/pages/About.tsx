@@ -76,7 +76,7 @@ export default function MarketingPage(props: { disableCustomTheme?: boolean, tog
         title={t('hero.about.title')}
         description={t('hero.about.description')}
         buttonText={t('hero.about.button')}
-        buttonLink="/checkout?category=category-b"
+        buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
         imageUrl={ourMissionImg}
         imageAlt="Educational Platform"
       />
@@ -91,7 +91,7 @@ export default function MarketingPage(props: { disableCustomTheme?: boolean, tog
           offerTitle={t('about.team.why_title')}
           offerText={t('about.team.testimonial')}
           buttonText={t('about.team.button')}
-          buttonLink="/checkout?category=category-b"
+          buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
           limitText={t('about.team.limit_text')}
         />
 

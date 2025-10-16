@@ -451,7 +451,7 @@ export default function Features({ heading }: FeaturesProps) {
         >
             {t('features.subtitle')}
         </Typography>
-        <StyledButton variant="contained" size="large" href="/checkout?category=category-b">
+        <StyledButton variant="contained" size="large" href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00">
           {t('features.feature3')}
         </StyledButton>
       </Box>

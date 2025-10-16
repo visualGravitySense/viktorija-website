@@ -36,7 +36,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
         name={t('painpoints.categories.a.title')}
         description={t('painpoints.categories.a.description')}
         provider="Viktorija Autokool Nõmme"
-        url="https://viktorijaautokool.ee/checkout?category=category-a"
+        url="https://buy.stripe.com/8x2aEYewiaJW94hdTa3ZK02"
         image="/a-cat.jpg"
         price={570}
       />
@@ -46,7 +46,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
         name={t('painpoints.categories.c.title')}
         description={t('painpoints.categories.c.description')}
         provider="Viktorija Autokool Nõmme"
-        url="https://viktorijaautokool.ee/checkout?category=category-c"
+        url="https://buy.stripe.com/eVq5kEgEqcS4a8l5mE3ZK01"
         image="/final-cat-1.jpg"
         price={150}
       />
@@ -58,7 +58,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
         subtitle={t('hero.features.subtitle')}
         description={t('hero.features.description')}
         buttonText={t('hero.features.button')}
-        buttonLink="/checkout?category=category-b"
+        buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
         imageUrl={aCatImg}
         imageAlt={t('hero.features.image_alt')}
       />
@@ -73,7 +73,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
           offerTitle={t('urgency.category_b.offer_title')}
           offerText={t('urgency.category_b.offer_text')}
           buttonText={t('urgency.category_b.button_text')}
-          buttonLink="/checkout?category=category-b"
+          buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
           limitText={t('urgency.category_b.limit_text')}
         />
         
@@ -86,7 +86,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
           offerTitle={t('urgency.exam_prep.offer_title')}
           offerText={t('urgency.exam_prep.offer_text')}
           buttonText={t('urgency.exam_prep.button_text')}
-          buttonLink="/checkout?category=category-b"
+          buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
           limitText={t('urgency.exam_prep.limit_text')}
         />
         
@@ -99,7 +99,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
           offerTitle={t('urgency.category_a.offer_title')}
           offerText={t('urgency.category_a.offer_text')}
           buttonText={t('urgency.category_a.button_text')}
-          buttonLink="/checkout?category=category-a"
+          buttonLink="https://buy.stripe.com/8x2aEYewiaJW94hdTa3ZK02"
           limitText={t('urgency.category_a.limit_text')}
         />
         
@@ -124,7 +124,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
             }
           ]}
           buttonText={t('admin_automation.learning.button_text')}
-          buttonLink="/checkout"
+          buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
         />
 
         <UrgencySection 
@@ -136,7 +136,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
           offerTitle={t('urgency.first_aid.offer_title')}
           offerText={t('urgency.first_aid.offer_text')}
           buttonText={t('urgency.first_aid.button_text')}
-          buttonLink="/checkout?category=category-c"
+          buttonLink="https://buy.stripe.com/eVq5kEgEqcS4a8l5mE3ZK01"
           limitText={t('urgency.first_aid.limit_text')}
         />
 
@@ -171,7 +171,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
             },
           ]}
           buttonText={t('admin_automation.time_saving.button_text')}
-          buttonLink="/checkout?category=category-b"
+          buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
         />
 
         <UrgencySection 
@@ -183,7 +183,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
           offerTitle={t('urgency.final_course.offer_title')}
           offerText={t('urgency.final_course.offer_text')}
           buttonText={t('urgency.final_course.button_text')}
-          buttonLink="/checkout?category=category-c"
+          buttonLink="https://buy.stripe.com/eVq5kEgEqcS4a8l5mE3ZK01"
           limitText={t('urgency.final_course.limit_text')}
         />
 
@@ -223,7 +223,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
             position: t('ai_assistant.quote.position'),
           }}
           buttonText={t('ai_assistant.button_text')}
-          buttonLink="/checkout?category=category-b"
+          buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
         />
 
         <Divider />

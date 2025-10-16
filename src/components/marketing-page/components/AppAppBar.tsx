@@ -108,7 +108,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
       icon: <PaymentIcon />,
       items: [
         { text: t('navigation.packages'), href: '/#packages' },
-        { text: t('navigation.payment'), href: '/checkout' },
+        { text: t('navigation.payment'), href: 'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00' },
       ],
     },
   ];
@@ -273,8 +273,9 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
               color="primary" 
               variant="outlined" 
               size="small"
-              component={RouterLink}
-              to="/checkout?category=category-c"
+              component="a"
+              href="https://buy.stripe.com/eVq5kEgEqcS4a8l5mE3ZK01"
+              target="_blank"
               sx={{
                 fontWeight: 600,
                 '&:hover': {
@@ -289,8 +290,9 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
               color="primary" 
               variant="contained" 
               size="small"
-              component={RouterLink}
-              to="/checkout?category=category-b"
+              component="a"
+              href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
+              target="_blank"
               sx={{
                 fontWeight: 600,
                 background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
@@ -514,8 +516,9 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     color="primary" 
                     variant="outlined" 
                     fullWidth
-                    component={RouterLink}
-                    to="/#pricing"
+                    component="a"
+                    href="https://buy.stripe.com/eVq5kEgEqcS4a8l5mE3ZK01"
+                    target="_blank"
                     sx={{
                       fontWeight: 600,
                       minHeight: 48,
@@ -536,8 +539,9 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     color="primary" 
                     variant="contained" 
                     fullWidth
-                    component={RouterLink}
-                    to="/checkout"
+                    component="a"
+                    href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
+                    target="_blank"
                     sx={{
                       fontWeight: 600,
                       minHeight: 48,
