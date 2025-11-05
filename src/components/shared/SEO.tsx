@@ -40,6 +40,7 @@ export default function SEO({
     <Helmet>
       {/* Basic meta tags */}
       <html lang={language} />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={defaultKeywords} />

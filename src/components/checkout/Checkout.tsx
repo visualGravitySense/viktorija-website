@@ -49,8 +49,9 @@ const CheckoutContext = React.createContext<{
 
 export const useCheckoutContext = () => React.useContext(CheckoutContext);
 
-export default function Checkout(props: { disableCustomTheme?: boolean }) {
+export default function Checkout(props: { disableCustomTheme?: boolean; h1Title?: string }) {
   const { t } = useTranslation();
+  const { h1Title } = props;
   const location = useLocation();
   const navigate = useNavigate();
   const steps = [t('checkout.steps.shipping'), t('checkout.steps.payment'), t('checkout.steps.review')];
@@ -208,6 +209,26 @@ export default function Checkout(props: { disableCustomTheme?: boolean }) {
 
       <CheckoutContext.Provider value={contextValue}>
         <StripePaymentProvider>
+          {/* H1 Heading for SEO */}
+          {h1Title && (
+            <Typography
+              component="h1"
+              variant="h1"
+              sx={{
+                position: 'absolute',
+                width: '1px',
+                height: '1px',
+                padding: 0,
+                margin: '-1px',
+                overflow: 'hidden',
+                clipPath: 'inset(50%)',
+                whiteSpace: 'nowrap',
+                border: 0,
+              }}
+            >
+              {h1Title}
+            </Typography>
+          )}
           <Grid
             container
             sx={{

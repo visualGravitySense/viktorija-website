@@ -1,6 +1,7 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import AppTheme from '../components/shared-theme/AppTheme.tsx';
 import AppAppBar from '../components/marketing-page/components/AppAppBar.tsx';
 import Hero from '../components/marketing-page/components/Hero.tsx';
@@ -28,6 +29,7 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
         description={t('hero.features.description')}
         ogImage="/services-hero.jpg"
         ogUrl="https://viktorijaautokool.ee/features"
+        canonicalUrl="https://viktorijaautokool.ee/features"
         language={i18n.language}
       />
       
@@ -52,6 +54,26 @@ const FeaturesPage: React.FC<{ disableCustomTheme?: boolean; toggleColorMode?: (
       />
       
       <CssBaseline enableColorScheme />
+      
+      {/* H1 Heading for SEO - Visually hidden but accessible */}
+      <Typography
+        component="h1"
+        variant="h1"
+        sx={{
+          position: 'absolute',
+          width: '1px',
+          height: '1px',
+          padding: 0,
+          margin: '-1px',
+          overflow: 'hidden',
+          clipPath: 'inset(50%)',
+          whiteSpace: 'nowrap',
+          border: 0,
+        }}
+      >
+        {t('hero.features.title')}
+      </Typography>
+
       <AppAppBar toggleColorMode={toggleColorMode} />
       <Hero 
         title={t('hero.features.title')}
