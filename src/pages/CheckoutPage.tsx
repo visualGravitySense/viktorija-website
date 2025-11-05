@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Checkout from '../components/checkout/Checkout.tsx';
 import SEO from '../components/shared/SEO.tsx';
 import { CourseSchema } from '../components/shared/StructuredData.tsx';
@@ -49,12 +50,25 @@ export default function CheckoutPage({ disableCustomTheme, toggleColorMode }: Ch
     coursePrice = 150;
   }
   
+  // Determine H1 heading text based on category
+  let h1Title = title;
+  if (category === 'category-a') {
+    h1Title = t('painpoints.categories.a.title');
+  } else if (category === 'category-b') {
+    h1Title = t('painpoints.categories.b.title');
+  } else if (category === 'category-c') {
+    h1Title = t('painpoints.categories.c.title');
+  } else {
+    h1Title = t('checkout.page_title') || t('checkout.place_order');
+  }
+
   return (
     <Box sx={{ minHeight: '100vh', width: '100%' }}>
       <SEO 
         title={title}
         description={description}
-        ogUrl="https://viktorijaautokool.ee/checkout"
+        ogUrl={`https://viktorijaautokool.ee/checkout${category ? `?category=${category}` : ''}`}
+        canonicalUrl="https://viktorijaautokool.ee/checkout"
         language={i18n.language}
       />
       
@@ -68,7 +82,7 @@ export default function CheckoutPage({ disableCustomTheme, toggleColorMode }: Ch
         price={coursePrice}
       />
       
-      <Checkout disableCustomTheme={disableCustomTheme} />
+      <Checkout disableCustomTheme={disableCustomTheme} h1Title={h1Title} />
     </Box>
   );
 } 

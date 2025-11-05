@@ -1,6 +1,7 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import AppTheme from '../components/shared-theme/AppTheme.tsx';
 import AppAppBar from '../components/marketing-page/components/AppAppBar.tsx';
 import Hero from '../components/marketing-page/components/Hero.tsx';
@@ -36,6 +37,7 @@ export default function MarketingPage(props: { disableCustomTheme?: boolean, tog
         description={t('hero.about.description')}
         ogImage={ourMissionImg}
         ogUrl="https://viktorijaautokool.ee/about"
+        canonicalUrl="https://viktorijaautokool.ee/about"
         language={i18n.language}
       />
       
@@ -69,6 +71,25 @@ export default function MarketingPage(props: { disableCustomTheme?: boolean, tog
       />
       
       <CssBaseline enableColorScheme />
+
+      {/* H1 Heading for SEO - Visually hidden but accessible */}
+      <Typography
+        component="h1"
+        variant="h1"
+        sx={{
+          position: 'absolute',
+          width: '1px',
+          height: '1px',
+          padding: 0,
+          margin: '-1px',
+          overflow: 'hidden',
+          clipPath: 'inset(50%)',
+          whiteSpace: 'nowrap',
+          border: 0,
+        }}
+      >
+        {t('hero.about.title')}
+      </Typography>
 
       <AppAppBar toggleColorMode={toggleColorMode} />
       <Hero 
