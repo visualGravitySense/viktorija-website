@@ -10,7 +10,8 @@
     "edit": "Muuda",
     "create": "Loo",
     "search": "Otsi",
-    "loading": "Laadimine..."
+    "loading": "Laadimine...",
+    "send_email": "Saada email"
   },
   "languages": {
     "ru": "Vene",

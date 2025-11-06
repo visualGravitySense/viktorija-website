@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import EmailIcon from '@mui/icons-material/Email';
 import { useTheme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 
@@ -131,6 +133,24 @@ export default function Testimonials() {
           </Grid>
         ))}
       </Grid>
+      <Box sx={{ mt: 4, textAlign: 'center' }}>
+        <Button
+          variant="outlined"
+          size="large"
+          startIcon={<EmailIcon />}
+          href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+          sx={{
+            px: 4,
+            py: 1.5,
+            borderWidth: 2,
+            '&:hover': {
+              borderWidth: 2,
+            }
+          }}
+          >
+            {t('common.send_email')}
+          </Button>
+      </Box>
     </Container>
   );
 }

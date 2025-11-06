@@ -2,6 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import EmailIcon from '@mui/icons-material/Email';
+import { useTranslation } from 'react-i18next';
 
 export interface PhotoGalleryImage {
   src: string;
@@ -15,6 +18,8 @@ export interface PhotoGalleryProps {
 }
 
 export default function PhotoGallery({ title = 'Gallery', images }: PhotoGalleryProps) {
+  const { t } = useTranslation();
+  
   return (
     <Box sx={{ py: 8, backgroundColor: 'background.default' }}>
       <Container maxWidth="lg">
@@ -56,6 +61,24 @@ export default function PhotoGallery({ title = 'Gallery', images }: PhotoGallery
               )}
             </Box>
           ))}
+        </Box>
+        <Box sx={{ mt: 4, textAlign: 'center' }}>
+          <Button
+            variant="outlined"
+            size="large"
+            startIcon={<EmailIcon />}
+            href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+            sx={{
+              px: 4,
+              py: 1.5,
+              borderWidth: 2,
+              '&:hover': {
+                borderWidth: 2,
+              }
+            }}
+          >
+            {t('common.send_email')}
+          </Button>
         </Box>
       </Container>
     </Box>

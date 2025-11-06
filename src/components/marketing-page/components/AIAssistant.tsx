@@ -19,6 +19,7 @@ import PsychologyIcon from '@mui/icons-material/Psychology';
 import StarIcon from '@mui/icons-material/Star';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import EmailIcon from '@mui/icons-material/Email';
 
 const floatAnimation = keyframes`
   0% { transform: translateY(0px); }
@@ -253,6 +254,8 @@ export default function AIAssistant({
   buttonText = "See the AI Assistant in Action →",
   buttonLink = "#",
 }: AIAssistantProps) {
+  const { t } = useTranslation();
+  
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'smartToy':
@@ -342,9 +345,27 @@ export default function AIAssistant({
             </Typography>
           </QuoteBox>
 
-          <StyledButton variant="contained" size="large" href={buttonLink}>
-            {buttonText}
-          </StyledButton>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" alignItems="center">
+            <StyledButton variant="contained" size="large" href={buttonLink}>
+              {buttonText}
+            </StyledButton>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<EmailIcon />}
+              href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+              sx={{
+                px: 4,
+                py: 1.5,
+                borderWidth: 2,
+                '&:hover': {
+                  borderWidth: 2,
+                }
+              }}
+            >
+              {t('common.send_email')}
+            </Button>
+          </Stack>
         </Stack>
       </Container>
     </Box>

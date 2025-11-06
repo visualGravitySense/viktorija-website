@@ -13,6 +13,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SupportIcon from '@mui/icons-material/Support';
 import SecurityIcon from '@mui/icons-material/Security';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import EmailIcon from '@mui/icons-material/Email';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
@@ -182,6 +183,31 @@ export default function Hero({
             ))}
           </Box>
 
+          {/* Email Button */}
+          <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            mt: 3,
+            px: { xs: 1, sm: 0 }
+          }}>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<EmailIcon />}
+              href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+              sx={{
+                px: 4,
+                py: 1.5,
+                fontSize: { xs: '0.9rem', sm: '1rem' },
+                borderWidth: 2,
+                '&:hover': {
+                  borderWidth: 2,
+                }
+              }}
+            >
+              {t('common.send_email')}
+            </Button>
+          </Box>
           
         </Stack>
         <Box

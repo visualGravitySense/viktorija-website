@@ -8,6 +8,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import EmailIcon from '@mui/icons-material/Email';
 import { useTranslation } from 'react-i18next';
 
 interface FAQProps {
@@ -142,27 +143,44 @@ export default function FAQ({
           </Accordion>
         ))}
       </Box>
-      {hasMoreItems && (
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'center', mt: 4 }}>
+        {hasMoreItems && (
+          <Button
+            variant="outlined"
+            onClick={handleLoadMore}
+            sx={{
+              px: 4,
+              py: 1.5,
+              borderRadius: 2,
+              textTransform: 'none',
+              fontSize: '1rem',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+              },
+              transition: 'all 0.2s ease-in-out',
+            }}
+          >
+            {t('faq.show_more')}
+          </Button>
+        )}
         <Button
           variant="outlined"
-          onClick={handleLoadMore}
+          size="large"
+          startIcon={<EmailIcon />}
+          href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
           sx={{
-            mt: 2,
             px: 4,
             py: 1.5,
-            borderRadius: 2,
-            textTransform: 'none',
-            fontSize: '1rem',
+            borderWidth: 2,
             '&:hover': {
-              transform: 'translateY(-2px)',
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-            },
-            transition: 'all 0.2s ease-in-out',
+              borderWidth: 2,
+            }
           }}
-        >
-          {t('faq.show_more')}
-        </Button>
-      )}
+          >
+            {t('common.send_email')}
+          </Button>
+      </Box>
     </Container>
   );
 }

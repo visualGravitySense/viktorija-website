@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
 import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded';
 import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
+import EmailIcon from '@mui/icons-material/Email';
 import creditPreviewImg from '/credit-preview.png';
 import highResImg from '/high-results-1.jpg';
 import carsParkImg from '/cars-park-1.jpg';
@@ -451,9 +452,27 @@ export default function Features({ heading }: FeaturesProps) {
         >
             {t('features.subtitle')}
         </Typography>
-        <StyledButton variant="contained" size="large" href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00">
-          {t('features.feature3')}
-        </StyledButton>
+        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <StyledButton variant="contained" size="large" href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00">
+            {t('features.feature3')}
+          </StyledButton>
+          <Button
+            variant="outlined"
+            size="large"
+            startIcon={<EmailIcon />}
+            href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+            sx={{
+              px: 4,
+              py: 1.5,
+              borderWidth: 2,
+              '&:hover': {
+                borderWidth: 2,
+              }
+            }}
+          >
+            {t('common.send_email')}
+          </Button>
+        </Box>
       </Box>
     </Container>
   );

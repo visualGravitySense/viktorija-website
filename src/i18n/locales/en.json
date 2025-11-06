@@ -10,7 +10,8 @@
     "edit": "Edit",
     "create": "Create",
     "search": "Search",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "send_email": "Send email"
   },
   "languages": {
     "ru": "Russian",
