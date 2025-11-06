@@ -7,6 +7,7 @@ import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom';
+import EmailIcon from '@mui/icons-material/Email';
 import { useTranslation } from 'react-i18next';
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -178,6 +179,24 @@ export default function Instructors({
             </Grid>
           ))}
         </Grid>
+        <Box sx={{ mt: 4, textAlign: 'center' }}>
+          <Button
+            variant="outlined"
+            size="large"
+            startIcon={<EmailIcon />}
+            href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+            sx={{
+              px: 4,
+              py: 1.5,
+              borderWidth: 2,
+              '&:hover': {
+                borderWidth: 2,
+              }
+            }}
+          >
+            {t('common.send_email')}
+          </Button>
+        </Box>
       </Container>
     </Box>
   );

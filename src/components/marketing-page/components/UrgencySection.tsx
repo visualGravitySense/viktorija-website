@@ -5,7 +5,10 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
+import EmailIcon from '@mui/icons-material/Email';
+import { useTranslation } from 'react-i18next';
 import PaymentButton from '../../shared/PaymentButton.tsx';
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -50,6 +53,8 @@ export default function UrgencySection({
   category = 'category-a',
   transmissionType = 'manual'
 }: UrgencySectionProps) {
+  const { t } = useTranslation();
+  
   return (
     <Container id="urgency" sx={{ py: { xs: 8, sm: 16 } }}>
       <Box sx={{ textAlign: 'center', mb: 4 }}>
@@ -87,15 +92,33 @@ export default function UrgencySection({
           </Box>
 
           <Box sx={{ textAlign: 'center' }}>
-            <PaymentButton
-              variant="contained"
-              size="large"
-              category={category}
-              transmissionType={transmissionType}
-              sx={{ px: 4, py: 1.5 }}
-            >
-              {buttonText}
-            </PaymentButton>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" alignItems="center">
+              <PaymentButton
+                variant="contained"
+                size="large"
+                category={category}
+                transmissionType={transmissionType}
+                sx={{ px: 4, py: 1.5 }}
+              >
+                {buttonText}
+              </PaymentButton>
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<EmailIcon />}
+                href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  borderWidth: 2,
+                  '&:hover': {
+                    borderWidth: 2,
+                  }
+                }}
+              >
+                {t('common.send_email')}
+              </Button>
+            </Stack>
             {limitText && (
               <Typography variant="caption" display="block" sx={{ mt: 2, color: 'text.secondary' }}>
                 {limitText}

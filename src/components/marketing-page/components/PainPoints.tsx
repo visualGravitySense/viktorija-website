@@ -21,6 +21,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import StarIcon from '@mui/icons-material/Star';
 import SecurityIcon from '@mui/icons-material/Security';
 import SupportIcon from '@mui/icons-material/Support';
+import EmailIcon from '@mui/icons-material/Email';
 import { useTranslation } from 'react-i18next';
 
 const PainPointsContent = styled(Box)(({ theme }) => ({
@@ -459,73 +460,91 @@ export default function PainPoints({
                       <Box component="div" sx={{ fontStyle: 'italic', mt: 1, fontSize: '0.875rem' }}>{item.afterPrice}</Box>
                     )}
                   </Box>
-                  {item.buttonLink && item.buttonLink.startsWith('http') ? (
-                    <a 
-                      href={item.buttonLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ textDecoration: 'none', width: '100%' }}
-                    >
-                      <StyledButton 
-                        variant="contained" 
-                        size="large" 
-                        sx={{ 
-                          mt: 'auto', 
-                          fontSize: { xs: '1rem', sm: '1.1rem' }, 
-                          py: { xs: 1.5, sm: 1.5 }, 
-                          px: { xs: 2, sm: 3 }, 
-                          width: '100%',
-                          minHeight: { xs: 48, sm: 56 },
-                          fontWeight: 600,
-                          background: 'linear-gradient(45deg, #4caf50 30%, #66bb6a 90%)',
-                          '&:hover': {
-                            background: 'linear-gradient(45deg, #388e3c 30%, #4caf50 90%)',
-                            transform: 'translateY(-2px)',
-                            boxShadow: '0 4px 20px rgba(76, 175, 80, 0.3)',
-                            transition: 'all 0.3s ease-in-out'
-                          },
-                          '&:active': {
-                            transform: 'translateY(0px)',
-                            transition: 'all 0.1s ease-in-out'
-                          }
-                        }}
+                  <Box sx={{ mt: 'auto', display: 'flex', flexDirection: 'column', gap: 1.5, width: '100%' }}>
+                    {item.buttonLink && item.buttonLink.startsWith('http') ? (
+                      <a 
+                        href={item.buttonLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ textDecoration: 'none', width: '100%' }}
                       >
-                        💳 {item.buttonText}
-                      </StyledButton>
-                    </a>
-                  ) : (
-                    <Link 
-                      to={item.buttonLink ? `${item.buttonLink}?category=${item.id}` : '#'}
-                      style={{ textDecoration: 'none', width: '100%' }}
-                    >
-                      <StyledButton 
-                        variant="contained" 
-                        size="large" 
-                        sx={{ 
-                          mt: 'auto', 
-                          fontSize: { xs: '1rem', sm: '1.1rem' }, 
-                          py: { xs: 1.5, sm: 1.5 }, 
-                          px: { xs: 2, sm: 3 }, 
-                          width: '100%',
-                          minHeight: { xs: 48, sm: 56 },
-                          fontWeight: 600,
-                          background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
-                          '&:hover': {
-                            background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
-                            transform: 'translateY(-2px)',
-                            boxShadow: '0 4px 20px rgba(25, 118, 210, 0.3)',
-                            transition: 'all 0.3s ease-in-out'
-                          },
-                          '&:active': {
-                            transform: 'translateY(0px)',
-                            transition: 'all 0.1s ease-in-out'
-                          }
-                        }}
+                        <StyledButton 
+                          variant="contained" 
+                          size="large" 
+                          sx={{ 
+                            fontSize: { xs: '1rem', sm: '1.1rem' }, 
+                            py: { xs: 1.5, sm: 1.5 }, 
+                            px: { xs: 2, sm: 3 }, 
+                            width: '100%',
+                            minHeight: { xs: 48, sm: 56 },
+                            fontWeight: 600,
+                            background: 'linear-gradient(45deg, #4caf50 30%, #66bb6a 90%)',
+                            '&:hover': {
+                              background: 'linear-gradient(45deg, #388e3c 30%, #4caf50 90%)',
+                              transform: 'translateY(-2px)',
+                              boxShadow: '0 4px 20px rgba(76, 175, 80, 0.3)',
+                              transition: 'all 0.3s ease-in-out'
+                            },
+                            '&:active': {
+                              transform: 'translateY(0px)',
+                              transition: 'all 0.1s ease-in-out'
+                            }
+                          }}
+                        >
+                          💳 {item.buttonText}
+                        </StyledButton>
+                      </a>
+                    ) : (
+                      <Link 
+                        to={item.buttonLink ? `${item.buttonLink}?category=${item.id}` : '#'}
+                        style={{ textDecoration: 'none', width: '100%' }}
                       >
-                        {item.buttonText}
-                      </StyledButton>
-                    </Link>
-                  )}
+                        <StyledButton 
+                          variant="contained" 
+                          size="large" 
+                          sx={{ 
+                            fontSize: { xs: '1rem', sm: '1.1rem' }, 
+                            py: { xs: 1.5, sm: 1.5 }, 
+                            px: { xs: 2, sm: 3 }, 
+                            width: '100%',
+                            minHeight: { xs: 48, sm: 56 },
+                            fontWeight: 600,
+                            background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
+                            '&:hover': {
+                              background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
+                              transform: 'translateY(-2px)',
+                              boxShadow: '0 4px 20px rgba(25, 118, 210, 0.3)',
+                              transition: 'all 0.3s ease-in-out'
+                            },
+                            '&:active': {
+                              transform: 'translateY(0px)',
+                              transition: 'all 0.1s ease-in-out'
+                            }
+                          }}
+                        >
+                          {item.buttonText}
+                        </StyledButton>
+                      </Link>
+                    )}
+                    <Button
+                      variant="outlined"
+                      size="large"
+                      startIcon={<EmailIcon />}
+                      href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+                      sx={{
+                        width: '100%',
+                        py: { xs: 1.5, sm: 1.5 },
+                        px: { xs: 2, sm: 3 },
+                        fontSize: { xs: '0.9rem', sm: '1rem' },
+                        borderWidth: 2,
+                        '&:hover': {
+                          borderWidth: 2,
+                        }
+                      }}
+                    >
+                      {t('common.send_email')}
+                    </Button>
+                  </Box>
                 </ComparisonCard>
               ))
             )}

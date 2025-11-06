@@ -10,7 +10,8 @@
     "edit": "Редактировать",
     "create": "Создать",
     "search": "Поиск",
-    "loading": "Загрузка..."
+    "loading": "Загрузка...",
+    "send_email": "Отправить email"
   },
   "languages": {
     "ru": "Русский",

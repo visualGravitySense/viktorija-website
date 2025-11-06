@@ -5,12 +5,14 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded';
 import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
 import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded';
 import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
 import SupportAgentRoundedIcon from '@mui/icons-material/SupportAgentRounded';
 import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
+import EmailIcon from '@mui/icons-material/Email';
 import { useTranslation } from 'react-i18next';
 
 export default function Highlights() {
@@ -110,6 +112,28 @@ export default function Highlights() {
             </Grid>
           ))}
         </Grid>
+        <Box sx={{ mt: 4, textAlign: 'center' }}>
+          <Button
+            variant="outlined"
+            size="large"
+            startIcon={<EmailIcon />}
+            href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+            sx={{
+              px: 4,
+              py: 1.5,
+              borderWidth: 2,
+              color: 'white',
+              borderColor: 'white',
+              '&:hover': {
+                borderWidth: 2,
+                borderColor: 'white',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              }
+            }}
+          >
+            {t('common.send_email')}
+          </Button>
+        </Box>
       </Container>
     </Box>
   );

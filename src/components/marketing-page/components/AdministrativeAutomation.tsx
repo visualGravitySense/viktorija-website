@@ -13,6 +13,9 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PaymentIcon from '@mui/icons-material/Payment';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
+import EmailIcon from '@mui/icons-material/Email';
+import Stack from '@mui/material/Stack';
+import { useTranslation } from 'react-i18next';
 
 interface Benefit {
   icon: 'schedule' | 'notifications' | 'description' | 'payment' | 'analytics';
@@ -72,6 +75,8 @@ export default function AdministrativeAutomation({
   buttonText = "Calculate Your Time Savings →",
   buttonLink = "#",
 }: AdministrativeAutomationProps) {
+  const { t } = useTranslation();
+  
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'schedule':
@@ -129,15 +134,33 @@ export default function AdministrativeAutomation({
       </Grid>
 
       <Box sx={{ mt: 8, textAlign: 'center' }}>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          href={buttonLink}
-          sx={{ px: 4, py: 1.5 }}
-        >
-          {buttonText}
-        </Button>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" alignItems="center">
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            href={buttonLink}
+            sx={{ px: 4, py: 1.5 }}
+          >
+            {buttonText}
+          </Button>
+          <Button
+            variant="outlined"
+            size="large"
+            startIcon={<EmailIcon />}
+            href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+            sx={{
+              px: 4,
+              py: 1.5,
+              borderWidth: 2,
+              '&:hover': {
+                borderWidth: 2,
+              }
+            }}
+          >
+            {t('common.send_email')}
+          </Button>
+        </Stack>
       </Box>
     </Container>
   );
