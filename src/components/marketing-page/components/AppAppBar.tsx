@@ -269,7 +269,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
             }}
           >
             <LanguageSwitcher />
-            <Button 
+            {/* <Button 
               color="primary" 
               variant="outlined" 
               size="small"
@@ -285,13 +285,14 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
               }}
             >
               {t('navigation.signin')}
-            </Button>
+            </Button> */}
+
             <Button 
               color="primary" 
               variant="contained" 
               size="small"
               component="a"
-              href="https://t.me/viktorijastudentbot"
+              href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
               target="_blank"
               sx={{
                 fontWeight: 600,
@@ -380,7 +381,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     fullWidth
                     startIcon={<EventIcon />}
                     component="a"
-                    href="https://t.me/viktorijastudentbot"
+                    href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
                     target="_blank"
                     sx={{
                       fontWeight: 600,
@@ -518,7 +519,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     variant="outlined" 
                     fullWidth
                     component="a"
-                    href="https://t.me/aawraBot"
+                    href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
                     target="_blank"
                     sx={{
                       fontWeight: 600,
@@ -541,7 +542,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     variant="contained" 
                     fullWidth
                     component="a"
-                    href="https://t.me/viktorijastudentbot"
+                    href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
                     target="_blank"
                     sx={{
                       fontWeight: 600,

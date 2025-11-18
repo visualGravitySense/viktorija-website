@@ -14,6 +14,7 @@ import SupportIcon from '@mui/icons-material/Support';
 import SecurityIcon from '@mui/icons-material/Security';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import EmailIcon from '@mui/icons-material/Email';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
@@ -183,11 +184,54 @@ export default function Hero({
             ))}
           </Box>
 
+          {/* Primary CTA Button */}
+          <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            mt: 4,
+            px: { xs: 1, sm: 0 }
+          }}>
+            <Button
+              variant="contained"
+              size="large"
+              endIcon={<ArrowForwardIcon />}
+              component="a"
+              href={buttonLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={(theme) => ({
+                position: 'relative',
+                minWidth: { xs: '280px', sm: '320px' },
+                py: { xs: 1.5, sm: 2 },
+                px: 4,
+                background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary?.main || theme.palette.primary.light})`,
+                color: theme.palette.primary.contrastText || '#ffffff',
+                borderRadius: '12px',
+                fontWeight: 700,
+                fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' },
+                textTransform: 'none',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+                transition: 'all 0.3s ease',
+                overflow: 'hidden',
+                '&:hover': {
+                  transform: 'translateY(-3px)',
+                  boxShadow: '0 8px 30px rgba(0,0,0,0.35)',
+                  background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
+                },
+                '&:active': {
+                  transform: 'translateY(-1px)',
+                },
+              })}
+            >
+              {displayButtonText || t('hero.home.button', { defaultValue: 'Записаться на курс' })}
+            </Button>
+          </Box>
+
           {/* Email Button */}
           <Box sx={{ 
             display: 'flex', 
             justifyContent: 'center', 
-            mt: 3,
+            mt: 2,
             px: { xs: 1, sm: 0 }
           }}>
             <Button
