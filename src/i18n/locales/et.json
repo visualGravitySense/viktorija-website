@@ -11,7 +11,61 @@
     "create": "Loo",
     "search": "Otsi",
     "loading": "Laadimine...",
-    "send_email": "Saada email"
+    "send_email": "Saada email",
+    "call": "Helista",
+    "scroll_to_top": "Üles"
+  },
+  "benefits": {
+    "title": "Mida sa saad",
+    "subtitle": "Meie autokooli õppe eelised",
+    "freedom": {
+      "title": "Liikumisvabadus",
+      "description": "Liigu millal iganes, kuhu iganes, ilma ühistranspordist sõltumata"
+    },
+    "savings": {
+      "title": "Raha säästmine",
+      "description": "Säästa takso ja ühistranspordi pealt. Tasuvus juba esimesel aastal"
+    },
+    "travel": {
+      "title": "Reisimine",
+      "description": "Reisi Eestis ja Euroopas oma autoga"
+    },
+    "confidence": {
+      "title": "Enesekindlus",
+      "description": "Saa enesekindlaks juhiks 95% esimesel korral edukalt eksami sooritamisega"
+    },
+    "career": {
+      "title": "Karjäär",
+      "description": "Avage uued karjäärivõimalused, mis nõuavad juhiluba"
+    },
+    "independence": {
+      "title": "Sõltumatus",
+      "description": "Saavutage täielik sõltumatus ja vabadus liikumisel"
+    }
+  },
+  "requirements": {
+    "title": "Mida vaja registreerumiseks",
+    "subtitle": "Lihtne registreerumise protsess - vaid 3 sammu",
+    "docs_title": "Dokumendid",
+    "process_title": "Registreerumise protsess",
+    "passport": "Pass või ID-kaart",
+    "medical": "Meditsiiniline tunnistus kategooria A või B jaoks",
+    "payment": "Makse (võib osamaksega)",
+    "step1": "Vali kategooria",
+    "step1_desc": "A, B või C",
+    "step2": "Täida vorm või helista",
+    "step2_desc": "Võtab vaid 2 minutit",
+    "step3": "Maksa ja alusta õppimist",
+    "step3_desc": "Turvaline makse Stripe kaudu",
+    "register_button": "Registreeru kohe"
+  },
+  "timer": {
+    "title": "Järgmine kursus algab",
+    "days": "päeva",
+    "hours": "tundi",
+    "minutes": "minutit",
+    "seconds": "sekundit",
+    "subtitle": "Jõua registreeruda enne kursuse algust!"
   },
   "languages": {
     "ru": "Vene",

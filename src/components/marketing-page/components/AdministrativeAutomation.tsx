@@ -115,7 +115,7 @@ export default function AdministrativeAutomation({
 
       <Grid container spacing={4}>
         {benefits.map((benefit, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
             <StyledCard>
               <CardContent sx={{ p: 3, textAlign: 'center' }}>
                 <Box sx={{ mb: 2, color: 'primary.main' }}>

@@ -85,7 +85,7 @@ export default function Highlights() {
         </Box>
         <Grid container spacing={2}>
           {items.map((item, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
               <Stack
                 direction="column"
                 component={Card}

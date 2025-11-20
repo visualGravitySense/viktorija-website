@@ -20,6 +20,7 @@ import StarIcon from '@mui/icons-material/Star';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import EmailIcon from '@mui/icons-material/Email';
+import { useTranslation } from 'react-i18next';
 
 const floatAnimation = keyframes`
   0% { transform: translateY(0px); }
@@ -314,7 +315,7 @@ export default function AIAssistant({
 
           <Grid container spacing={3}>
             {features.map((feature, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
                 <StyledCard>
                   <FeatureIcon className="feature-icon">
                     {getIcon(feature.icon)}

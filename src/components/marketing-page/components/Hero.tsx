@@ -18,7 +18,20 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
+import { keyframes } from '@emotion/react';
 import mainHeroImg from '/main-hero-1.jpg';
+
+const pulseAnimation = keyframes`
+  0% {
+    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+  }
+`;
 
 interface HeroProps {
   title: string;
@@ -213,13 +226,21 @@ export default function Hero({
                 boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
                 transition: 'all 0.3s ease',
                 overflow: 'hidden',
+                animation: `${pulseAnimation} 2s infinite`,
                 '&:hover': {
                   transform: 'translateY(-3px)',
                   boxShadow: '0 8px 30px rgba(0,0,0,0.35)',
                   background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
+                  animation: 'none',
                 },
                 '&:active': {
                   transform: 'translateY(-1px)',
+                },
+                '& .MuiButton-endIcon': {
+                  transition: 'transform 0.3s ease',
+                },
+                '&:hover .MuiButton-endIcon': {
+                  transform: 'translateX(4px)',
                 },
               })}
             >

@@ -226,7 +226,7 @@ export default function PainPoints({
           </FloatingIcon>
 
           {/* Enhanced Social Proof Banner */}
-          <Card sx={{ 
+          {/* <Card sx={{ 
             mb: { xs: 3, sm: 4 }, 
             background: 'linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%)',
             border: '2px solid', 
@@ -319,7 +319,7 @@ export default function PainPoints({
                 ))}
               </Grid>
             </CardContent>
-          </Card>
+          </Card> */}
 
           <Box sx={{ 
             textAlign: 'center', 
