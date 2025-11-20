@@ -18,11 +18,6 @@ const StyledCard = styled(Card)(({ theme }) => ({
   border: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
 }));
 
-const HighlightText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.main,
-  fontWeight: 'bold',
-  display: 'inline',
-}));
 
 interface UrgencySectionProps {
   title: string;
@@ -76,9 +71,11 @@ export default function UrgencySection({
 
       <StyledCard>
         <CardContent>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1" sx={{ mb: 2 }}>
             {mainText}{' '}
-            <HighlightText>{highlightText}</HighlightText>{' '}
+            <Box component="span" sx={{ color: 'primary.main', fontWeight: 'bold' }}>
+              {highlightText}
+            </Box>{' '}
             {mainTextContinuation}
           </Typography>
           

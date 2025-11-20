@@ -1,7 +1,25 @@
-# BJ Fogg's Behavior Model
+# UX Правила для улучшения главной страницы
+
+## 1. BJ Fogg's Behavior Model
 B.J. Fogg, a renowned psychologist, and researcher at Stanford University, proposed the Fogg Behavior Model (FBM). This insightful model helps UX designers understand and influence user behavior by focusing on three core elements. These key factors are motivation, ability, and prompts.
 
-Подготовил список предложений по улучшению мотивации на главной странице на основе первого правила модели Фогга (мотивация). Документ сохранен в `Analytics/motivation-improvements.md`.
+Подготовлен список предложений по улучшению мотивации на главной странице на основе первого правила модели Фогга (мотивация). Документ: `Analytics/motivation-improvements.md`.
+
+---
+
+## 2. Stephen Wendel's CREATE Action Funnel
+Stephen Wendel's CREATE Action Funnel is a behavioral design framework aimed at helping individuals or organizations encourage specific behaviors in others, especially in the context of product design. It breaks down the process of motivating action into six key stages:
+
+### Этапы CREATE:
+
+1. **CUE (Сигнал)** - Пользователь должен заметить сигнал или подсказку, которая говорит ему действовать
+2. **REACTION (Реакция)** - Пользователь должен позитивно отреагировать на сигнал
+3. **EVALUATION (Оценка)** - Пользователь оценивает, стоит ли действие их времени и ресурсов
+4. **ABILITY (Способность)** - Пользователь должен чувствовать, что способен выполнить действие
+5. **TIMING (Время)** - Действие должно происходить в правильное время
+6. **EXECUTION (Выполнение)** - Действие должно быть успешно выполнено
+
+Подготовлен детальный анализ и предложения по улучшению главной страницы на основе CREATE Action Funnel. Документ: `Analytics/create-funnel-improvements.md`.
 
 ## Краткое резюме предложений:
 

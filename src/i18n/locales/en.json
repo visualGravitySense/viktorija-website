@@ -11,7 +11,61 @@
     "create": "Create",
     "search": "Search",
     "loading": "Loading...",
-    "send_email": "Send email"
+    "send_email": "Send email",
+    "call": "Call",
+    "scroll_to_top": "Scroll to top"
+  },
+  "benefits": {
+    "title": "What You'll Get",
+    "subtitle": "Benefits of learning at our driving school",
+    "freedom": {
+      "title": "Freedom of Movement",
+      "description": "Move anytime, anywhere, without depending on public transport"
+    },
+    "savings": {
+      "title": "Save Money",
+      "description": "Save on taxis and public transport. Payback already in the first year"
+    },
+    "travel": {
+      "title": "Travel",
+      "description": "Travel around Estonia and Europe in your own car"
+    },
+    "confidence": {
+      "title": "Confidence",
+      "description": "Become a confident driver with 95% first-time exam success rate"
+    },
+    "career": {
+      "title": "Career",
+      "description": "Open new career opportunities that require a driver's license"
+    },
+    "independence": {
+      "title": "Independence",
+      "description": "Achieve complete independence and freedom of movement"
+    }
+  },
+  "requirements": {
+    "title": "What You Need to Register",
+    "subtitle": "Simple registration process - just 3 steps",
+    "docs_title": "Documents",
+    "process_title": "Registration Process",
+    "passport": "Passport or ID card",
+    "medical": "Medical certificate for category A or B",
+    "payment": "Payment (can be in installments)",
+    "step1": "Choose category",
+    "step1_desc": "A, B or C",
+    "step2": "Fill out form or call",
+    "step2_desc": "Takes only 2 minutes",
+    "step3": "Pay and start learning",
+    "step3_desc": "Secure payment via Stripe",
+    "register_button": "Register Now"
+  },
+  "timer": {
+    "title": "Next Course Starts",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds",
+    "subtitle": "Register before the course starts!"
   },
   "languages": {
     "ru": "Russian",

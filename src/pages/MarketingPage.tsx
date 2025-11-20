@@ -12,6 +12,10 @@ import Testimonials from '../components/marketing-page/components/Testimonials.t
 import FAQ from '../components/marketing-page/components/FAQ.tsx';
 import Footer from '../components/marketing-page/components/Footer.tsx';
 import PainPoints from '../components/marketing-page/components/PainPoints.tsx'
+import FloatingActionButton from '../components/marketing-page/components/FloatingActionButton.tsx';
+import BenefitsSection from '../components/marketing-page/components/BenefitsSection.tsx';
+import RequirementsSection from '../components/marketing-page/components/RequirementsSection.tsx';
+import CourseTimer from '../components/marketing-page/components/CourseTimer.tsx';
 import SEO from '../components/shared/SEO.tsx';
 import { LocalBusinessSchema, FAQSchema, CourseSchema } from '../components/shared/StructuredData.tsx';
 import { useTranslation } from 'react-i18next';
@@ -131,6 +135,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
       />
       {/* Hero categories info/price  */}
       <div>
+        <CourseTimer nextCourseDate={new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)} />
         <PainPoints 
           title={t('painpoints.title')}
           subtitle={t('painpoints.subtitle')}
@@ -184,6 +189,12 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
         />
         <LogoCollection />
 
+        <BenefitsSection />
+
+        <Divider />
+        <RequirementsSection />
+
+        <Divider />
         <Features />
         
         {/* <AIAssistant 
@@ -326,6 +337,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
         <Divider />
         <Footer />
       </div>
+      <FloatingActionButton buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00" />
     </AppTheme>
   );
 }
