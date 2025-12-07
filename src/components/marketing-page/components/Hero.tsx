@@ -34,10 +34,10 @@ const pulseAnimation = keyframes`
 `;
 
 interface HeroProps {
-  title: string;
+  title?: string;
   subtitle?: string;
-  description: string;
-  buttonText: string;
+  description?: string;
+  buttonText?: string;
   buttonLink?: string;
   imageUrl?: string;
   imageAlt?: string;
@@ -296,13 +296,15 @@ export default function Hero({
           <img
             src={imageUrl}
             alt={imageAlt || displayTitle}
-            loading="lazy"
-            width="100%"
-            height="auto"
+            loading="eager"
+            fetchPriority="high"
+            width="1200"
+            height="400"
             style={{
               borderRadius: 'inherit',
               display: 'block',
               width: '100%',
+              height: 'auto',
               objectFit: 'cover',
               objectPosition: 'center',
               maxHeight: '400px'

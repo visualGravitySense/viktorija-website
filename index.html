@@ -18,7 +18,16 @@
     <link rel="canonical" href="https://viktorijaautokool.ee" />
     <title>Viktorija Autokool Nõmme - Professionaalne Kategooria A ja B autokoolitus Eestis</title>
     
-    <!-- Google tag (gtag.js) -->
+    <!-- Preconnect to external domains for faster resource loading -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.inspectlet.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://cdn.inspectlet.com" />
+    
+    <!-- Preload critical hero image -->
+    <link rel="preload" as="image" href="/main-hero-1.jpg" fetchpriority="high" />
+    
+    <!-- Google tag (gtag.js) - Defer to prevent blocking -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GR33YJ9WC5"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -27,14 +36,21 @@
       gtag('config', 'G-GR33YJ9WC5');
     </script>
     
-    <!-- Begin Inspectlet Asynchronous Code -->
+    <!-- Begin Inspectlet Asynchronous Code - Load after page load -->
     <script type="text/javascript">
     (function() {
-    window.__insp = window.__insp || [];
-    __insp.push(['wid', 1009173257]);
-    var ldinsp = function(){
-    if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js?wid=1009173257&r=' + Math.floor(new Date().getTime()/3600000); var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
-    setTimeout(ldinsp, 0);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadInspectlet);
+    } else {
+      setTimeout(loadInspectlet, 1000);
+    }
+    function loadInspectlet() {
+      window.__insp = window.__insp || [];
+      __insp.push(['wid', 1009173257]);
+      var ldinsp = function(){
+      if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js?wid=1009173257&r=' + Math.floor(new Date().getTime()/3600000); var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
+      setTimeout(ldinsp, 0);
+    }
     })();
     </script>
     <!-- End Inspectlet Asynchronous Code -->
