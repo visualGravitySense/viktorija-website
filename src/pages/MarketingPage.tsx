@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useMemo, Suspense, lazy } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import AppTheme from '../components/shared-theme/AppTheme.tsx';
@@ -9,18 +9,18 @@ import { LocalBusinessSchema, FAQSchema, CourseSchema } from '../components/shar
 import { useTranslation } from 'react-i18next';
 
 // Lazy load non-critical components (below the fold)
-const LogoCollection = React.lazy(() => import('../components/marketing-page/components/LogoCollection.tsx'));
-const Highlights = React.lazy(() => import('../components/marketing-page/components/Highlights.tsx'));
-const Pricing = React.lazy(() => import('../components/marketing-page/components/Pricing.tsx'));
-const Features = React.lazy(() => import('../components/marketing-page/components/Features.tsx'));
-const Testimonials = React.lazy(() => import('../components/marketing-page/components/Testimonials.tsx'));
-const FAQ = React.lazy(() => import('../components/marketing-page/components/FAQ.tsx'));
-const Footer = React.lazy(() => import('../components/marketing-page/components/Footer.tsx'));
-const PainPoints = React.lazy(() => import('../components/marketing-page/components/PainPoints.tsx'));
-const FloatingActionButton = React.lazy(() => import('../components/marketing-page/components/FloatingActionButton.tsx'));
-const BenefitsSection = React.lazy(() => import('../components/marketing-page/components/BenefitsSection.tsx'));
-const RequirementsSection = React.lazy(() => import('../components/marketing-page/components/RequirementsSection.tsx'));
-const CourseTimer = React.lazy(() => import('../components/marketing-page/components/CourseTimer.tsx'));
+const LogoCollection = lazy(() => import('../components/marketing-page/components/LogoCollection.tsx'));
+const Highlights = lazy(() => import('../components/marketing-page/components/Highlights.tsx'));
+const Pricing = lazy(() => import('../components/marketing-page/components/Pricing.tsx'));
+const Features = lazy(() => import('../components/marketing-page/components/Features.tsx'));
+const Testimonials = lazy(() => import('../components/marketing-page/components/Testimonials.tsx'));
+const FAQ = lazy(() => import('../components/marketing-page/components/FAQ.tsx'));
+const Footer = lazy(() => import('../components/marketing-page/components/Footer.tsx'));
+const PainPoints = lazy(() => import('../components/marketing-page/components/PainPoints.tsx'));
+const FloatingActionButton = lazy(() => import('../components/marketing-page/components/FloatingActionButton.tsx'));
+const BenefitsSection = lazy(() => import('../components/marketing-page/components/BenefitsSection.tsx'));
+const RequirementsSection = lazy(() => import('../components/marketing-page/components/RequirementsSection.tsx'));
+const CourseTimer = lazy(() => import('../components/marketing-page/components/CourseTimer.tsx'));
 import aCatImg from '/a-cat.jpg';
 import bCatImg from '/b-cat.jpg';
 import fCatImg from '/final-cat-1.jpg';
@@ -35,7 +35,7 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
   const { t, i18n } = useTranslation();
   
   // Extract FAQ data for structured data
-  const faqData = React.useMemo(() => {
+  const faqData = useMemo(() => {
     return [
       {
         question: t('faq.question1'),
@@ -136,12 +136,12 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
         imageAlt="Educational Platform"
       />
       {/* Hero categories info/price  */}
-      <React.Suspense fallback={<div style={{ minHeight: '200px' }} />}>
+      <Suspense fallback={<div style={{ minHeight: '200px' }} />}>
         <div>
-          <React.Suspense fallback={null}>
+          <Suspense fallback={null}>
             <CourseTimer nextCourseDate={new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)} />
-          </React.Suspense>
-          <React.Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+          </Suspense>
+          <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
             <PainPoints 
               title={t('painpoints.title')}
               subtitle={t('painpoints.subtitle')}
@@ -193,18 +193,24 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
                 }
               ]}
             />
-          </React.Suspense>
-          <React.Suspense fallback={<div style={{ minHeight: '200px' }} />}>
+          </Suspense>
+          <Suspense fallback={<div style={{ minHeight: '200px' }} />}>
             <LogoCollection />
-          </React.Suspense>
+          </Suspense>
 
-        <BenefitsSection />
+        <Suspense fallback={<div style={{ minHeight: '200px' }} />}>
+          <BenefitsSection />
+        </Suspense>
 
         <Divider />
-        <RequirementsSection />
+        <Suspense fallback={<div style={{ minHeight: '200px' }} />}>
+          <RequirementsSection />
+        </Suspense>
 
         <Divider />
-        <Features />
+        <Suspense fallback={<div style={{ minHeight: '200px' }} />}>
+          <Features />
+        </Suspense>
         
         {/* <AIAssistant 
           title="AI-Powered Marketing Assistant"
@@ -318,19 +324,19 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
         /> */}
 
           <Divider />
-          <React.Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+          <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
             <Testimonials />
-          </React.Suspense>
+          </Suspense>
 
           <Divider />
-          <React.Suspense fallback={<div style={{ minHeight: '300px' }} />}>
+          <Suspense fallback={<div style={{ minHeight: '300px' }} />}>
             <Highlights />
-          </React.Suspense>
+          </Suspense>
 
           {/* <Divider />
-          <React.Suspense fallback={null}>
+          <Suspense fallback={null}>
             <Pricing />
-          </React.Suspense> */}
+          </Suspense> */}
 
         {/* <UrgencySection 
           title="While You Consider, Your Competitors Are Evolving"
@@ -347,19 +353,19 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
           <Divider /> */}
           
           <Divider />
-          <React.Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+          <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
             <FAQ />
-          </React.Suspense>
+          </Suspense>
           
           <Divider />
-          <React.Suspense fallback={<div style={{ minHeight: '200px' }} />}>
+          <Suspense fallback={<div style={{ minHeight: '200px' }} />}>
             <Footer />
-          </React.Suspense>
+          </Suspense>
         </div>
-      </React.Suspense>
-      <React.Suspense fallback={null}>
+      </Suspense>
+      <Suspense fallback={null}>
         <FloatingActionButton buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00" />
-      </React.Suspense>
+      </Suspense>
     </AppTheme>
   );
 }
