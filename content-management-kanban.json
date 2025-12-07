@@ -1,403 +1,401 @@
 {
-  "board": {
+  "kanban_columns": [
+    {
+      "id": "backlog",
+      "name": "Backlog",
+      "color": "#9e9e9e",
+      "tasks": []
+    },
+    {
+      "id": "todo",
+      "name": "To Do",
+      "color": "#2196f3",
+      "tasks": [
+        {
+          "id": "auth-1",
+          "title": "Создать структуру папок для админ-панели",
+          "description": "Создать папки src/pages/admin/, src/components/admin/content/, src/components/admin/auth/",
+          "priority": "high",
+          "estimatedHours": 1,
+          "tags": ["setup", "этап-1"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "auth-2",
+          "title": "Настроить роутинг для /admin/*",
+          "description": "Добавить маршруты в App.tsx для админ-панели",
+          "priority": "high",
+          "estimatedHours": 2,
+          "tags": ["routing", "этап-1"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "auth-3",
+          "title": "Реализовать AuthProvider и useAuth хук",
+          "description": "Создать контекст для управления аутентификацией и хук для использования",
+          "priority": "high",
+          "estimatedHours": 4,
+          "tags": ["auth", "этап-1"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "auth-4",
+          "title": "Создать LoginForm компонент",
+          "description": "Форма входа с email/password, валидация, обработка ошибок",
+          "priority": "high",
+          "estimatedHours": 4,
+          "tags": ["auth", "ui", "этап-1"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "auth-5",
+          "title": "Создать ProtectedRoute компонент",
+          "description": "HOC для защиты маршрутов, редирект на /admin/login если не авторизован",
+          "priority": "high",
+          "estimatedHours": 3,
+          "tags": ["auth", "routing", "этап-1"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "auth-6",
+          "title": "Настроить Supabase аутентификацию",
+          "description": "Включить Email провайдер в Supabase, настроить политики RLS",
+          "priority": "high",
+          "estimatedHours": 2,
+          "tags": ["supabase", "этап-1"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "list-1",
+          "title": "Создать ContentListPage компонент",
+          "description": "Главная страница со списком контента",
+          "priority": "high",
+          "estimatedHours": 3,
+          "tags": ["list", "этап-2"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "list-2",
+          "title": "Реализовать ContentList с DataGrid",
+          "description": "Таблица контента с колонками: тип, язык, заголовок, статус, даты",
+          "priority": "high",
+          "estimatedHours": 6,
+          "tags": ["list", "ui", "этап-2"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "list-3",
+          "title": "Добавить ContentFilters компонент",
+          "description": "Фильтры по типу, языку, статусу публикации",
+          "priority": "medium",
+          "estimatedHours": 4,
+          "tags": ["list", "filters", "этап-2"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "list-4",
+          "title": "Реализовать поиск по заголовку и содержимому",
+          "description": "Поисковая строка с debounce, поиск в title и content",
+          "priority": "medium",
+          "estimatedHours": 3,
+          "tags": ["list", "search", "этап-2"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "list-5",
+          "title": "Добавить сортировку и пагинацию",
+          "description": "Сортировка по дате создания/обновления, пагинация результатов",
+          "priority": "medium",
+          "estimatedHours": 3,
+          "tags": ["list", "этап-2"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "editor-1",
+          "title": "Создать ContentEditorPage компонент",
+          "description": "Страница редактора контента",
+          "priority": "high",
+          "estimatedHours": 2,
+          "tags": ["editor", "этап-3"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "editor-2",
+          "title": "Реализовать ContentEditor форму",
+          "description": "Основная форма с полями: title, content, slug, metadata",
+          "priority": "high",
+          "estimatedHours": 6,
+          "tags": ["editor", "form", "этап-3"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "editor-3",
+          "title": "Добавить ContentTypeSelector",
+          "description": "Выпадающий список для выбора типа контента",
+          "priority": "high",
+          "estimatedHours": 2,
+          "tags": ["editor", "ui", "этап-3"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "editor-4",
+          "title": "Добавить LanguageTabs",
+          "description": "Вкладки для переключения между языками (ru/et/en)",
+          "priority": "high",
+          "estimatedHours": 3,
+          "tags": ["editor", "i18n", "этап-3"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "editor-5",
+          "title": "Реализовать SlugGenerator",
+          "description": "Автоматическая генерация slug из title, возможность ручного редактирования",
+          "priority": "medium",
+          "estimatedHours": 3,
+          "tags": ["editor", "этап-3"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "editor-6",
+          "title": "Добавить RichTextEditor (WYSIWYG)",
+          "description": "Редактор с форматированием текста (Bold, Italic, Headers, Links, Images)",
+          "priority": "high",
+          "estimatedHours": 8,
+          "tags": ["editor", "ui", "этап-3"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "editor-7",
+          "title": "Создать MetadataEditor",
+          "description": "Редактор JSON метаданных с валидацией",
+          "priority": "medium",
+          "estimatedHours": 4,
+          "tags": ["editor", "этап-3"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "editor-8",
+          "title": "Добавить валидацию формы",
+          "description": "Валидация обязательных полей, уникальности slug, валидности JSON",
+          "priority": "high",
+          "estimatedHours": 4,
+          "tags": ["editor", "validation", "этап-3"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "editor-9",
+          "title": "Реализовать сохранение (создание/обновление)",
+          "description": "Интеграция с ContentService для сохранения контента",
+          "priority": "high",
+          "estimatedHours": 4,
+          "tags": ["editor", "api", "этап-3"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "extra-1",
+          "title": "Добавить ImageUploader компонент",
+          "description": "Компонент для загрузки изображений в Supabase Storage",
+          "priority": "medium",
+          "estimatedHours": 6,
+          "tags": ["storage", "этап-4"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "extra-2",
+          "title": "Интегрировать Supabase Storage",
+          "description": "Настроить bucket для изображений, политики доступа",
+          "priority": "medium",
+          "estimatedHours": 3,
+          "tags": ["storage", "supabase", "этап-4"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "extra-3",
+          "title": "Реализовать ContentPreview",
+          "description": "Компонент предпросмотра контента перед публикацией",
+          "priority": "medium",
+          "estimatedHours": 4,
+          "tags": ["preview", "этап-4"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "extra-4",
+          "title": "Добавить кнопки: Сохранить черновик, Опубликовать",
+          "description": "Раздельные действия для сохранения и публикации",
+          "priority": "high",
+          "estimatedHours": 2,
+          "tags": ["editor", "этап-4"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "extra-5",
+          "title": "Реализовать автосохранение (debounce)",
+          "description": "Автоматическое сохранение изменений каждые N секунд",
+          "priority": "low",
+          "estimatedHours": 4,
+          "tags": ["editor", "этап-4"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "manage-1",
+          "title": "Добавить действия в ContentList: редактировать, удалить, дублировать",
+          "description": "Кнопки действий для каждой строки в таблице",
+          "priority": "high",
+          "estimatedHours": 4,
+          "tags": ["list", "crud", "этап-5"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "manage-2",
+          "title": "Реализовать ConfirmDialog",
+          "description": "Диалог подтверждения для удаления контента",
+          "priority": "high",
+          "estimatedHours": 2,
+          "tags": ["ui", "этап-5"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "manage-3",
+          "title": "Добавить массовые действия",
+          "description": "Выбор нескольких элементов и массовое опубликование/скрытие",
+          "priority": "medium",
+          "estimatedHours": 5,
+          "tags": ["list", "этап-5"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "manage-4",
+          "title": "Реализовать экспорт контента (JSON/CSV)",
+          "description": "Экспорт выбранного контента в файлы",
+          "priority": "low",
+          "estimatedHours": 4,
+          "tags": ["export", "этап-5"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "manage-5",
+          "title": "Добавить статистику на главной странице",
+          "description": "Карточки с количеством контента: всего, опубликовано, черновиков",
+          "priority": "medium",
+          "estimatedHours": 4,
+          "tags": ["dashboard", "этап-5"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "polish-1",
+          "title": "Добавить обработку ошибок (toast notifications)",
+          "description": "Уведомления об успехе/ошибке операций",
+          "priority": "high",
+          "estimatedHours": 3,
+          "tags": ["ui", "этап-6"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "polish-2",
+          "title": "Реализовать оптимистичные обновления UI",
+          "description": "Мгновенное обновление UI до получения ответа от сервера",
+          "priority": "medium",
+          "estimatedHours": 4,
+          "tags": ["optimization", "этап-6"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "polish-3",
+          "title": "Добавить индикаторы изменений (unsaved changes)",
+          "description": "Предупреждение при попытке уйти со страницы с несохраненными изменениями",
+          "priority": "medium",
+          "estimatedHours": 3,
+          "tags": ["editor", "ux", "этап-6"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "polish-4",
+          "title": "Оптимизировать загрузку данных",
+          "description": "Lazy loading, кэширование, оптимизация запросов",
+          "priority": "medium",
+          "estimatedHours": 5,
+          "tags": ["optimization", "этап-6"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "polish-5",
+          "title": "Добавить keyboard shortcuts",
+          "description": "Ctrl+S для сохранения, Ctrl+P для предпросмотра и т.д.",
+          "priority": "low",
+          "estimatedHours": 3,
+          "tags": ["ux", "этап-6"],
+          "assignee": null,
+          "dueDate": null
+        },
+        {
+          "id": "polish-6",
+          "title": "Улучшить мобильную версию",
+          "description": "Адаптация всех компонентов для мобильных устройств",
+          "priority": "high",
+          "estimatedHours": 8,
+          "tags": ["responsive", "этап-6"],
+          "assignee": null,
+          "dueDate": null
+        }
+      ]
+    },
+    {
+      "id": "in-progress",
+      "name": "In Progress",
+      "color": "#ff9800",
+      "tasks": []
+    },
+    {
+      "id": "review",
+      "name": "Review",
+      "color": "#9c27b0",
+      "tasks": []
+    },
+    {
+      "id": "done",
+      "name": "Done",
+      "color": "#4caf50",
+      "tasks": []
+    }
+  ],
+  "metadata": {
     "name": "Управление контентом Supabase - Kanban",
     "description": "Kanban доска для отслеживания разработки веб-интерфейса управления контентом",
     "created": "2024",
-    "columns": [
-      {
-        "id": "backlog",
-        "name": "Backlog",
-        "color": "#9e9e9e",
-        "tasks": []
-      },
-      {
-        "id": "todo",
-        "name": "To Do",
-        "color": "#2196f3",
-        "tasks": [
-          {
-            "id": "auth-1",
-            "title": "Создать структуру папок для админ-панели",
-            "description": "Создать папки src/pages/admin/, src/components/admin/content/, src/components/admin/auth/",
-            "priority": "high",
-            "estimatedHours": 1,
-            "tags": ["setup", "этап-1"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "auth-2",
-            "title": "Настроить роутинг для /admin/*",
-            "description": "Добавить маршруты в App.tsx для админ-панели",
-            "priority": "high",
-            "estimatedHours": 2,
-            "tags": ["routing", "этап-1"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "auth-3",
-            "title": "Реализовать AuthProvider и useAuth хук",
-            "description": "Создать контекст для управления аутентификацией и хук для использования",
-            "priority": "high",
-            "estimatedHours": 4,
-            "tags": ["auth", "этап-1"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "auth-4",
-            "title": "Создать LoginForm компонент",
-            "description": "Форма входа с email/password, валидация, обработка ошибок",
-            "priority": "high",
-            "estimatedHours": 4,
-            "tags": ["auth", "ui", "этап-1"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "auth-5",
-            "title": "Создать ProtectedRoute компонент",
-            "description": "HOC для защиты маршрутов, редирект на /admin/login если не авторизован",
-            "priority": "high",
-            "estimatedHours": 3,
-            "tags": ["auth", "routing", "этап-1"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "auth-6",
-            "title": "Настроить Supabase аутентификацию",
-            "description": "Включить Email провайдер в Supabase, настроить политики RLS",
-            "priority": "high",
-            "estimatedHours": 2,
-            "tags": ["supabase", "этап-1"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "list-1",
-            "title": "Создать ContentListPage компонент",
-            "description": "Главная страница со списком контента",
-            "priority": "high",
-            "estimatedHours": 3,
-            "tags": ["list", "этап-2"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "list-2",
-            "title": "Реализовать ContentList с DataGrid",
-            "description": "Таблица контента с колонками: тип, язык, заголовок, статус, даты",
-            "priority": "high",
-            "estimatedHours": 6,
-            "tags": ["list", "ui", "этап-2"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "list-3",
-            "title": "Добавить ContentFilters компонент",
-            "description": "Фильтры по типу, языку, статусу публикации",
-            "priority": "medium",
-            "estimatedHours": 4,
-            "tags": ["list", "filters", "этап-2"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "list-4",
-            "title": "Реализовать поиск по заголовку и содержимому",
-            "description": "Поисковая строка с debounce, поиск в title и content",
-            "priority": "medium",
-            "estimatedHours": 3,
-            "tags": ["list", "search", "этап-2"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "list-5",
-            "title": "Добавить сортировку и пагинацию",
-            "description": "Сортировка по дате создания/обновления, пагинация результатов",
-            "priority": "medium",
-            "estimatedHours": 3,
-            "tags": ["list", "этап-2"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "editor-1",
-            "title": "Создать ContentEditorPage компонент",
-            "description": "Страница редактора контента",
-            "priority": "high",
-            "estimatedHours": 2,
-            "tags": ["editor", "этап-3"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "editor-2",
-            "title": "Реализовать ContentEditor форму",
-            "description": "Основная форма с полями: title, content, slug, metadata",
-            "priority": "high",
-            "estimatedHours": 6,
-            "tags": ["editor", "form", "этап-3"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "editor-3",
-            "title": "Добавить ContentTypeSelector",
-            "description": "Выпадающий список для выбора типа контента",
-            "priority": "high",
-            "estimatedHours": 2,
-            "tags": ["editor", "ui", "этап-3"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "editor-4",
-            "title": "Добавить LanguageTabs",
-            "description": "Вкладки для переключения между языками (ru/et/en)",
-            "priority": "high",
-            "estimatedHours": 3,
-            "tags": ["editor", "i18n", "этап-3"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "editor-5",
-            "title": "Реализовать SlugGenerator",
-            "description": "Автоматическая генерация slug из title, возможность ручного редактирования",
-            "priority": "medium",
-            "estimatedHours": 3,
-            "tags": ["editor", "этап-3"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "editor-6",
-            "title": "Добавить RichTextEditor (WYSIWYG)",
-            "description": "Редактор с форматированием текста (Bold, Italic, Headers, Links, Images)",
-            "priority": "high",
-            "estimatedHours": 8,
-            "tags": ["editor", "ui", "этап-3"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "editor-7",
-            "title": "Создать MetadataEditor",
-            "description": "Редактор JSON метаданных с валидацией",
-            "priority": "medium",
-            "estimatedHours": 4,
-            "tags": ["editor", "этап-3"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "editor-8",
-            "title": "Добавить валидацию формы",
-            "description": "Валидация обязательных полей, уникальности slug, валидности JSON",
-            "priority": "high",
-            "estimatedHours": 4,
-            "tags": ["editor", "validation", "этап-3"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "editor-9",
-            "title": "Реализовать сохранение (создание/обновление)",
-            "description": "Интеграция с ContentService для сохранения контента",
-            "priority": "high",
-            "estimatedHours": 4,
-            "tags": ["editor", "api", "этап-3"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "extra-1",
-            "title": "Добавить ImageUploader компонент",
-            "description": "Компонент для загрузки изображений в Supabase Storage",
-            "priority": "medium",
-            "estimatedHours": 6,
-            "tags": ["storage", "этап-4"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "extra-2",
-            "title": "Интегрировать Supabase Storage",
-            "description": "Настроить bucket для изображений, политики доступа",
-            "priority": "medium",
-            "estimatedHours": 3,
-            "tags": ["storage", "supabase", "этап-4"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "extra-3",
-            "title": "Реализовать ContentPreview",
-            "description": "Компонент предпросмотра контента перед публикацией",
-            "priority": "medium",
-            "estimatedHours": 4,
-            "tags": ["preview", "этап-4"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "extra-4",
-            "title": "Добавить кнопки: Сохранить черновик, Опубликовать",
-            "description": "Раздельные действия для сохранения и публикации",
-            "priority": "high",
-            "estimatedHours": 2,
-            "tags": ["editor", "этап-4"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "extra-5",
-            "title": "Реализовать автосохранение (debounce)",
-            "description": "Автоматическое сохранение изменений каждые N секунд",
-            "priority": "low",
-            "estimatedHours": 4,
-            "tags": ["editor", "этап-4"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "manage-1",
-            "title": "Добавить действия в ContentList: редактировать, удалить, дублировать",
-            "description": "Кнопки действий для каждой строки в таблице",
-            "priority": "high",
-            "estimatedHours": 4,
-            "tags": ["list", "crud", "этап-5"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "manage-2",
-            "title": "Реализовать ConfirmDialog",
-            "description": "Диалог подтверждения для удаления контента",
-            "priority": "high",
-            "estimatedHours": 2,
-            "tags": ["ui", "этап-5"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "manage-3",
-            "title": "Добавить массовые действия",
-            "description": "Выбор нескольких элементов и массовое опубликование/скрытие",
-            "priority": "medium",
-            "estimatedHours": 5,
-            "tags": ["list", "этап-5"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "manage-4",
-            "title": "Реализовать экспорт контента (JSON/CSV)",
-            "description": "Экспорт выбранного контента в файлы",
-            "priority": "low",
-            "estimatedHours": 4,
-            "tags": ["export", "этап-5"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "manage-5",
-            "title": "Добавить статистику на главной странице",
-            "description": "Карточки с количеством контента: всего, опубликовано, черновиков",
-            "priority": "medium",
-            "estimatedHours": 4,
-            "tags": ["dashboard", "этап-5"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "polish-1",
-            "title": "Добавить обработку ошибок (toast notifications)",
-            "description": "Уведомления об успехе/ошибке операций",
-            "priority": "high",
-            "estimatedHours": 3,
-            "tags": ["ui", "этап-6"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "polish-2",
-            "title": "Реализовать оптимистичные обновления UI",
-            "description": "Мгновенное обновление UI до получения ответа от сервера",
-            "priority": "medium",
-            "estimatedHours": 4,
-            "tags": ["optimization", "этап-6"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "polish-3",
-            "title": "Добавить индикаторы изменений (unsaved changes)",
-            "description": "Предупреждение при попытке уйти со страницы с несохраненными изменениями",
-            "priority": "medium",
-            "estimatedHours": 3,
-            "tags": ["editor", "ux", "этап-6"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "polish-4",
-            "title": "Оптимизировать загрузку данных",
-            "description": "Lazy loading, кэширование, оптимизация запросов",
-            "priority": "medium",
-            "estimatedHours": 5,
-            "tags": ["optimization", "этап-6"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "polish-5",
-            "title": "Добавить keyboard shortcuts",
-            "description": "Ctrl+S для сохранения, Ctrl+P для предпросмотра и т.д.",
-            "priority": "low",
-            "estimatedHours": 3,
-            "tags": ["ux", "этап-6"],
-            "assignee": null,
-            "dueDate": null
-          },
-          {
-            "id": "polish-6",
-            "title": "Улучшить мобильную версию",
-            "description": "Адаптация всех компонентов для мобильных устройств",
-            "priority": "high",
-            "estimatedHours": 8,
-            "tags": ["responsive", "этап-6"],
-            "assignee": null,
-            "dueDate": null
-          }
-        ]
-      },
-      {
-        "id": "in-progress",
-        "name": "In Progress",
-        "color": "#ff9800",
-        "tasks": []
-      },
-      {
-        "id": "review",
-        "name": "Review",
-        "color": "#9c27b0",
-        "tasks": []
-      },
-      {
-        "id": "done",
-        "name": "Done",
-        "color": "#4caf50",
-        "tasks": []
-      }
-    ]
-  },
-  "metadata": {
     "totalTasks": 35,
     "tasksByPriority": {
       "high": 18,
@@ -467,4 +465,3 @@
     }
   ]
 }
-

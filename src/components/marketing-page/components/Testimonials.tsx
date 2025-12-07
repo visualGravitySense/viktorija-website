@@ -123,11 +123,6 @@ export default function Testimonials() {
                   title={testimonial.name}
                   subheader={testimonial.occupation}
                 />
-                <img
-                  src={logos[index % logos.length]}
-                  alt={`Logo ${index + 1}`}
-                  style={{ display: 'none' }}
-                />
               </Box>
             </Card>
           </Grid>

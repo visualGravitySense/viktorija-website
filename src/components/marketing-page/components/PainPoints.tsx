@@ -411,6 +411,9 @@ export default function PainPoints({
                     component="img"
                     src={item.imageUrl}
                     alt={item.title}
+                    loading="lazy"
+                    width="320"
+                    height="240"
                     sx={{ 
                       width: '100%', 
                       maxWidth: 320, 

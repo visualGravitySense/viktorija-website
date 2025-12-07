@@ -73,6 +73,9 @@ export default function LogoCollection() {
             <img
               src={logo}
               alt={`Partner logo ${index + 1}`}
+              loading="lazy"
+              width="200"
+              height="180"
               style={logoStyle}
               onError={handleImageError}
             />
