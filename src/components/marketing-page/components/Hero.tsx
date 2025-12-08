@@ -42,6 +42,8 @@ interface HeroProps {
   imageUrl?: string;
   imageAlt?: string;
   translationKey?: 'home' | 'about' | 'features';
+  variant?: 'default' | 'landing';
+  showImage?: boolean;
 }
 
 export default function Hero({
@@ -52,15 +54,20 @@ export default function Hero({
   buttonLink = 'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00',
   imageUrl = mainHeroImg,
   imageAlt = 'Driving School Hero',
-  translationKey = 'home'
+  translationKey = 'home',
+  variant = 'default',
+  showImage = true
 }: HeroProps) {
   const { t } = useTranslation();
   
+  const isLanding = variant === 'landing';
+  
   // Use translations from i18n if translationKey is provided and no direct props
-  const displayTitle = title || t(`hero.${translationKey}.title`);
-  const displaySubtitle = subtitle || t(`hero.${translationKey}.subtitle`);
-  const displayDescription = description || t(`hero.${translationKey}.description`);
-  const displayButtonText = buttonText || t(`hero.${translationKey}.button`);
+  const translationPrefix = isLanding ? 'landing.hero' : `hero.${translationKey}`;
+  const displayTitle = title || t(`${translationPrefix}.title`);
+  const displaySubtitle = subtitle || t(`${translationPrefix}.subtitle`);
+  const displayDescription = description || t(`${translationPrefix}.description`);
+  const displayButtonText = buttonText || t(`${translationPrefix}.button`);
 
   // Social proof data - Enhanced with better metrics and localization
   const socialProof = [
@@ -97,17 +104,22 @@ export default function Hero({
     { icon: <SupportIcon color="info" />, text: "24/7 tugi" }
   ];
   
+  const greenGradient = 'linear-gradient(135deg, #34D186 0%, #2AB673 100%)';
+  
   return (
     <Box
       id="hero"
       sx={(theme) => ({
         width: '100%',
-        backgroundImage:
-          theme.palette.mode === 'light'
+        backgroundColor: isLanding ? '#34D186' : 'transparent',
+        backgroundImage: isLanding 
+          ? greenGradient
+          : theme.palette.mode === 'light'
             ? 'linear-gradient(180deg,rgba(49, 130, 206, 0.20), #FCFCFC)'
             : `linear-gradient(#1F3B60, ${alpha('#05070A', 0.95)})`,
-        backgroundSize: '100% 20%',
+        backgroundSize: isLanding ? 'cover' : '100% 20%',
         backgroundRepeat: 'no-repeat',
+        color: isLanding ? '#FFFFFF' : 'inherit',
       })}
     >
       <Container
@@ -133,7 +145,8 @@ export default function Hero({
               fontSize: { xs: '2rem', sm: '2.5rem', md: '3.5rem', lg: '4rem' },
               fontWeight: 'bold',
               lineHeight: { xs: 1.2, sm: 1.3 },
-              px: { xs: 1, sm: 0 }
+              px: { xs: 1, sm: 0 },
+              color: isLanding ? '#FFFFFF' : 'inherit'
             }}
           >
             {displayTitle}
@@ -141,32 +154,36 @@ export default function Hero({
           <Typography
             variant="h5"
             textAlign="center"
-            color="text.secondary"
+            color={isLanding ? '#FFFFFF' : 'text.secondary'}
             sx={{ 
               alignSelf: 'center', 
               width: { xs: '100%', sm: '100%', md: '85%' },
               fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' },
               fontWeight: 500,
               lineHeight: { xs: 1.4, sm: 1.5 },
-              px: { xs: 1, sm: 0 }
+              px: { xs: 1, sm: 0 },
+              opacity: isLanding ? 0.95 : 1
             }}
           >
             {displaySubtitle}
           </Typography>
-          <Typography
-            variant="body1"
-            textAlign="center"
-            color="text.secondary"
-            sx={{ 
-              alignSelf: 'center', 
-              width: { xs: '100%', sm: '100%', md: '85%' },
-              fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem' },
-              lineHeight: { xs: 1.5, sm: 1.6 },
-              px: { xs: 1, sm: 0 }
-            }}
-          >
-            {displayDescription}
-          </Typography>
+          {displayDescription && (
+            <Typography
+              variant="body1"
+              textAlign="center"
+              color={isLanding ? '#FFFFFF' : 'text.secondary'}
+              sx={{ 
+                alignSelf: 'center', 
+                width: { xs: '100%', sm: '100%', md: '85%' },
+                fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem' },
+                lineHeight: { xs: 1.5, sm: 1.6 },
+                px: { xs: 1, sm: 0 },
+                opacity: isLanding ? 0.95 : 1
+              }}
+            >
+              {displayDescription}
+            </Typography>
+          )}
 
           {/* Trust Indicators */}
           <Box sx={{ 
@@ -205,7 +222,7 @@ export default function Hero({
             px: { xs: 1, sm: 0 }
           }}>
             <Button
-              variant="contained"
+              variant={isLanding ? 'contained' : 'contained'}
               size="large"
               endIcon={<ArrowForwardIcon />}
               component="a"
@@ -217,24 +234,34 @@ export default function Hero({
                 minWidth: { xs: '280px', sm: '320px' },
                 py: { xs: 1.5, sm: 2 },
                 px: 4,
-                background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary?.main || theme.palette.primary.light})`,
-                color: theme.palette.primary.contrastText || '#ffffff',
-                borderRadius: '12px',
-                fontWeight: 700,
+                background: isLanding 
+                  ? '#FFFFFF' 
+                  : `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary?.main || theme.palette.primary.light})`,
+                color: isLanding 
+                  ? '#34D186' 
+                  : theme.palette.primary.contrastText || '#ffffff',
+                borderRadius: isLanding ? '50px' : '12px',
+                fontWeight: 600,
                 fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' },
                 textTransform: 'none',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+                boxShadow: isLanding 
+                  ? '0 4px 15px rgba(0,0,0,0.2)' 
+                  : '0 4px 20px rgba(0,0,0,0.25)',
                 transition: 'all 0.3s ease',
                 overflow: 'hidden',
-                animation: `${pulseAnimation} 2s infinite`,
+                animation: isLanding ? 'none' : `${pulseAnimation} 2s infinite`,
                 '&:hover': {
-                  transform: 'translateY(-3px)',
-                  boxShadow: '0 8px 30px rgba(0,0,0,0.35)',
-                  background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
+                  transform: isLanding ? 'scale(1.05)' : 'translateY(-3px)',
+                  boxShadow: isLanding 
+                    ? '0 6px 20px rgba(0,0,0,0.3)' 
+                    : '0 8px 30px rgba(0,0,0,0.35)',
+                  background: isLanding 
+                    ? '#FFFFFF' 
+                    : `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
                   animation: 'none',
                 },
                 '&:active': {
-                  transform: 'translateY(-1px)',
+                  transform: isLanding ? 'scale(1.02)' : 'translateY(-1px)',
                 },
                 '& .MuiButton-endIcon': {
                   transition: 'transform 0.3s ease',
@@ -275,42 +302,45 @@ export default function Hero({
           </Box>
           
         </Stack>
-        <Box
-          id="image"
-          sx={{
-            mt: { xs: 6, sm: 8, md: 10 },
-            alignSelf: 'center',
-            width: '100%',
-            maxWidth: { xs: '100%', sm: '90%', md: '80%' },
-            borderRadius: { xs: '8px', sm: '10px' },
-            outline: '1px solid',
-            outlineColor: (theme) =>
-              theme.palette.mode === 'light' ? 'primary.200' : 'primary.700',
-            boxShadow: (theme) =>
-              theme.palette.mode === 'light'
-                ? `0 0 ${alpha(theme.palette.primary.main, 0.2)}`
-                : `0 0 24px 12px ${alpha(theme.palette.primary.main, 0.2)}`,
-            mx: { xs: 2, sm: 0 }
-          }}
-        >
-          <img
-            src={imageUrl}
-            alt={imageAlt || displayTitle}
-            loading="eager"
-            fetchPriority="high"
-            width="1200"
-            height="400"
-            style={{
-              borderRadius: 'inherit',
-              display: 'block',
+        {/* Image - Hide on landing variant */}
+        {showImage && !isLanding && (
+          <Box
+            id="image"
+            sx={{
+              mt: { xs: 6, sm: 8, md: 10 },
+              alignSelf: 'center',
               width: '100%',
-              height: 'auto',
-              objectFit: 'cover',
-              objectPosition: 'center',
-              maxHeight: '400px'
+              maxWidth: { xs: '100%', sm: '90%', md: '80%' },
+              borderRadius: { xs: '8px', sm: '10px' },
+              outline: '1px solid',
+              outlineColor: (theme) =>
+                theme.palette.mode === 'light' ? 'primary.200' : 'primary.700',
+              boxShadow: (theme) =>
+                theme.palette.mode === 'light'
+                  ? `0 0 ${alpha(theme.palette.primary.main, 0.2)}`
+                  : `0 0 24px 12px ${alpha(theme.palette.primary.main, 0.2)}`,
+              mx: { xs: 2, sm: 0 }
             }}
-          />
-        </Box>
+          >
+            <img
+              src={imageUrl}
+              alt={imageAlt || displayTitle}
+              loading="eager"
+              fetchPriority="high"
+              width="1200"
+              height="400"
+              style={{
+                borderRadius: 'inherit',
+                display: 'block',
+                width: '100%',
+                height: 'auto',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                maxHeight: '400px'
+              }}
+            />
+          </Box>
+        )}
       </Container>
     </Box>
   );
