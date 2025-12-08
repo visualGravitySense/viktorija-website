@@ -740,5 +740,103 @@
         "expiry date": "Expiry date"
       }
     }
+  },
+  "landing": {
+    "hero": {
+      "title": "🚗 Become a Bolt Driver!",
+      "subtitle": "Professional driver training and all necessary documents\nStart earning in just 2 weeks",
+      "button": "Register now →"
+    },
+    "why_choose": {
+      "title": "Why choose Viktorija Autokool?",
+      "quick_start": {
+        "title": "Quick start",
+        "description": "Complete training in 2 weeks. All documents and license in order"
+      },
+      "earn_money": {
+        "title": "Earn money immediately",
+        "description": "Bolt drivers earn an average of 15-25€/hour. Flexible work schedule"
+      },
+      "all_in_one": {
+        "title": "Everything from one place",
+        "description": "We help obtain a taxi license, register with Bolt and start working"
+      },
+      "experienced_instructors": {
+        "title": "Experienced instructors",
+        "description": "We teach all practical tips and the best routes in the city"
+      }
+    },
+    "stats": {
+      "training_time": {
+        "value": "2 weeks",
+        "label": "Training and document processing"
+      },
+      "success_rate": {
+        "value": "100%",
+        "label": "We help prepare for all exams"
+      },
+      "graduates": {
+        "value": "500+",
+        "label": "Graduates already work at Bolt"
+      }
+    },
+    "how_it_works": {
+      "title": "How does this happen?",
+      "step1": {
+        "title": "Registration and consultation",
+        "description": "We'll discuss all the details and check your documents. Free consultation!"
+      },
+      "step2": {
+        "title": "Theory and exams",
+        "description": "5 hours of taxi driver theory: traffic rules, customer service, tax system. Online and on-site."
+      },
+      "step3": {
+        "title": "Practical driving lessons",
+        "description": "10 hours of practice with an experienced instructor. You'll learn the best routes and customer communication."
+      },
+      "step4": {
+        "title": "Document formalization",
+        "description": "We help obtain a taxi license, register as an entrepreneur (FIE) and join Bolt."
+      },
+      "step5": {
+        "title": "Start earning!",
+        "description": "You are ready to start. Our support team is always available even after the course ends."
+      }
+    },
+    "pricing": {
+      "title": "Price",
+      "price": "690€",
+      "package_description": "Full package: theory + practice + license processing",
+      "installment": "Possible to pay in installments",
+      "special_offer": "The first 5 registrants get a -50€ discount!",
+      "button_theory": "Pay for theory",
+      "button_full_course": "Pay for full course and get discount"
+    },
+    "cta": {
+      "title": "Ready to start?",
+      "subtitle": "Register today and start earning in just a couple of weeks!",
+      "button_whatsapp": "WhatsApp",
+      "button_call": "Call now",
+      "email": "viktorijaautokool@hot.ee"
+    },
+    "testimonials": {
+      "title": "What Our Students Say",
+      "testimonial1": {
+        "text": "Best driving school in town! I passed my exam on the first try thanks to the patient and professional instructors.",
+        "name": "Maria K.",
+        "license": "Category B License Holder"
+      },
+      "testimonial2": {
+        "text": "I was terrified of driving, but my instructor helped me overcome my fears. Now I drive with confidence every day!",
+        "name": "Thomas L.",
+        "license": "Category A License Holder"
+      },
+      "testimonial3": {
+        "text": "The lessons were both educational and fun. I learned not just to pass the test, but to be a truly good driver.",
+        "name": "Anna S.",
+        "license": "Category B License Holder"
+      },
+      "send_email": "Send email"
+    }
   }
 } 

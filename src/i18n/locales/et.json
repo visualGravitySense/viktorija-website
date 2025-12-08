@@ -742,5 +742,103 @@
         "expiry date": "Kehtivusaeg"
       }
     }
+  },
+  "landing": {
+    "hero": {
+      "title": "🚗 Hakka Bolt Juhiks!",
+      "subtitle": "Professionaalne juhikoolitus ja kõik vajalikud dokumendid\nAlusta teenimist juba 2 nädala pärast",
+      "button": "Registreeru kohe →"
+    },
+    "why_choose": {
+      "title": "Miks valida Viktorija Autokool?",
+      "quick_start": {
+        "title": "Kiire alustamine",
+        "description": "Täielik koolitus 2 nädala jooksul. Kõik dokumendid ja litsents korras"
+      },
+      "earn_money": {
+        "title": "Teenid kohe raha",
+        "description": "Bolt juhid teenivad keskmiselt 15-25€/tund. Paindlik töögraafik"
+      },
+      "all_in_one": {
+        "title": "Kõik ühest kohast",
+        "description": "Aitame hankida takso litsentsi, registreerida Boltis ja alustada tööd"
+      },
+      "experienced_instructors": {
+        "title": "Kogenud juhendajad",
+        "description": "Õpetame kõik praktilised nippe ja linna parimad marsruudid"
+      }
+    },
+    "stats": {
+      "training_time": {
+        "value": "2 nädalat",
+        "label": "Koolitus ja dokumentide vormistamine"
+      },
+      "success_rate": {
+        "value": "100%",
+        "label": "Aitame kõiki eksamitele ettevalmistada"
+      },
+      "graduates": {
+        "value": "500+",
+        "label": "Lõpetajat töötab juba Boltis"
+      }
+    },
+    "how_it_works": {
+      "title": "Kuidas see toimub?",
+      "step1": {
+        "title": "Registreerimine ja konsultatsioon",
+        "description": "Räägime läbi kõik detailid ja kontrollime sinu dokumente. Tasuta konsultatsioon!"
+      },
+      "step2": {
+        "title": "Teooria ja eksamid",
+        "description": "5 tundi taksojuhi teooriat: liikluseeskirjad, klienditeenindus, maksusüsteem. Online ja kohapeal."
+      },
+      "step3": {
+        "title": "Praktilised sõidutunnid",
+        "description": "10 tundi praktikat kogenud juhendajaga. Õpid parimaid marsruute ja kliendisuhtlust."
+      },
+      "step4": {
+        "title": "Dokumentide vormistamine",
+        "description": "Aitame hankida takso litsentsi, registreerida ettevõtjaks (FIE) ja liituda Boltiga."
+      },
+      "step5": {
+        "title": "Alusta teenimist!",
+        "description": "Oled valmis alustama. Meie tugimeeskond on alati abiks ka pärast kursuse lõppu."
+      }
+    },
+    "pricing": {
+      "title": "Hind",
+      "price": "690€",
+      "package_description": "Täispakk: teooria + praktika + litsentsi vormistamine",
+      "installment": "Võimalik maksta osade kaupa",
+      "special_offer": "Esimesed 5 registreerijat saavad -50€ soodustust!",
+      "button_theory": "Maksta teooria",
+      "button_full_course": "Maksta kogu kursuse eest ja saada soodustus"
+    },
+    "cta": {
+      "title": "Valmis alustama?",
+      "subtitle": "Registreeru täna ja alusta teenimist juba paari nädala pärast!",
+      "button_whatsapp": "WhatsApp",
+      "button_call": "Helista kohe",
+      "email": "viktorijaautokool@hot.ee"
+    },
+    "testimonials": {
+      "title": "What Our Students Say",
+      "testimonial1": {
+        "text": "Best driving school in town! I passed my exam on the first try thanks to the patient and professional instructors.",
+        "name": "Maria K.",
+        "license": "Category B License Holder"
+      },
+      "testimonial2": {
+        "text": "I was terrified of driving, but my instructor helped me overcome my fears. Now I drive with confidence every day!",
+        "name": "Thomas L.",
+        "license": "Category A License Holder"
+      },
+      "testimonial3": {
+        "text": "The lessons were both educational and fun. I learned not just to pass the test, but to be a truly good driver.",
+        "name": "Anna S.",
+        "license": "Category B License Holder"
+      },
+      "send_email": "Send email"
+    }
   }
 } 

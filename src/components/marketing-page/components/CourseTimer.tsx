@@ -20,10 +20,12 @@ const TimerBox = styled(Box)(({ theme }) => ({
 
 interface CourseTimerProps {
   nextCourseDate?: Date;
+  variant?: 'default' | 'landing';
 }
 
 export default function CourseTimer({ 
-  nextCourseDate = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000) // Default: 3 days from now
+  nextCourseDate = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // Default: 3 days from now
+  variant = 'default'
 }: CourseTimerProps) {
   const { t, i18n } = useTranslation();
   const [timeLeft, setTimeLeft] = React.useState({
@@ -72,27 +74,33 @@ export default function CourseTimer({
     });
   };
 
+  const isLanding = variant === 'landing';
+  const LANDING_GREEN = '#34D186';
+  const LANDING_GREEN_DARK = '#2AB673';
+
   return (
     <Box
       sx={{
         py: { xs: 4, sm: 6 },
-        bgcolor: 'background.default',
+        bgcolor: isLanding ? '#FFFFFF' : 'background.default',
       }}
     >
       <Container maxWidth="md">
         <Card
           sx={{
-            background: (theme) =>
-              `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.1)} 0%, ${alpha(theme.palette.secondary?.main || theme.palette.primary.light, 0.1)} 100%)`,
+            background: isLanding
+              ? 'linear-gradient(135deg, rgba(52, 209, 134, 0.1) 0%, rgba(42, 182, 115, 0.1) 100%)'
+              : (theme) =>
+                  `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.1)} 0%, ${alpha(theme.palette.secondary?.main || theme.palette.primary.light, 0.1)} 100%)`,
             border: '2px solid',
-            borderColor: 'primary.main',
+            borderColor: isLanding ? LANDING_GREEN : 'primary.main',
           }}
         >
           <CardContent sx={{ p: { xs: 3, sm: 4 } }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 3 }}>
-              <EventIcon sx={{ fontSize: 40, color: 'primary.main', mr: 1 }} />
-              <Typography variant="h5" component="h3" sx={{ fontWeight: 700 }}>
-                {t('timer.title', { defaultValue: 'Следующий курс начинается' })}
+              <EventIcon sx={{ fontSize: 40, color: isLanding ? LANDING_GREEN : 'primary.main', mr: 1 }} />
+              <Typography variant="h5" component="h3" sx={{ fontWeight: 700, color: isLanding ? LANDING_GREEN_DARK : 'inherit' }}>
+                {t('timer.title', { defaultValue: 'Next Course Starts' })}
               </Typography>
             </Box>
             <Typography variant="h6" textAlign="center" color="text.secondary" sx={{ mb: 4 }}>
@@ -108,49 +116,69 @@ export default function CourseTimer({
               }}
             >
               <Box sx={{ minWidth: { xs: 'calc(50% - 8px)', sm: 'auto' }, flex: { xs: '0 1 calc(50% - 8px)', sm: '0 1 auto' } }}>
-                <TimerBox>
-                  <Typography variant="h3" component="div" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                <TimerBox
+                  sx={isLanding ? {
+                    borderColor: LANDING_GREEN,
+                    background: 'rgba(52, 209, 134, 0.1)',
+                  } : {}}
+                >
+                  <Typography variant="h3" component="div" sx={{ fontWeight: 700, color: isLanding ? LANDING_GREEN : 'primary.main' }}>
                     {timeLeft.days}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {t('timer.days', { defaultValue: 'дней' })}
+                  <Typography variant="body2" color="text.secondary" sx={{ color: isLanding ? 'text.primary' : 'text.secondary' }}>
+                    {t('timer.days', { defaultValue: 'days' })}
                   </Typography>
                 </TimerBox>
               </Box>
               <Box sx={{ minWidth: { xs: 'calc(50% - 8px)', sm: 'auto' }, flex: { xs: '0 1 calc(50% - 8px)', sm: '0 1 auto' } }}>
-                <TimerBox>
-                  <Typography variant="h3" component="div" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                <TimerBox
+                  sx={isLanding ? {
+                    borderColor: LANDING_GREEN,
+                    background: 'rgba(52, 209, 134, 0.1)',
+                  } : {}}
+                >
+                  <Typography variant="h3" component="div" sx={{ fontWeight: 700, color: isLanding ? LANDING_GREEN : 'primary.main' }}>
                     {timeLeft.hours}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {t('timer.hours', { defaultValue: 'часов' })}
+                  <Typography variant="body2" color="text.secondary" sx={{ color: isLanding ? 'text.primary' : 'text.secondary' }}>
+                    {t('timer.hours', { defaultValue: 'hours' })}
                   </Typography>
                 </TimerBox>
               </Box>
               <Box sx={{ minWidth: { xs: 'calc(50% - 8px)', sm: 'auto' }, flex: { xs: '0 1 calc(50% - 8px)', sm: '0 1 auto' } }}>
-                <TimerBox>
-                  <Typography variant="h3" component="div" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                <TimerBox
+                  sx={isLanding ? {
+                    borderColor: LANDING_GREEN,
+                    background: 'rgba(52, 209, 134, 0.1)',
+                  } : {}}
+                >
+                  <Typography variant="h3" component="div" sx={{ fontWeight: 700, color: isLanding ? LANDING_GREEN : 'primary.main' }}>
                     {timeLeft.minutes}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {t('timer.minutes', { defaultValue: 'минут' })}
+                  <Typography variant="body2" color="text.secondary" sx={{ color: isLanding ? 'text.primary' : 'text.secondary' }}>
+                    {t('timer.minutes', { defaultValue: 'minutes' })}
                   </Typography>
                 </TimerBox>
               </Box>
               <Box sx={{ minWidth: { xs: 'calc(50% - 8px)', sm: 'auto' }, flex: { xs: '0 1 calc(50% - 8px)', sm: '0 1 auto' } }}>
-                <TimerBox>
-                  <Typography variant="h3" component="div" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                <TimerBox
+                  sx={isLanding ? {
+                    borderColor: LANDING_GREEN,
+                    background: 'rgba(52, 209, 134, 0.1)',
+                  } : {}}
+                >
+                  <Typography variant="h3" component="div" sx={{ fontWeight: 700, color: isLanding ? LANDING_GREEN : 'primary.main' }}>
                     {timeLeft.seconds}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {t('timer.seconds', { defaultValue: 'секунд' })}
+                  <Typography variant="body2" color="text.secondary" sx={{ color: isLanding ? 'text.primary' : 'text.secondary' }}>
+                    {t('timer.seconds', { defaultValue: 'seconds' })}
                   </Typography>
                 </TimerBox>
               </Box>
             </Box>
 
             <Typography variant="body2" textAlign="center" color="text.secondary" sx={{ mt: 3 }}>
-              {t('timer.subtitle', { defaultValue: 'Успейте записаться до начала курса!' })}
+              {t('timer.subtitle', { defaultValue: 'Register before the course starts!' })}
             </Typography>
           </CardContent>
         </Card>

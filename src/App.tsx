@@ -6,6 +6,7 @@ import './App.css';
 
 // Lazy load route pages for better code splitting
 const MarketingPage = lazy(() => import('./pages/MarketingPage.tsx'));
+const LandingPage = lazy(() => import('./pages/LandingPage.tsx'));
 const Features = lazy(() => import('./pages/Features.tsx'));
 const About = lazy(() => import('./pages/About.tsx'));
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage.tsx'));
@@ -35,6 +36,7 @@ function App({ toggleColorMode }: AppProps) {
         }>
           <Routes>
             <Route path="/" element={<MarketingPage toggleColorMode={toggleColorMode} />} />
+            <Route path="/landing" element={<LandingPage toggleColorMode={toggleColorMode} />} />
             <Route path="/features" element={<Features toggleColorMode={toggleColorMode} />} />
             <Route path="/about" element={<About toggleColorMode={toggleColorMode} />} />
             <Route path="/checkout" element={<CheckoutPage toggleColorMode={toggleColorMode} />} />

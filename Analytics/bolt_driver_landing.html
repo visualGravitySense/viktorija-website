@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolt Juhi Kursused - Viktorija Autokool Nõmme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #34D186 0%, #2AB673 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .hero .cta-button {
+            background: white;
+            color: #34D186;
+            padding: 18px 45px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .hero .cta-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .benefits {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .benefits h2 {
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 50px;
+            color: #2AB673;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .benefit-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .benefit-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #2AB673;
+        }
+        
+        .stats {
+            background: #1a1a1a;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .stat-item h3 {
+            font-size: 3em;
+            color: #34D186;
+            margin-bottom: 10px;
+        }
+        
+        .stat-item p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .program {
+            padding: 60px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .program h2 {
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 40px;
+            color: #2AB673;
+        }
+        
+        .program-step {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background: #34D186;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            font-size: 1.4em;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .pricing {
+            background: #f8f9fa;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .pricing h2 {
+            font-size: 2.2em;
+            margin-bottom: 40px;
+            color: #2AB673;
+        }
+        
+        .price-box {
+            background: white;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+        
+        .price {
+            font-size: 3.5em;
+            color: #34D186;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .price-note {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #2AB673 0%, #34D186 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .contact-btn {
+            padding: 18px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .contact-btn.whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        
+        .contact-btn.phone {
+            background: white;
+            color: #2AB673;
+        }
+        
+        .contact-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.1em;
+            }
+            
+            .price {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🚗 Hakka Bolt Juhiks!</h1>
+        <p class="subtitle">Professionaalne juhikoolitus ja kõik vajalikud dokumendid<br>Alusta teenimist juba 2 nädala pärast</p>
+        <button class="cta-button" onclick="scrollToCTA()">Registreeru kohe →</button>
+    </div>
+
+    <div class="benefits">
+        <h2>Miks valida Viktorija Autokool?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">⚡</div>
+                <h3>Kiire alustamine</h3>
+                <p>Täielik koolitus 2 nädala jooksul. Kõik dokumendid ja litsents korras</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">💰</div>
+                <h3>Teenid kohe raha</h3>
+                <p>Bolt juhid teenivad keskmiselt 15-25€/tund. Paindlik töögraafik</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">📋</div>
+                <h3>Kõik ühest kohast</h3>
+                <p>Aitame hankida takso litsentsi, registreerida Boltis ja alustada tööd</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">👨‍🏫</div>
+                <h3>Kogenud juhendajad</h3>
+                <p>Õpetame kõik praktilised nippe ja linna parimad marsruudid</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>2 nädalat</h3>
+                <p>Koolitus ja dokumentide vormistamine</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Aitame kõiki eksamitele ettevalmistada</p>
+            </div>
+            <div class="stat-item">
+                <h3>500+</h3>
+                <p>Lõpetajat töötab juba Boltis</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="program">
+        <h2>Kuidas see toimub?</h2>
+        
+        <div class="program-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Registreerimine ja konsultatsioon</h3>
+                <p>Räägime läbi kõik detailid ja kontrollime sinu dokumente. Tasuta konsultatsioon!</p>
+            </div>
+        </div>
+        
+        <div class="program-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Teooria ja eksamid</h3>
+                <p>5 tundi taksojuhi teooriat: liikluseeskirjad, klienditeenindus, maksusüsteem. Online ja kohapeal.</p>
+            </div>
+        </div>
+        
+        <div class="program-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Praktilised sõidutunnid</h3>
+                <p>10 tundi praktikat kogenud juhendajaga. Õpid parimaid marsruute ja kliendisuhtlust.</p>
+            </div>
+        </div>
+        
+        <div class="program-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h3>Dokumentide vormistamine</h3>
+                <p>Aitame hankida takso litsentsi, registreerida ettevõtjaks (FIE) ja liituda Boltiga.</p>
+            </div>
+        </div>
+        
+        <div class="program-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+                <h3>Alusta teenimist!</h3>
+                <p>Oled valmis alustama. Meie tugimeeskond on alati abiks ka pärast kursuse lõppu.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="pricing">
+        <h2>Hind</h2>
+        <div class="price-box">
+            <div class="price">690€</div>
+            <p class="price-note">Täispakk: teooria + praktika + litsentsi vormistamine</p>
+            <p style="color: #666; margin-bottom: 20px;">💳 Võimalik maksta osade kaupa</p>
+            <p style="color: #34D186; font-weight: 600; font-size: 1.2em;">⚡ Esimesed 5 registreerijat saavad -50€ soodustust!</p>
+        </div>
+    </div>
+
+    <div class="cta-section" id="cta">
+        <h2>Valmis alustama?</h2>
+        <p>Registreeru täna ja alusta teenimist juba paari nädala pärast!</p>
+        <div class="contact-buttons">
+            <a href="https://wa.me/3725xxxxxxx" class="contact-btn whatsapp">📱 WhatsApp</a>
+            <a href="tel:+3725xxxxxxx" class="contact-btn phone">📞 Helista kohe</a>
+        </div>
+        <p style="margin-top: 30px; font-size: 1.1em;">✉️ info@viktorijaautokool.ee</p>
+    </div>
+
+    <div class="footer">
+        <p><strong>Viktorija Autokool Nõmme</strong></p>
+        <p>Tallinn, Nõmme | Litsentseeritud autokool</p>
+        <p style="margin-top: 15px; opacity: 0.7;">© 2024 Viktorija Autokool. Kõik õigused kaitstud.</p>
+    </div>
+
+    <script>
+        function scrollToCTA() {
+            document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
