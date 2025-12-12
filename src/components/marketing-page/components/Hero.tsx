@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import { keyframes } from '@emotion/react';
 import mainHeroImg from '/main-hero-1.jpg';
+import { trackButtonClick, trackLinkClick } from '../../../lib/analytics';
 
 const pulseAnimation = keyframes`
   0% {
@@ -229,6 +230,17 @@ export default function Hero({
               href={buttonLink}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                // Check if buttonLink is a Stripe payment link
+                const isPayment = buttonLink && buttonLink.includes('buy.stripe.com');
+                trackButtonClick(
+                  'hero_primary_cta',
+                  isPayment ? 'payment' : 'info',
+                  'hero',
+                  displayButtonText || t('hero.home.button', { defaultValue: 'Записаться на курс' }),
+                  buttonLink
+                );
+              }}
               sx={(theme) => ({
                 position: 'relative',
                 minWidth: { xs: '280px', sm: '320px' },
@@ -287,6 +299,13 @@ export default function Hero({
               size="large"
               startIcon={<EmailIcon />}
               href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+              onClick={() => trackButtonClick(
+                'hero_email',
+                'info',
+                'hero',
+                t('common.send_email'),
+                'mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli'
+              )}
               sx={{
                 px: 4,
                 py: 1.5,

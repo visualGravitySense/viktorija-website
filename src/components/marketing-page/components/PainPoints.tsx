@@ -23,6 +23,7 @@ import SecurityIcon from '@mui/icons-material/Security';
 import SupportIcon from '@mui/icons-material/Support';
 import EmailIcon from '@mui/icons-material/Email';
 import { useTranslation } from 'react-i18next';
+import { trackButtonClick } from '../../../lib/analytics';
 
 const PainPointsContent = styled(Box)(({ theme }) => ({
   position: 'relative',
@@ -473,7 +474,17 @@ export default function PainPoints({
                       >
                         <StyledButton 
                           variant="contained" 
-                          size="large" 
+                          size="large"
+                          onClick={() => {
+                            const isPayment = item.buttonLink && item.buttonLink.includes('buy.stripe.com');
+                            trackButtonClick(
+                              `painpoint_${item.id}_button`,
+                              isPayment ? 'payment' : 'info',
+                              'painpoints',
+                              item.buttonText,
+                              item.buttonLink
+                            );
+                          }}
                           sx={{ 
                             fontSize: { xs: '1rem', sm: '1.1rem' }, 
                             py: { xs: 1.5, sm: 1.5 }, 
@@ -504,7 +515,17 @@ export default function PainPoints({
                       >
                         <StyledButton 
                           variant="contained" 
-                          size="large" 
+                          size="large"
+                          onClick={() => {
+                            const isPayment = item.buttonLink && item.buttonLink.includes('buy.stripe.com');
+                            trackButtonClick(
+                              `painpoint_${item.id}_button`,
+                              isPayment ? 'payment' : 'info',
+                              'painpoints',
+                              item.buttonText,
+                              item.buttonLink
+                            );
+                          }}
                           sx={{ 
                             fontSize: { xs: '1rem', sm: '1.1rem' }, 
                             py: { xs: 1.5, sm: 1.5 }, 
@@ -534,6 +555,13 @@ export default function PainPoints({
                       size="large"
                       startIcon={<EmailIcon />}
                       href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+                      onClick={() => trackButtonClick(
+                        `painpoint_${item.id}_email`,
+                        'info',
+                        'painpoints',
+                        t('common.send_email'),
+                        'mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli'
+                      )}
                       sx={{
                         width: '100%',
                         py: { xs: 1.5, sm: 1.5 },

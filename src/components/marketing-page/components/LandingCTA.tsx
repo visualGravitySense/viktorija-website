@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import { trackButtonClick, trackLinkClick } from '../../../lib/analytics';
 
 const LANDING_GREEN = '#34D186';
 const LANDING_GREEN_DARK = '#2AB673';
@@ -72,6 +73,13 @@ export default function LandingCTA() {
             target="_blank"
             rel="noopener noreferrer"
             startIcon={<WhatsAppIcon />}
+            onClick={() => trackButtonClick(
+              'whatsapp_cta',
+              'info',
+              'landing_cta',
+              t('landing.cta.button_whatsapp', { defaultValue: 'WhatsApp' }),
+              'https://wa.me/37253464508'
+            )}
             sx={{
               py: 1.8,
               px: 4,
@@ -98,6 +106,13 @@ export default function LandingCTA() {
             variant="contained"
             href="tel:+37253464508"
             startIcon={<PhoneIcon />}
+            onClick={() => trackButtonClick(
+              'phone_cta',
+              'info',
+              'landing_cta',
+              t('landing.cta.button_call', { defaultValue: 'Helista kohe' }),
+              'tel:+37253464508'
+            )}
             sx={{
               py: 1.8,
               px: 4,
@@ -137,6 +152,11 @@ export default function LandingCTA() {
           <Typography
             component="a"
             href="mailto:viktorijaautokool@hot.ee"
+            onClick={() => trackLinkClick(
+              'mailto:viktorijaautokool@hot.ee',
+              t('landing.cta.email', { defaultValue: 'viktorijaautokool@hot.ee' }),
+              'landing_cta'
+            )}
             sx={{
               fontSize: { xs: '0.95rem', sm: '1.1rem' },
               color: '#FFFFFF',

@@ -22,6 +22,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import creditPreviewImg from '/credit-preview.png';
 import highResImg from '/high-results-1.jpg';
 import carsParkImg from '/cars-park-1.jpg';
+import { trackButtonClick } from '../../../lib/analytics';
 
 interface FeatureItem {
   icon: React.ReactNode;
@@ -181,6 +182,13 @@ export function MobileLayout({
               component="a"
               href={items[selectedItemIndex].pdfUrl}
               target="_blank"
+              onClick={() => trackButtonClick(
+                `features_view_report_${selectedItemIndex}`,
+                'info',
+                'features',
+                t('features.view_report'),
+                items[selectedItemIndex].pdfUrl
+              )}
               sx={{ pointerEvents: 'auto', mt: 'auto' }}
             >
               {/* {t('features.view_document')} */}
@@ -453,7 +461,18 @@ export default function Features({ heading }: FeaturesProps) {
             {t('features.subtitle')}
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <StyledButton variant="contained" size="large" href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00">
+          <StyledButton 
+            variant="contained" 
+            size="large" 
+            href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
+            onClick={() => trackButtonClick(
+              'features_register',
+              'payment',
+              'features',
+              t('features.feature3'),
+              'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00'
+            )}
+          >
             {t('features.feature3')}
           </StyledButton>
           <Button
@@ -461,6 +480,13 @@ export default function Features({ heading }: FeaturesProps) {
             size="large"
             startIcon={<EmailIcon />}
             href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+            onClick={() => trackButtonClick(
+              'features_email',
+              'info',
+              'features',
+              t('common.send_email'),
+              'mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli'
+            )}
             sx={{
               px: 4,
               py: 1.5,

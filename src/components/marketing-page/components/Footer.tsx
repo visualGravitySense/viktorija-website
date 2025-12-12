@@ -17,6 +17,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { useTranslation } from 'react-i18next';
+import { trackButtonClick, trackLinkClick } from '../../../lib/analytics';
 
 function Copyright() {
   const { t } = useTranslation();
@@ -142,6 +143,12 @@ export default function Footer() {
               variant="contained"
               color="primary"
               size="small"
+              onClick={() => trackButtonClick(
+                'footer_subscribe',
+                'info',
+                'footer',
+                t('footer.subscribe_button')
+              )}
               sx={{ 
                 flexShrink: 0,
                 height: { xs: '40px', sm: '36px' },

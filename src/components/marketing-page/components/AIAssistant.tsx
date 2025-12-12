@@ -21,6 +21,7 @@ import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import EmailIcon from '@mui/icons-material/Email';
 import { useTranslation } from 'react-i18next';
+import { trackButtonClick } from '../../../lib/analytics';
 
 const floatAnimation = keyframes`
   0% { transform: translateY(0px); }
@@ -347,7 +348,22 @@ export default function AIAssistant({
           </QuoteBox>
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" alignItems="center">
-            <StyledButton variant="contained" size="large" href={buttonLink}>
+            <StyledButton 
+              variant="contained" 
+              size="large" 
+              href={buttonLink}
+              onClick={() => {
+                // Check if buttonLink is a Stripe payment link
+                const isPayment = buttonLink && buttonLink.includes('buy.stripe.com');
+                trackButtonClick(
+                  'ai_assistant_cta',
+                  isPayment ? 'payment' : 'info',
+                  'ai_assistant',
+                  buttonText,
+                  buttonLink
+                );
+              }}
+            >
               {buttonText}
             </StyledButton>
             <Button
@@ -355,6 +371,13 @@ export default function AIAssistant({
               size="large"
               startIcon={<EmailIcon />}
               href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+              onClick={() => trackButtonClick(
+                'ai_assistant_email',
+                'info',
+                'ai_assistant',
+                t('common.send_email'),
+                'mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli'
+              )}
               sx={{
                 px: 4,
                 py: 1.5,
