@@ -4,6 +4,7 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import { trackButtonClick } from '../../../lib/analytics';
 
 const StyledModal = styled(Modal)({
   display: 'flex',
@@ -76,6 +77,12 @@ export default function ExitIntentPopup({ open, onClose }: ExitIntentPopupProps)
           color="primary"
           size="large"
           fullWidth
+          onClick={() => trackButtonClick(
+            'exit_intent_assessment',
+            'info',
+            'exit_intent_popup',
+            'Get Instant Assessment'
+          )}
           sx={{ py: 1.5 }}
         >
           Get Instant Assessment →

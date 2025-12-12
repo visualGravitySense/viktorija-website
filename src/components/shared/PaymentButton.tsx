@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
+import { trackButtonClick } from '../../lib/analytics';
 
 const StyledPaymentButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius * 2,
@@ -50,6 +51,16 @@ export default function PaymentButton({
     };
     
     const stripeUrl = stripeUrls[category] || stripeUrls['category-a'];
+    
+    // Track button click
+    trackButtonClick(
+      `payment_${category}`,
+      'payment',
+      'payment_button',
+      defaultText,
+      stripeUrl
+    );
+    
     window.open(stripeUrl, '_blank');
   };
 

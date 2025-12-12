@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EmailIcon from '@mui/icons-material/Email';
 import { useTranslation } from 'react-i18next';
+import { trackButtonClick } from '../../../lib/analytics';
 
 interface FAQProps {
   title?: string;
@@ -147,7 +148,10 @@ export default function FAQ({
         {hasMoreItems && (
           <Button
             variant="outlined"
-            onClick={handleLoadMore}
+            onClick={() => {
+              trackButtonClick('faq_load_more', 'info', 'faq', t('faq.show_more'));
+              handleLoadMore();
+            }}
             sx={{
               px: 4,
               py: 1.5,
@@ -169,6 +173,13 @@ export default function FAQ({
           size="large"
           startIcon={<EmailIcon />}
           href="mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli"
+          onClick={() => trackButtonClick(
+            'faq_email',
+            'info',
+            'faq',
+            t('common.send_email'),
+            'mailto:viktorijaautokool@hot.ee?subject=Registratsioon%20autokooli'
+          )}
           sx={{
             px: 4,
             py: 1.5,

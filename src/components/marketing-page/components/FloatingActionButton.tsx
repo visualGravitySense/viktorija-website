@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { keyframes } from '@emotion/react';
+import { trackButtonClick } from '../../../lib/analytics';
 
 const pulse = keyframes`
   0% {
@@ -41,6 +42,7 @@ export default function FloatingActionButton({
   }, []);
 
   const scrollToTop = () => {
+    trackButtonClick('scroll_to_top', 'info', 'floating_action_button', t('common.scroll_to_top', { defaultValue: 'Наверх' }));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -55,6 +57,17 @@ export default function FloatingActionButton({
           href={buttonLink}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => {
+            // Check if buttonLink is a Stripe payment link
+            const isPayment = buttonLink && buttonLink.includes('buy.stripe.com');
+            trackButtonClick(
+              'floating_register_button',
+              isPayment ? 'payment' : 'info',
+              'floating_action_button',
+              t('hero.home.button', { defaultValue: 'Записаться на курс' }),
+              buttonLink
+            );
+          }}
           sx={(theme) => ({
             position: 'fixed',
             bottom: { xs: 80, sm: 24 },

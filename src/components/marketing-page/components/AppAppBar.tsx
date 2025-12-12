@@ -29,6 +29,7 @@ import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { trackButtonClick, trackLinkClick } from '../../../lib/analytics';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -294,6 +295,13 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
               component="a"
               href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
               target="_blank"
+              onClick={() => trackButtonClick(
+                'navbar_signup',
+                'payment',
+                'navbar',
+                t('navigation.signup'),
+                'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00'
+              )}
               sx={{
                 fontWeight: 600,
                 background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
@@ -355,6 +363,13 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     fullWidth
                     startIcon={<PhoneIcon />}
                     href="tel:+37253464508"
+                    onClick={() => trackButtonClick(
+                      'mobile_menu_call',
+                      'info',
+                      'mobile_menu',
+                      t('navigation.call_now'),
+                      'tel:+37253464508'
+                    )}
                     sx={{ 
                       mb: 1,
                       fontWeight: 600,
@@ -383,6 +398,13 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     component="a"
                     href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
                     target="_blank"
+                    onClick={() => trackButtonClick(
+                      'mobile_menu_book',
+                      'payment',
+                      'mobile_menu',
+                      t('navigation.book_lesson'),
+                      'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00'
+                    )}
                     sx={{
                       fontWeight: 600,
                       minHeight: 48,
@@ -544,6 +566,13 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     component="a"
                     href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
                     target="_blank"
+                    onClick={() => trackButtonClick(
+                      'mobile_menu_signup',
+                      'payment',
+                      'mobile_menu',
+                      t('navigation.signup'),
+                      'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00'
+                    )}
                     sx={{
                       fontWeight: 600,
                       minHeight: 48,

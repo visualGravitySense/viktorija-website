@@ -392,8 +392,55 @@
 
     <script>
         function scrollToCTA() {
+            // Track button click in Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'button_click', {
+                    event_category: 'info',
+                    event_label: 'hero_cta_button',
+                    button_name: 'hero_cta_button',
+                    button_location: 'hero',
+                    button_text: 'Registreeru kohe'
+                });
+            }
             document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
         }
+
+        // Track all button clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track WhatsApp button
+            const whatsappBtn = document.querySelector('a.contact-btn.whatsapp');
+            if (whatsappBtn) {
+                whatsappBtn.addEventListener('click', function() {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'button_click', {
+                            event_category: 'info',
+                            event_label: 'whatsapp_cta',
+                            button_name: 'whatsapp_cta',
+                            button_location: 'cta_section',
+                            button_text: 'WhatsApp',
+                            button_url: this.href
+                        });
+                    }
+                });
+            }
+
+            // Track phone button
+            const phoneBtn = document.querySelector('a.contact-btn.phone');
+            if (phoneBtn) {
+                phoneBtn.addEventListener('click', function() {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'button_click', {
+                            event_category: 'info',
+                            event_label: 'phone_cta',
+                            button_name: 'phone_cta',
+                            button_location: 'cta_section',
+                            button_text: 'Helista kohe',
+                            button_url: this.href
+                        });
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>
