@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mida meie õpilased ütlevad?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 20px;
+            min-height: 100vh;
+        }
+
+        .testimonials-section {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.35rem;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .testimonials-container {
+            display: grid;
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .testimonial-card:nth-child(1) { animation-delay: 0.1s; }
+        .testimonial-card:nth-child(2) { animation-delay: 0.2s; }
+        .testimonial-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 120px;
+            font-family: Georgia, serif;
+            color: rgba(102, 126, 234, 0.1);
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover .avatar {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .avatar::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+        }
+
+        .avatar-1 {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        .avatar-2 {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+
+        .avatar-3 {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .user-course {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .course-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .rating {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .star {
+            color: #fbbf24;
+            font-size: 1.25rem;
+        }
+
+        .testimonial-text {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #475569;
+            position: relative;
+            z-index: 1;
+            font-weight: 400;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #5b21b6;
+        }
+
+        .cta-container {
+            text-align: center;
+            animation: fadeIn 1s ease-out 0.6s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .cta-button {
+            background: white;
+            color: #5b21b6;
+            padding: 20px 48px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+        }
+
+        .verified-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 60px 16px;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .section-subtitle {
+                font-size: 1.15rem;
+                padding: 16px 20px;
+            }
+
+            .testimonial-card {
+                padding: 32px 24px;
+            }
+
+            .testimonial-card::before {
+                font-size: 80px;
+                top: 10px;
+                left: 20px;
+            }
+
+            .avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .user-name {
+                font-size: 1.25rem;
+            }
+
+            .user-course {
+                font-size: 0.9rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .testimonial-text {
+                font-size: 1.05rem;
+            }
+
+            .cta-button {
+                padding: 18px 36px;
+                font-size: 1.1rem;
+            }
+
+            .verified-badge {
+                top: 16px;
+                right: 16px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="testimonials-section">
+        <div class="section-header">
+            <h2 class="section-title">Mida meie õpilased ütlevad?</h2>
+            <p class="section-subtitle">
+                Parim autokool linnas! Sooritasin eksami esimesel katsel tänu kannatlikele ja professionaalsetele instruktoritele. 30 päevaga juhiluba käes!
+            </p>
+        </div>
+
+        <div class="testimonials-container">
+            <!-- Отзыв 1 -->
+            <div class="testimonial-card">
+                <div class="verified-badge">
+                    <span>✓</span>
+                    <span>Kinnitatud</span>
+                </div>
+                <div class="card-header">
+                    <div class="avatar avatar-1">EK</div>
+                    <div class="user-info">
+                        <div class="user-name">Maria K.</div>
+                        <div class="user-course">
+                            <span class="course-badge">B-kategooria juhiloa omanik</span>
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    Parim autokool linnas! Sooritasin <span class="highlight">eksami esimesel katsel</span> tänu kannatlikele ja professionaalsetele instruktoritele. <span class="highlight">30 päevaga juhiluba käes!</span>
+                </p>
+            </div>
+
+            <!-- Отзыв 2 -->
+            <div class="testimonial-card">
+                <div class="verified-badge">
+                    <span>✓</span>
+                    <span>Kinnitatud</span>
+                </div>
+                <div class="card-header">
+                    <div class="avatar avatar-2">MV</div>
+                    <div class="user-info">
+                        <div class="user-name">Thomas L.</div>
+                        <div class="user-course">
+                            <span class="course-badge">B-kategooria juhiloa omanik</span>
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    Ma kartsin sõitmist, kuid mu instruktor aitas mul hirmudest üle saada. Nüüd sõidan <span class="highlight">iga päev enesekindlalt! 100% soovitan!</span>
+                </p>
+            </div>
+
+            <!-- Отзыв 3 -->
+            <div class="testimonial-card">
+                <div class="verified-badge">
+                    <span>✓</span>
+                    <span>Kinnitatud</span>
+                </div>
+                <div class="card-header">
+                    <div class="avatar avatar-3">AS</div>
+                    <div class="user-info">
+                        <div class="user-name">Anna S.</div>
+                        <div class="user-course">
+                            <span class="course-badge">A-kategooria juhiloa omanik</span>
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    Tunnid olid nii harivad kui ka lõbusad. Õppisin mitte ainult eksamit sooritama, vaid olema <span class="highlight">tõeliselt hea juht</span>. Tänu individuaalsele lähenemisele!
+                </p>
+            </div>
+        </div>
+
+        <div class="cta-container">
+            <button class="cta-button">
+                <span>✉️</span>
+                <span>Saada email</span>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

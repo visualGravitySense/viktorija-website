@@ -1,0 +1,844 @@
+{
+  "common": {
+    "welcome": "Tere tulemast",
+    "login": "Logi sisse",
+    "logout": "Logi välja",
+    "settings": "Seaded",
+    "save": "Salvesta",
+    "cancel": "Tühista",
+    "delete": "Kustuta",
+    "edit": "Muuda",
+    "create": "Loo",
+    "search": "Otsi",
+    "loading": "Laadimine...",
+    "send_email": "Saada email",
+    "call": "Helista",
+    "scroll_to_top": "Üles"
+  },
+  "benefits": {
+    "title": "Mida sa saad",
+    "subtitle": "Meie autokooli õppe eelised",
+    "freedom": {
+      "title": "kõrgeim näitaja Tallinnas",
+      "description": "98% õpilastest sooritab eksami esimesel korral"
+    },
+    "savings": {
+      "title": "autokool garantiiga",
+      "description": "Juhiluba 4-5 nädalaga kui on kiire"
+    },
+    "travel": {
+      "title": "professionaalsed ja kannatlikud",
+      "description": "Kogenud õpetajad üle 15 aasta kogemusega"
+    },
+    "confidence": {
+      "title": "individuaalne lähenemine",
+      "description": "Iga õpilane saab 100% tähelepanu"
+    },
+    "career": {
+      "title": "kaasaegsed õppeautod",
+      "description": "Manuaal- ja automaatkäigukastiga"
+    },
+    "independence": {
+      "title": "paindlik ajakava",
+      "description": "õpid siis, kui sulle sobib"
+    }
+  },
+  "requirements": {
+    "title": "Mida vaja registreerumiseks",
+    "subtitle": "Lihtne registreerumise protsess - vaid 3 sammu",
+    "docs_title": "Dokumendid",
+    "process_title": "Registreerumise protsess",
+    "passport": "Pass või ID-kaart",
+    "medical": "Meditsiiniline tunnistus kategooria A või B jaoks",
+    "payment": "Makse (võib osamaksega)",
+    "step1": "Vali kategooria",
+    "step1_desc": "A, B või C",
+    "step2": "Täida vorm või helista",
+    "step2_desc": "Võtab vaid 2 minutit",
+    "step3": "Maksa ja alusta õppimist",
+    "step3_desc": "Turvaline makse Stripe kaudu",
+    "register_button": "Registreeru kohe"
+  },
+  "timer": {
+    "title": "Järgmine kursus algab",
+    "days": "päeva",
+    "hours": "tundi",
+    "minutes": "minutit",
+    "seconds": "sekundit",
+    "subtitle": "Jõua registreeruda enne kursuse algust!"
+  },
+  "languages": {
+    "ru": "Vene",
+    "et": "Eesti",
+    "en": "Inglise"
+  },
+  "seo": {
+    "default_keywords": "autokool, viktorija, driving school, sõiduõpetus, sõidukursused, Eesti, Tallinn, juhiluba, A-kategooria, B-kategooria, C-kategooria, 95% edu, esimesel korral, kogenud instruktorid, kaasaegsed autod, individuaalne lähenemine, paindlik ajakava, 100% tagatud tulemus",
+    "meta_description": "Viktorija Autokool - Eesti #1 autokool alates 1998. aastast! 95% õpilastest läbib eksami esimesel korral. Kogenud instruktorid, kaasaegsed autod, individuaalne lähenemine. Juhiluba 30 päevaga!",
+    "meta_title": "Viktorija Autokool - Juhiluba 30 päevaga | 95% edu esimesel korral"
+  },
+  "navigation": {
+    "home": "Avaleht",
+    "dashboard": "Juhtpaneel",
+    "profile": "Profiil",
+    "about": "Meist",
+    "services": "Teenused",
+    "reviews": "Arvustused",
+    "advantages": "Eelised",
+    "prices": "Hinnad",
+    "questions": "Küsimused",
+    "signin": "📚 Vaata hindu",
+    "signup": "🚀 Alusta täna!",
+    "contacts": "Kontaktid",
+    "call_now": "📞 Helista kohe - 5346 4508",
+    "book_lesson": "📅 Broneeri tasuta konsultatsioon",
+    "schedule": "Tunniplaan",
+    "theory": "Teooria",
+    "practical": "Praktika",
+    "exam_preparation": "Eksami ettevalmistus",
+    "view_schedule": "Vaata kõiki",
+    "packages": "Paketid",
+    "payment": "Makseviisid",
+    "bank_transfer": "Pangaülekanne",
+    "bank_account_details": "Pangakonto andmed",
+    "account_holder": "Konto omanik",
+    "account_number": "Konto number",
+    "bank_name": "Panga nimi",
+    "reference": "Viide",
+    "payment_reference": "Makse viide",
+    "copy_details": "Kopeeri andmed",
+    "copied": "Kopeeritud!",
+    "payment_instructions": "Makse juhised",
+    "payment_instructions_text": "Palun ülekanda summa meie pangakontole. Kasuta allpool olevat viitenumbrit. Teie tellimus töödeldakse pärast makse laekumist.",
+    "reference_number": "Viitenumber",
+    "generate_reference": "Genereeri viide",
+    "payment_confirmation": "Makse kinnitamine",
+    "payment_confirmation_text": "Pärast pangaülekande tegemist palun saatke meile kinnituse e-kiri koos tellimuse andmete ja makse viitega."
+  },
+  "footer": {
+    "subscribe": "Tellige uudiskiri",
+    "weekly_updates": "Saage iganädalaseid uuendusi. Mitte mingit rämpsposti!",
+    "email": "E-post",
+    "your_email": "Teie e-post",
+    "subscribe_button": "Tellige",
+    "product": "Toode",
+    "company": "Ettevõte",
+    "legal": "Juriidiline teave",
+    "jobs": "Töökohad",
+    "press": "Ajakirjandus",
+    "terms": "Tingimused",
+    "privacy": "Privaatsus",
+    "contacts": "Kontaktid",
+    "privacy_policy": "Privaatsuspoliitika",
+    "terms_of_service": "Teenusetingimused",
+    "copyright": "Autoriõigus ©",
+    "contact_us": "Võta meiega ühendust",
+    "phone": "Telefon/Viber/WhatsApp",
+    "email_address": "E-posti aadress",
+    "facebook": "Facebook"
+  },
+  "hero": {
+    "home": {
+      "title": "Viktorija Autokool Nõmme - Professionaalne Autokoolitus Tallinnas",
+      "subtitle": "Tere tulemast Viktorija Autokooli Nõmme! Oled valmis saama oma juhiloa? Meie autokool pakub professionaalset õpetust kategooriatele A (mootorratas) ja B (sõiduauto) juba üle 15 aasta. Meie unikaalne garantii: juhiluba 4-5 nädalaga või tagastame sulle raha tagasi!",
+      "description": "Statistika räägib ise enda eest - 98% meie õpilastest sooritab eksami esimesel korral. See ei ole juhus, vaid meie kogenud õpetajate ja individuaalse lähenemise tulemus. Alusta oma teekonda juhiloani kohe täna! Registreeri kursusele ja saada kohe juurdepääs kõigile õppematerjalidele.",
+      "button": "🚗 Juhiluba 30 päevaga - Alusta täna!"
+    },
+    "about": {
+      "title": "MEIST",
+      "subtitle": "AUTOKOOL Viktorija — KOOLITAME JUHTE, MITTE REISIJAID!",
+      "description": "Ühel päeval sündis väikeses Eesti linnas unistus: luua koht, kus inimesed mitte ainult ei saa juhiluba, vaid õpivad tõeliselt autot juhtima.",
+      "button": "Sinu juhiluba — meie missioon. Alustame koos! →"
+    },
+    "features": {
+      "title": "Muudame jalakäijaid juhtideks alates 1998. aastast!",
+      "subtitle": "🚗 Ei oska autot juhtida? See on ajutine!",
+      "description": "Meie autokool aitab sul omandada autojuhtimise kunsti ja saada B-kategooria juhiloa. Kogenud instruktorid, kaasaegsed autod ja individuaalne lähenemine igale õpilasele.",
+      "button": "Pargi meiega — ja juhiluba on sinu! →",
+      "image_alt": "Autokooli teenused"
+    }
+  },
+  "urgency": {
+    "category_b": {
+      "title": "🚗 Valitse teed B-kategooriaga!",
+      "subtitle": "Tere tulemast Viktorija Autokooli Nõmme!<br><br>Oled valmis saama oma juhiloa? Meie autokool pakub professionaalset õpetust kategooriatele A (mootorratas) ja B (sõiduauto) juba üle 15 aasta. Meie unikaalne garantii: juhiluba 4-5 nädalaga või tagastame sulle raha tagasi!",
+      "main_text": "Mis kuulub kursustesse? • Teooria – 28 akadeemilist tundi • Sõit – 28 akadeemilist tundi • Esmaabi kursused – 16 tundi • Pimeda ja libeda tee sõidukursused",
+      "highlight_text": "📋 Mida vajad registreerimiseks?",
+      "main_text_continuation": "🆔 Pass või ID-kaart 🩺 Meditsiiniline tõend B-kategooria jaoks",
+      "offer_title": "🔥 Alusta oma teekonda juhiloani täna – tee ootab sind! 🚦",
+      "offer_text": "Kursuse alguskuupäevad: 03.02.2025 – 17.30",
+      "button_text": "Manööverda oma unistuse poole — registreeru kursusele! →",
+      "limit_text": "Sinu juhiluba — meie missioon. Alustame koos!"
+    },
+    "exam_prep": {
+      "title": "🚦 ETTEVALMISTUS ARK EKSAMIKS",
+      "subtitle": "ARK eksam on nagu pimekohting: sa ei tea kunagi, kuidas see lõppeb.",
+      "main_text": "Kuid meiega on sul kindlasti teine kohting! Valmistame sind nii hästi ette, et inspektor hakkab kahtlema oma autoriteedis.",
+      "highlight_text": "Meie salajane eduretsept:",
+      "main_text_continuation": "• Eksami marsruudi simulaator • Psühholoogiline ettevalmistus 'Ka inspektor on inimene' • Paralleelparkimine (parem hoia silmad lahti) • Õnnesoov kooli direktorilt",
+      "offer_title": "📱 VEEBIKURSUSED: TEOORIA ILMA IGAVUSETA",
+      "offer_text": "Õpi oma pidžaamas! Meie kursused on mõeldud neile, kes soovivad õppida liikluseeskirju koos kassi ja teekruusiga. Unusta igavad loengud! Sisaldab: • Interaktiivsed tunnid • Testid ilma aknast välja hüppamise soovita • Animeeritud liiklusolukorrad • 24/7 juurdepääs",
+      "button_text": "Alusta õppimist →",
+      "limit_text": "Möödu kõigist teistest teel oma juhiloani!"
+    },
+    "category_a": {
+      "title": "🏍️ Tunne vabadust kahel rattal A-kategooriaga!",
+      "subtitle": "A-kategooria on sinu võimalus saada mootorratta juhtimise meistriks 🏁. Naudi kiirust, manööverdusvõimet ja unustamatuid emotsioone 🌟.",
+      "main_text": "📋 Mida vajad registreerimiseks? 🆔 Pass või ID-kaart 🩺 Meditsiiniline tõend A-kategooria jaoks",
+      "highlight_text": "🔥 Saa tõeliseks mootorratturiks – alusta koolitust täna! 🛣️",
+      "main_text_continuation": "Teooria ja praktika TÄISKURSUS: 570 €",
+      "offer_title": "📅 Vali endale sobiv alguskuupäev:",
+      "offer_text": "🎯 Esimene grupp: 10.02.2025 – 09.00 🎯 Teine grupp: 25.02.2025 – 09.00",
+      "button_text": "Registreeru mootorrattakursusele →",
+      "limit_text": "Kohtade arv on piiratud!"
+    },
+    "first_aid": {
+      "title": "🚑 Esmaabikursused – oluline samm sinu ohutuse poole!",
+      "subtitle": "Meie autokoolis õpid oskusi, mis aitavad sul õigesti reageerida hädaolukordades teel ja päästa elusid.",
+      "main_text": "✨ Miks see on oluline? 💔 Abi enne kiirabi saabumist võib päästa elu. 🧠 Õpid tegutsema õnnetuste, vigastuste ja teiste kriitiliste juhtumite korral. 🎓 Kursuste läbimise tunnistus on vajalik eksami sooritamiseks.",
+      "highlight_text": "Mida kursused sisaldavad?",
+      "main_text_continuation": "📚 Teooria ja praktika: päris stsenaariumid ja töö mannekeenidega. 🩺 Põhioskused: elustamine, verejooksu peatamine ja šoki abi.",
+      "offer_title": "🔥 Registreeru täna ja saa enesekindlaks juhiks! 🚦",
+      "offer_text": "Kursuse alguskuupäevad: 01.02.2025",
+      "button_text": "Registreeru kursustele →",
+      "limit_text": "Kohtade arv on piiratud!"
+    },
+    "final_course": {
+      "title": "🏁 Viimane etapp teel alalise juhiloani – valmista end ette võiduks!",
+      "subtitle": "Lõplik väljaõppekursus, talvine sõit – see on sinu viimane pingutus A- või B-kategooria eksamite edukaks sooritamiseks. Teeme kõik selleks, et tunneksid end enesekindlalt ja oleksid valmis mis tahes väljakutseteks teel.",
+      "main_text": "📋 Mida vajad registreerimiseks? 🆔 Pass või ID-kaart 🩺 Meditsiiniline tõend A- või B-kategooria jaoks",
+      "highlight_text": "🔥 Tee otsustav samm – alusta koolitust ja saa peagi juhiluba! 🚦",
+      "main_text_continuation": "TÄISKURSUS: 150 €",
+      "offer_title": "📅 Vali endale sobiv alguskuupäev:",
+      "offer_text": "🎯 Esimene grupp: 07.02.2025 – 08.00 🎯 Teine grupp: 22.02.2025 – 08.00",
+      "button_text": "Registreeru lõppkursusele →",
+      "limit_text": "Kohtade arv on piiratud!"
+    }
+  },
+  "admin_automation": {
+    "learning": {
+      "title": "Õppeetapid autokoolis",
+      "subtitle": "Muutu algajast enesekindlaks juhiks meie toetusega",
+      "button_text": "Alusta õppimist →",
+      "benefits": {
+        "assessment": {
+          "title": "Kiire hindamine",
+          "description": "Esialgne konsultatsioon ja sõidutaseme hindamine (30 minutit)"
+        },
+        "plan": {
+          "title": "Individuaalne plaan",
+          "description": "Saad personaalse sõiduõppe programmi"
+        },
+        "instructor": {
+          "title": "Instruktori tugi",
+          "description": "Meie instruktor viib läbi kõik vajalikud tunnid edukaks eksami sooritamiseks"
+        }
+      }
+    },
+    "time_saving": {
+      "title": "Säästa aega sõidutundidel",
+      "subtitle": "Keskmine õpilane kulutab 15+ tundi korralduslikele küsimustele, mida meie autokool lahendab automaatselt.",
+      "button_text": "Liigu reisijast juhiks — registreeru kohe! →",
+      "benefits": {
+        "schedule": {
+          "title": "Nutikas ajakavastamine",
+          "description": "Väldib konflikte ja optimeerib tunniplaani"
+        },
+        "reminders": {
+          "title": "Automaatsed meeldetuletused",
+          "description": "Vähendab puudumisi 78% võrra"
+        },
+        "documentation": {
+          "title": "Digitaalne dokumentatsioon",
+          "description": "Turvaline ja nõuetekohane kirjete pidamine"
+        },
+        "payments": {
+          "title": "Integreeritud maksed",
+          "description": "Automaatsed arved ja maksete jälgimine"
+        },
+        "analytics": {
+          "title": "Tulemuslikkuse analüütika",
+          "description": "Tuvastab õppimisel probleemsed valdkonnad"
+        }
+      }
+    }
+  },
+  "ai_assistant": {
+    "title": "Sinu usaldusväärne partner sõiduõppes",
+    "subtitle": "Meie autokool pakub kaasaegset lähenemist sõiduõppele — teooriast kuni eksami eduka sooritamiseni",
+    "button_text": "Astu juhireale — klõpsa siin! →",
+    "features": {
+      "answers": {
+        "title": "Kohesed vastused",
+        "description": "Kõigile küsimustele kursuste, hindade ja nõuete kohta"
+      },
+      "schedule": {
+        "title": "Paindlik ajakava",
+        "description": "Sünkroniseerimine sinu isikliku ajakavaga reaalajas"
+      },
+      "approach": {
+        "title": "Individuaalne lähenemine",
+        "description": "Maksimaalselt tõhusaks õppimiseks"
+      },
+      "support": {
+        "title": "Isiklik tugi",
+        "description": "Põhineb sinu edusammudel ja progressil"
+      },
+      "multilingual": {
+        "title": "Mitmekeelne tugi",
+        "description": "Eri riikidest pärit õpilaste õpetamiseks"
+      }
+    },
+    "quote": {
+      "text": "Tänu individuaalsele lähenemisele ja paindlikule ajakavale sain juhiloa kätte vaid 2 kuuga! Instruktorid on alati kättesaadavad ja valmis aitama.",
+      "author": "Anna Petrova",
+      "position": "Autokooli lõpetaja"
+    }
+  },
+  "painpoints": {
+    "title": "Juhtimiskategooriad - vali oma tee vabaduseni!",
+    "subtitle": "Kui õpid meie instruktoritega parkima, ei ole paralleelparkimine enam sinu õudusunenägu, vaid hommikune soojendus. 18+ aastat kogemust, 1000+ õpilast ja 95% edu!",
+    "no_categories": "Kategooriad pole saadaval",
+    "theory": "Teooria",
+    "lesson": "Üks tund",
+    "total": "Kokku",
+    "euro": "eurot",
+    "categories": {
+      "a": {
+        "title": "🏍️ A-kategooria — Kui kaks pedaali on juba liiga palju!",
+        "description": "A-kategooria juhiluba võimaldab juhtida mootorratast. Meie kursus sisaldab:",
+        "button": "30 päevaga valmis!",
+        "price_label": "Hind:"
+      },
+      "b": {
+        "title": "🚗 B-kategooria. Neile, kes on väsinud juhile ütlemast \"vale tee!\"",
+        "description": "B-kategooria juhiluba annab õiguse juhtida sõiduautot kuni 3500 kg. Meie kursus sisaldab:",
+        "button": "Juhiluba lihtsalt!",
+        "price_label": "Vabaduse hind:",
+        "manual_total": "Manuaalkäigukast kokku:",
+        "auto_total": "Automaatkäigukast kokku:"
+      },
+      "c": {
+        "title": "🎓 Lõppkursus. Viimane tõuge unistuste juhiloani!",
+        "description": "Viimane sirge tiitlini",
+        "button": "Alusta kohe!",
+        "price_label": "Investeering hirmuvabasse tulevikku:",
+        "after_price": "Hindamatu neile, kes soovivad eksami esimesel korral läbida, mitte korduslubade kollektsioneerimist.",
+        "final_label": "Lõppkursus:"
+      }
+    },
+    "instructors": {
+      "title": "Meie Kogenud Instruktorid",
+      "subtitle": "Professionaalne meeskond paljude aastate õpetamiskogemusega",
+      "button": "Registreeri tunnile"
+    }
+  },
+  "about": {
+    "team": {
+      "title": "MEIE MEESKOND: INIMESED, KES ARMASTAVAD OMA TÖÖD",
+      "subtitle": "Juba rohkem kui 15 aastat oleme muutnud ebakindlad jalakäijad enesekindlateks juhtideks. Selle aja jooksul on meie lõpetajad pannud oma autode ratastele nii palju kilomeetreid, et oleks võinud jõuda Kuule ja tagasi... mitu korda!",
+      "main_text": "Meie autokoolis töötavad mitte lihtsalt instruktorid, vaid tõelised rooli võlurid.",
+      "instructor_name": "Igor Nagorski",
+      "instructor_description": "— kooli juht ja asutaja, legendaarne isik, teooria guru, tunneb liikluseeskirju paremini kui oma koduaadressi. Sõiduõpetaja, kelle kannatlikkus võiks olla kantud Guinnessi rekordite raamatusse. Isegi kui sul auto kümme korda järjest foori all välja sureb, naeratab ta lihtsalt ja ütleb: Proovime üheteistkümnendat korda!",
+      "why_title": "MIKS MEIE? SEST ME OLEME PARIMAD!",
+      "testimonial": "Siin tõesti hoolitakse igast õpilasest. Minu instruktor Andrei võttis arvesse kõik mu hirmud ja aitas mul need ületada. Nüüd sõidan ma sellise naudinguga, nagu oleksin kogu elu roolis olnud! — Katrin, 34-aastane",
+      "button": "Manööverda unistuse poole — registreeru kursusele! →",
+      "limit_text": "Meil pole õpetamise malle, sest iga õpilane on ainulaadne. Mõned kardavad kiirust, mõned pöördeid ja mõned lihtsalt ei suuda meenutada, kus asub suunatuli. Ja see on normaalne!"
+    },
+    "gallery": {
+      "title": "Autokooli Fotogalerii",
+      "captions": {
+        "1": "Mootorratta praktika",
+        "2": "Õppeklass",
+        "3": "Õppeprotsess",
+        "4": "Tunnid instruktoriga",
+        "5": "Libedaga sõidu ala",
+        "6": "Talvine sõit"
+      },
+      "images": {
+        "motorcycle_practice": "Mootorratta praktika",
+        "classroom_1": "Õppeklass 1",
+        "classroom_2": "Õppeklass 2",
+        "classroom_3": "Õppeklass 3",
+        "ice_area_1": "Libedaga sõidu ala 1",
+        "ice_area_2": "Libedaga sõidu ala 2"
+      }
+    },
+    "instructors": {
+      "1": {
+        "title": "👨‍🏫 Igor Nagorski",
+        "description": "Autokool \"Viktorija\" asutaja ja juht, kogenud sõiduõpetaja. Auto: Toyota Corolla"
+      },
+      "2": {
+        "title": "👨‍🏫 Maxim Fedorenko",
+        "description": "Sõiduõpetaja, kannatlik ja hooliv õpetaja. Auto: Volkswagen Golf"
+      },
+      "3": {
+        "title": "👨‍🏫 Stanislav Zigadlo",
+        "description": "Sõiduõpetaja 18-aastase pedagoogilise staažiga. Auto: Skoda Octavia"
+      },
+      "4": {
+        "title": "👨‍🏫 Ivan Skorobogatov",
+        "description": "Kogenud instruktor, töötas ARK-i eksamineerijana üle 2,5 aasta. Auto: Toyota Yaris"
+      },
+      "5": {
+        "title": "👨‍🏫 Andrei Naan",
+        "description": "Kõrgelt kvalifitseeritud B- ja A-kategooria sõiduõpetaja. Auto: Volkswagen Polo"
+      }
+    },
+    "instructors_component": {
+      "default_title": "Meie Instruktorid",
+      "default_subtitle": "Kogenud instruktorid aitavad sul omandada sõiduoskused",
+      "sign_up_button": "Registreeri tunnile",
+      "instructors": {
+        "igor": {
+          "name": "Igor Nagorski",
+          "description": "Autokool \"Viktorija\" asutaja ja juht, kogenud sõiduõpetaja. Auto: Toyota Corolla"
+        },
+        "maksim": {
+          "name": "Maxim Fedorenko",
+          "description": "Sõiduõpetaja, kannatlik ja hooliv õpetaja. Auto: Volkswagen Golf"
+        },
+        "stanislav": {
+          "name": "Stanislav Zigadlo",
+          "description": "Sõiduõpetaja 18-aastase pedagoogilise staažiga. Auto: Skoda Octavia"
+        },
+        "ivan": {
+          "name": "Ivan Skorobogatov",
+          "description": "Kogenud instruktor, töötas ARK-i eksamineerijana üle 2,5 aasta. Auto: Toyota Yaris"
+        },
+        "andrei": {
+          "name": "Andrei Naan",
+          "description": "Kõrgelt kvalifitseeritud B- ja A-kategooria sõiduõpetaja. Auto: Volkswagen Polo"
+        }
+      }
+    }
+  },
+  "features": {
+    "title": "Miks valida meie autokool?",
+    "subtitle": "Pakume ainulaadset lähenemist juhi väljaõppele",
+    "feature1": "Kogenud instruktorid",
+    "feature1_desc": "Meie meeskond koosneb sertifitseeritud instruktoritest, kellel on aastatepikkune kogemus",
+    "feature2": "Kaasaegsed õppesõidukid",
+    "feature2_desc": "Õpi hästi hooldatud, kaasaegsete sõidukitega, millel on topeltjuhtimisseadmed",
+    "feature3": "Paindlik ajakava",
+    "feature3_desc": "Vali tundide ajad, mis sobivad sinu tihedasse ajakavasse",
+    "feature4": "Põhjalik õppekava",
+    "feature4_desc": "Õpi kõiki sõitmise aspekte algtasemest kuni keerulisema tehnikani",
+    "feature5": "Individuaalne lähenemine",
+    "feature5_desc": "Personaalne tähelepanu iga õpilase unikaalsetele vajadustele",
+    "feature6": "Kõrge läbimisprotsent",
+    "feature6_desc": "Suurepärased edu määrad esimest korda eksamil käijatele",
+    "view_report": "Vaata aruannet"
+  },
+  "testimonials": {
+    "title": "Mida meie õpilased ütlevad - 1000+ õpilast, 95% edu!",
+    "testimonial1": {
+      "text": "Parim autokool linnas! Sooritasin eksami esimesel katsel tänu kannatlikele ja professionaalsetele instruktoritele. 30 päevaga juhiluba käes!",
+      "author": "Maria K.",
+      "role": "B-kategooria juhiloa omanik",
+      "rating": "⭐⭐⭐⭐⭐"
+    },
+    "testimonial2": {
+      "text": "Ma kartsin sõitmist, kuid mu instruktor aitas mul hirmudest üle saada. Nüüd sõidan iga päev enesekindlalt! 100% soovitan!",
+      "author": "Thomas L.",
+      "role": "B-kategooria juhiloa omanik",
+      "rating": "⭐⭐⭐⭐⭐"
+    },
+    "testimonial3": {
+      "text": "Tunnid olid nii harivad kui ka lõbusad. Õppisin mitte ainult eksamit sooritama, vaid olema tõeliselt hea juht. Tänu individuaalsele lähenemisele!",
+      "author": "Anna S.",
+      "role": "A-kategooria juhiloa omanik",
+      "rating": "⭐⭐⭐⭐⭐"
+    }
+  },
+  "highlights": {
+    "title": "Meie eelised - Miks valida Viktorija Autokool?",
+    "subtitle": "18+ aastat kogemust, 1000+ õpilast, 95% edu esimesel korral!",
+    "highlight1": "✅ 100% tagatud tulemus",
+    "highlight1_desc": "Kui ei läbi eksami esimesel korral, õpetame tasuta kuni tulemuseni!",
+    "highlight2": "🚗 Kaasaegsed autod",
+    "highlight2_desc": "Uued, turvalised ja mugavad õppeautod kõigi kategooriate jaoks",
+    "highlight3": "👨‍🏫 Kogenud instruktorid",
+    "highlight3_desc": "18+ aastat kogemust, sertifitseeritud professionaalid, individuaalne lähenemine",
+    "highlight4": "⏰ Paindlik ajakava",
+    "highlight4_desc": "Õpi oma tempos - hommikul, õhtul või nädalavahetusel",
+    "highlight5": "🏆 95% edu esimesel korral",
+    "highlight5_desc": "Meie õpilastest 95% läbib eksami esimesel katsel - see on Eesti rekord!",
+    "highlight6": "Kõrge läbimisprotsent",
+    "highlight6_desc": "Suurepärased edu määrad esimest korda eksamil käijatele",
+    "cta_button": "Alusta oma teekonda täna!"
+  },
+  "pricing": {
+    "title": "Meie hinnapaketid",
+    "subtitle": "Läbipaistev hinnakujundus ilma peidetud tasudeta",
+    "category_a": "A-kategooria",
+    "category_b": "B-kategooria",
+    "category_c": "C-kategooria",
+    "theory": "Teooriakursus",
+    "practice": "Praktilised tunnid",
+    "exam_prep": "Eksamiks ettevalmistus",
+    "per_hour": "tunnis",
+    "button": "Vali pakett",
+    "most_popular": "Populaarseim",
+    "features": "Mida pakett sisaldab",
+    "feature1": "Põhjalik teooriakursus",
+    "feature2": "Praktilised sõidutunnid",
+    "feature3": "Õppematerjalid",
+    "feature4": "Proovieksam",
+    "feature5": "Tasuta kordusõpe läbikukkumise korral",
+    "feature6": "Eksami registreerimisabi",
+    "total": "kokku"
+  },
+  "pricing_data": {
+    "title": "Vali oma pakett",
+    "subtitle": "Põhjalik koolitus meie kõige zen-instruktoritega, kes püsivad rahulikud isegi siis, kui ajad gaasi piduriga segi.",
+    "tiers": {
+      "a": {
+        "title": "🏍️ A-kategooria",
+        "description": [
+          "Täielik koolituskursus",
+          "Mugav praktika",
+          "Paindlik ajakava",
+          "Täielik tugi"
+        ],
+        "button_text": "Roheline tuli õigustele — klõpsa!"
+      },
+      "b": {
+        "title": "🚗 B-kategooria",
+        "subheader": "Populaarseim",
+        "description": [
+          "28 akadeemilist tundi teooriat",
+          "28 akadeemilist tundi sõitu",
+          "16 tundi esmaabikursusi",
+          "Pimeda ja libeda tee sõidukursused",
+          "Individuaalne lähenemine",
+          "Täielik tugi"
+        ],
+        "button_text": "Kinnita turvavöö edule — alusta!"
+      },
+      "final": {
+        "title": "🎓 Lõppkursus",
+        "description": [
+          "Paindlik tunniplaan",
+          "Õppematerjalid",
+          "Ekstreemolukordade praktika",
+          "Sõiduvalmiduse garantii"
+        ],
+        "button_text": "Saa maksimum — registreeru!"
+      }
+    }
+  },
+  "faq": {
+    "title": "Korduma kippuvad küsimused",
+    "subtitle": "Leia vastused levinud küsimustele meie autokooli kohta",
+    "question1": "Kui kaua võtab juhiloa saamine aega?",
+    "answer1": "Juhiloa saamiseks kuluv aeg sõltub kategooriast ja sinu õppimiskiirusest. Keskmiselt kulub B-kategooria jaoks 1-3 kuud.",
+    "question2": "Mitu sõidutundi mul vaja läheb?",
+    "answer2": "Tundide arv sõltub sinu varasemast kogemusest ja kui kiiresti õpid. Enamik õpilasi vajab B-kategooria jaoks 20-30 tundi.",
+    "question3": "Milliseid dokumente vajan õppimise alustamiseks?",
+    "answer3": "Vajad oma isikutunnistust, tervisetõendit ja passipilti. Aitame sind paberimajandusega.",
+    "question4": "Millal maksan tundide eest?",
+    "answer4": "Võid maksta kogu kursuse eest ette koos allahindlusega või maksta osade kaupa õpingute edenedes.",
+    "question5": "Kas saan tunde võtta õhtuti või nädalavahetustel?",
+    "answer5": "Jah, pakume paindlikku ajakava, sealhulgas õhtuti ja nädalavahetustel, et sobida sinu tihedasse ajakavasse.",
+    "question6": "Mis saab, kui kukun eksamil läbi?",
+    "answer6": "Kui kukud eksamil läbi, pakume lisatuge ja harjutamist enne uut katset. Oleme pühendunud sinu edule.",
+    "show_more": "Näita rohkem küsimusi"
+  },
+  "errors": {
+    "required": "See väli on kohustuslik",
+    "invalidEmail": "Vigane e-posti aadress",
+    "serverError": "Serveri viga",
+    "notFound": "Lehekülge ei leitud"
+  },
+  "logo_collection": {
+    "title": "Meid usaldavad need, kes väärtustavad professionaalsust teel",
+    "description": "Kui jutt käib liiklusohutusest, ei ole juhuslikke partnereid. Just sellepärast teevad meiega koostööd ettevõtted, kelle jaoks juhtide professionaalsus pole pelgalt sõnad, vaid igapäevane vajadus."
+  },
+  "driving_categories": {
+    "page_title": "Vali oma sõidukategooria",
+    "page_subtitle": "Vali oma vajadustele sobiv kursus",
+    "categories": {
+      "a": {
+        "title": "🏍️ A-kategooria",
+        "description": "Pakume täielikku koolituskursust, mis sisaldab teoreetilisi tunde ja individuaalseid praktilisi õppetunde kaasaegsetel mootorratastel kogenud instruktoritega."
+      },
+      "b": {
+        "title": "🚗 B-kategooria",
+        "description": "Pakume täielikku koolituskursust, mis sisaldab teoreetilisi tunde ja individuaalseid praktilisi õppetunde kaasaegsetel autodel kogenud instruktoritega."
+      },
+      "c": {
+        "title": "🚚 C-kategooria",
+        "description": "Pakume täielikku koolituskursust, mis sisaldab teoreetilisi tunde ja individuaalseid praktilisi õppetunde kaasaegsetel veoautodel kogenud instruktoritega."
+      }
+    }
+  },
+  "social_proof": {
+    "rating": {
+      "value": "4.9/5",
+      "label": "Hindamine",
+      "sublabel": "1000+ arvustust"
+    },
+    "experience": {
+      "value": "18+",
+      "label": "Aastat kogemust",
+      "sublabel": "Alates 1998"
+    },
+    "students": {
+      "value": "1000+",
+      "label": "Õpilast",
+      "sublabel": "Edukalt lõpetanud"
+    },
+    "success_rate": {
+      "value": "95%",
+      "label": "Edu esimesel korral",
+      "sublabel": "Eesti rekord"
+    }
+  },
+  "checkout": {
+    "steps": {
+      "shipping": "Tarneaadress",
+      "payment": "Makseteave",
+      "review": "Tellimuse ülevaade"
+    },
+    "products": {
+      "theory_a": {
+        "name": "Teooriaõpe A",
+        "desc": "Baas teooriakursus"
+      },
+      "theory_b": {
+        "name": "Teooriaõpe B",
+        "desc": "Edasijõudnute teooriakursus"
+      },
+      "theory": {
+        "desc": "Teooriakursuse tasu"
+      },
+      "lessons_a": {
+        "name": "Sõidutunnid A",
+        "desc": "Baas sõidutunnid"
+      },
+      "lessons_b": {
+        "name": "Sõidutunnid B",
+        "desc": "Edasijõudnute sõidutunnid"
+      },
+      "lessons": {
+        "desc": "Ühe tunni hind"
+      },
+      "manual_a": {
+        "name": "Manuaalkäigukasti kursus A",
+        "desc": "Baas manuaalkäigukasti kursus"
+      },
+      "manual_b": {
+        "name": "Manuaalkäigukasti kursus B",
+        "desc": "Edasijõudnute manuaalkäigukasti kursus"
+      },
+      "manual": {
+        "desc": "Täielik kursus"
+      },
+      "final_course": {
+        "name": "Lõppkursus",
+        "desc": "Põhjalik lõppkursus"
+      }
+    },
+    "transmission_type": "Käigukasti tüüp",
+    "manual_transmission": "Manuaalkäigukasti kogusumma",
+    "automatic_transmission": "Automaatkäigukasti kogusumma",
+    "make_gift": "Tee kingituseks",
+    "gift_message": "Saadame kingisaajale ilusa kinkekaardi koos teie isikliku sõnumiga",
+    "recipient_email": "Saaja e-post",
+    "recipient_email_placeholder": "Sisestage saaja e-posti aadress",
+    "invalid_email": "Palun sisestage kehtiv e-posti aadress",
+    "selected_products": "Valitud tooted",
+    "thank_you": "Täname tellimuse eest!",
+    "order_number": "Teie tellimuse number on",
+    "email_confirmation": "Oleme saatnud tellimuse kinnituse e-postile ja teavitame teid, kui see on saadetud.",
+    "go_to_orders": "Mine minu tellimuste juurde",
+    "previous": "Tagasi",
+    "back": "Tagasi",
+    "next": "Edasi",
+    "place_order": "Esita tellimus",
+    "view_details": "Vaata üksikasju",
+    "address": {
+      "first_name": "Eesnimi",
+      "first_name_placeholder": "Jaan",
+      "last_name": "Perekonnanimi",
+      "last_name_placeholder": "Tamm",
+      "address_line1": "Aadress, rida 1",
+      "address_line1_placeholder": "Tänava nimi ja maja number",
+      "address_line2": "Aadress, rida 2",
+      "address_line2_placeholder": "Korter, tuba jne (valikuline)",
+      "city": "Linn",
+      "city_placeholder": "Tallinn",
+      "state": "Maakond",
+      "state_placeholder": "Harjumaa",
+      "zip": "Postiindeks",
+      "zip_placeholder": "12345",
+      "country": "Riik",
+      "country_placeholder": "Eesti",
+      "use_shipping_address": "Kasuta seda aadressi makseandmete jaoks"
+    },
+    "payment": {
+      "card": "Kaart",
+      "bank_account": "Pangakonto",
+      "credit_card": "Krediitkaart",
+      "secure_card": "Turvaline kaardimakse",
+      "secure_card_payment": "Turvaline kaardimakse",
+      "payment_successful": "Makse õnnestus!",
+      "receipt_email": "Kviitung on saadetud teie e-postile.",
+      "processing": "Töödeldakse...",
+      "pay_now": "Maksa nüüd",
+      "card_element_error": "Kaardi element ei leitud",
+      "generic_error": "Tekkis viga. Palun proovige uuesti.",
+      "secure_payment_message": "Teie makseandmed on turvalised ja krüptitud.",
+      "card_number": "Kaardi number",
+      "cvv": "CVV",
+      "expiry_date": "Kehtivusaeg",
+      "name_on_card": "Kaardi omanik",
+      "name_placeholder": "Jaan Tamm",
+      "remember_card": "Jäta kaardi andmed meelde edaspidiseks",
+      "test_mode_message": "See on testrežiim. Teilt ei võeta raha.",
+      "bank_info_message": "Teie tellimus töödeldakse pärast makse laekumist.",
+      "account_name": "Konto omanik",
+      "account_name_placeholder": "Jaan Tamm",
+      "account_number": "Konto number",
+      "account_number_placeholder": "EE123456789",
+      "routing_number": "Panga kood",
+      "routing_number_placeholder": "HABAEE2X",
+      "save_account_info": "Salvesta konto andmed edaspidiseks kasutamiseks",
+      "bank_transfer": "Pangaülekanne",
+      "bank_account_details": "Pangakonto andmed",
+      "account_holder": "Konto omanik",
+      "bank_name": "Panga nimi",
+      "reference": "Viide",
+      "payment_reference": "Makse viide",
+      "copy_details": "Kopeeri andmed",
+      "copied": "Kopeeritud!",
+      "payment_instructions": "Makse juhised",
+      "payment_instructions_text": "Palun ülekanda summa meie pangakontole. Kasuta allpool olevat viitenumbrit. Teie tellimus töödeldakse pärast makse laekumist.",
+      "reference_number": "Viitenumber",
+      "generate_reference": "Genereeri viide",
+      "payment_confirmation": "Makse kinnitamine",
+      "payment_confirmation_text": "Pärast pangaülekande tegemist palun saatke meile kinnituse e-kiri koos tellimuse andmete ja makse viitega.",
+      "confirm_payment": "Kinnita makse"
+    },
+    "review": {
+      "payment_successful": "Makse sooritatud edukalt!",
+      "confirmation_email": "Tellimuse kinnitus on saadetud teie e-postile",
+      "order_summary": "Tellimuse kokkuvõte",
+      "service": "Teenus",
+      "driving_lessons": "Sõidutunnid",
+      "total": "Kokku",
+      "shipment_details": "Saaja andmed",
+      "payment_details": "Makse andmed",
+      "products": "Tooted",
+      "products_selected": "{{count}} valitud",
+      "shipping": "Saatmine",
+      "plus_taxes": "Pluss maksud",
+      "payment": {
+        "card type": "Kaardi tüüp",
+        "card holder": "Kaardi omanik",
+        "card number": "Kaardi number",
+        "expiry date": "Kehtivusaeg"
+      }
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "🚗 Hakka Bolt Juhiks! Viktorija Autokool Nõmme",
+      "subtitle": "Professionaalne juhikoolitus ja kõik vajalikud dokumendid\nAlusta teenimist juba 2 nädala pärast",
+      "button": "Registreeru kohe →"
+    },
+    "why_choose": {
+      "title": "Miks valida Viktorija Autokool?",
+      "quick_start": {
+        "title": "Kiire alustamine",
+        "description": "Täielik koolitus 2 nädala jooksul. Kõik dokumendid ja litsents korras"
+      },
+      "earn_money": {
+        "title": "Teenid kohe raha",
+        "description": "Bolt juhid teenivad keskmiselt 15-25€/tund. Paindlik töögraafik"
+      },
+      "all_in_one": {
+        "title": "Kõik ühest kohast",
+        "description": "Aitame hankida takso litsentsi, registreerida Boltis ja alustada tööd"
+      },
+      "experienced_instructors": {
+        "title": "Kogenud juhendajad",
+        "description": "Õpetame kõik praktilised nippe ja linna parimad marsruudid"
+      }
+    },
+    "stats": {
+      "training_time": {
+        "value": "2 nädalat",
+        "label": "Koolitus ja dokumentide vormistamine"
+      },
+      "success_rate": {
+        "value": "100%",
+        "label": "Aitame kõiki eksamitele ettevalmistada"
+      },
+      "graduates": {
+        "value": "500+",
+        "label": "Lõpetajat töötab juba Boltis"
+      }
+    },
+    "how_it_works": {
+      "title": "Kuidas see toimub?",
+      "step1": {
+        "title": "Registreerimine ja konsultatsioon",
+        "description": "Räägime läbi kõik detailid ja kontrollime sinu dokumente. Tasuta konsultatsioon!"
+      },
+      "step2": {
+        "title": "Teooria ja eksamid",
+        "description": "5 tundi taksojuhi teooriat: liikluseeskirjad, klienditeenindus, maksusüsteem. Online ja kohapeal."
+      },
+      "step3": {
+        "title": "Praktilised sõidutunnid",
+        "description": "10 tundi praktikat kogenud juhendajaga. Õpid parimaid marsruute ja kliendisuhtlust."
+      },
+      "step4": {
+        "title": "Dokumentide vormistamine",
+        "description": "Aitame hankida takso litsentsi, registreerida ettevõtjaks (FIE) ja liituda Boltiga."
+      },
+      "step5": {
+        "title": "Alusta teenimist!",
+        "description": "Oled valmis alustama. Meie tugimeeskond on alati abiks ka pärast kursuse lõppu."
+      }
+    },
+    "pricing": {
+      "title": "Hind",
+      "price": "690€",
+      "package_description": "Täispakk: teooria + praktika + litsentsi vormistamine",
+      "installment": "Võimalik maksta osade kaupa",
+      "special_offer": "Esimesed 5 registreerijat saavad -50€ soodustust!",
+      "button_theory": "Maksta teooria",
+      "button_full_course": "Maksta kogu kursuse eest ja saada soodustus"
+    },
+    "cta": {
+      "title": "Valmis alustama?",
+      "subtitle": "Registreeru täna ja alusta teenimist juba paari nädala pärast!",
+      "button_whatsapp": "WhatsApp",
+      "button_call": "Helista kohe",
+      "email": "viktorijaautokool@hot.ee"
+    },
+    "testimonials": {
+      "title": "What Our Students Say",
+      "testimonial1": {
+        "text": "Best driving school in town! I passed my exam on the first try thanks to the patient and professional instructors.",
+        "name": "Maria K.",
+        "license": "Category B License Holder"
+      },
+      "testimonial2": {
+        "text": "I was terrified of driving, but my instructor helped me overcome my fears. Now I drive with confidence every day!",
+        "name": "Thomas L.",
+        "license": "Category A License Holder"
+      },
+      "testimonial3": {
+        "text": "The lessons were both educational and fun. I learned not just to pass the test, but to be a truly good driver.",
+        "name": "Anna S.",
+        "license": "Category B License Holder"
+      },
+      "send_email": "Send email"
+    }
+  }
+} 
