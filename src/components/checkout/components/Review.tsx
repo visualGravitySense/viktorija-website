@@ -29,6 +29,25 @@ export default function Review({
 }: ReviewProps) {
   const { t } = useTranslation();
   
+  // Google Ads Conversion Tracking
+  React.useEffect(() => {
+    if (paymentSuccess && typeof window !== 'undefined' && window.gtag) {
+      // Extract numeric value from orderTotal (remove € and parse)
+      const numericValue = parseFloat(orderTotal.replace(/[^\d.,]/g, '').replace(',', '.')) || 1.0;
+      
+      // Generate or use transaction ID from payment data
+      const transactionId = paymentData?.id || paymentData?.paymentIntentId || `TXN-${Date.now()}`;
+      
+      // Send conversion event to Google Ads
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-17804500858/xC1QCPztwdQbEPq-7KlC',
+        'value': numericValue,
+        'currency': 'EUR',
+        'transaction_id': transactionId
+      });
+    }
+  }, [paymentSuccess, orderTotal, paymentData]);
+  
   // Default payment details if not provided through props
   const payments = paymentData ? [
     { name: 'Payment method:', detail: paymentData.card?.brand || 'Credit Card' },
