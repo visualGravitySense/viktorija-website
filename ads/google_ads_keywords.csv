@@ -1,0 +1,39 @@
+Keyword,Match Type,Group,Priority,Expected CPC,Expected Conversion
+viktorija autokool,Exact,Brand,High,€0.50-1.00,15-25%
+viktorija autokool nõmme,Exact,Brand,High,€0.60-1.20,12-20%
+viktorija autokool tallinnas,Exact,Brand,High,€0.70-1.50,10-18%
+autokool viktorija,Phrase,Brand,High,€0.80-1.80,8-15%
+autokool nõmmes,Exact,Geo+Category,High,€1.50-3.00,8-12%
+autokool nõmmes tallinnas,Exact,Geo+Category,High,€1.80-3.50,7-11%
+b kategooria kursused tallinnas,Phrase,Geo+Category,High,€2.00-4.00,6-10%
+a kategooria kursused tallinnas,Phrase,Geo+Category,High,€1.80-3.50,5-9%
+autokool nõmmes b kategooria,Phrase,Geo+Category,High,€2.20-4.50,7-11%
+autokool nõmmes a kategooria,Phrase,Geo+Category,High,€2.00-4.00,6-10%
+juhiloa saamine kiiresti,Phrase,Commercial,High,€2.50-5.00,10-15%
+juhiluba 4-5 nädalaga,Exact,Commercial,High,€2.00-4.00,12-18%
+juhiloa saamine nõmmes,Phrase,Commercial,High,€2.20-4.50,8-13%
+autokool hinnad tallinnas,Phrase,Commercial,High,€1.80-3.50,6-10%
+b kategooria hind,Phrase,Commercial,High,€2.00-4.00,7-12%
+autokool registreerimine,Phrase,Commercial,High,€1.50-3.00,9-14%
+professionaalne autokoolitus,Phrase,Educational,Medium,€1.20-2.50,4-8%
+kogenud sõiduõpetajad,Phrase,Educational,Medium,€1.00-2.00,3-7%
+autokoolitus tallinnas,Phrase,Educational,Medium,€1.50-3.00,5-9%
+sõiduõpetus nõmmes,Phrase,Educational,Medium,€1.80-3.50,6-10%
+juhiloa kursus tallinnas,Phrase,Educational,Medium,€2.00-4.00,7-11%
+autokool nõmmes kiire juhiloa saamine,Exact,Long Tail,Medium,€1.50-3.00,10-15%
+viktorija autokool kategooria b kursused,Exact,Long Tail,Medium,€1.80-3.50,9-14%
+parim autokool tallinnas nõmmes,Phrase,Long Tail,Medium,€2.00-4.00,8-12%
+juhiloa saamine 4-5 nädalaga,Exact,Long Tail,Medium,€2.20-4.50,11-17%
+autokool nõmmes soodsad hinnad,Phrase,Long Tail,Medium,€1.80-3.50,7-11%
+b kategooria eksam esimesel korral,Phrase,Long Tail,Medium,€2.00-4.00,8-13%
+autokool nõmmes kogenud õpetajad,Phrase,Long Tail,Medium,€1.50-3.00,6-10%
+kuidas saada juhiluba,Phrase,Question,Medium,€1.00-2.00,3-6%
+kui kaua kestab juhiloa saamine,Phrase,Question,Medium,€1.20-2.50,4-7%
+milline autokool on parim tallinnas,Phrase,Question,Medium,€1.50-3.00,5-9%
+kui palju maksab b kategooria,Phrase,Question,Medium,€1.80-3.50,6-10%
+kuidas valida autokooli,Phrase,Question,Medium,€1.00-2.00,3-6%
+autokool,Broad,General,Low,€2.50-5.00,2-5%
+autokool tallinnas,Broad,General,Low,€3.00-6.00,3-6%
+juhiluba,Broad,General,Low,€2.00-4.50,2-5%
+b kategooria,Broad,General,Low,€2.50-5.00,3-7%
+
