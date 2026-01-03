@@ -20,6 +20,7 @@ import EventIcon from '@mui/icons-material/Event';
 import PaymentIcon from '@mui/icons-material/Payment';
 import HelpIcon from '@mui/icons-material/Help';
 import InfoIcon from '@mui/icons-material/Info';
+import HomeIcon from '@mui/icons-material/Home';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown';
@@ -84,6 +85,12 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
 
   const handleSectionClick = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
+  };
+
+  const handleLinkClick = () => {
+    toggleDrawer(false)();
+    // Scroll to top when navigating to a new page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const menuItems = [
@@ -185,6 +192,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                 size="small"
                 component={RouterLink}
                 to="/features"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 sx={{ 
                   textDecoration: 'none',
                   '&:hover': { 
@@ -201,6 +209,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                 size="small"
                 component={RouterLink}
                 to="/about"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 sx={{ 
                   textDecoration: 'none',
                   '&:hover': { 
@@ -427,53 +436,11 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
 
                 {/* Main Navigation */}
                 <List component="nav" sx={{ flexGrow: 1 }}>
-                  {menuItems.map((section) => (
-                    <React.Fragment key={section.title}>
-                      <ListItem
-                        onClick={() => handleSectionClick(section.title)}
-                        sx={{
-                          borderRadius: 1,
-                          mb: 0.5,
-                          cursor: 'pointer',
-                          '&:hover': {
-                            backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                          },
-                        }}
-                      >
-                        <ListItemIcon sx={{ minWidth: 40 }}>
-                          {section.icon}
-                        </ListItemIcon>
-                        <ListItemText primary={section.title} />
-                        {expandedSection === section.title ? <ExpandLess /> : <ExpandMore />}
-                      </ListItem>
-                      <Collapse in={expandedSection === section.title} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                          {section.items.map((item) => (
-                            <ListItem
-                              key={item.text}
-                              component={RouterLink}
-                              to={item.href}
-                              onClick={toggleDrawer(false)}
-                              sx={{
-                                pl: 4,
-                                borderRadius: 1,
-                                '&:hover': {
-                                  backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                                },
-                              }}
-                            >
-                              <ListItemText primary={item.text} />
-                            </ListItem>
-                          ))}
-                        </List>
-                      </Collapse>
-                    </React.Fragment>
-                  ))}
-
+                  {/* HOME - Direct link to home */}
                   <ListItem
                     component={RouterLink}
-                    to="/#faq"
-                    onClick={toggleDrawer(false)}
+                    to="/"
+                    onClick={handleLinkClick}
                     sx={{
                       borderRadius: 1,
                       mb: 0.5,
@@ -483,15 +450,34 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     }}
                   >
                     <ListItemIcon sx={{ minWidth: 40 }}>
-                      <HelpIcon />
+                      <HomeIcon />
                     </ListItemIcon>
-                    <ListItemText primary={t('navigation.questions')} />
+                    <ListItemText primary={t('navigation.home')} />
+                  </ListItem>
+
+                  {/* Teenused - Direct link to /features */}
+                  <ListItem
+                    component={RouterLink}
+                    to="/features"
+                    onClick={handleLinkClick}
+                    sx={{
+                      borderRadius: 1,
+                      mb: 0.5,
+                      '&:hover': {
+                        backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                      },
+                    }}
+                  >
+                    <ListItemIcon sx={{ minWidth: 40 }}>
+                      <DirectionsCarIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={t('navigation.services')} />
                   </ListItem>
 
                   <ListItem
                     component={RouterLink}
                     to="/about"
-                    onClick={toggleDrawer(false)}
+                    onClick={handleLinkClick}
                     sx={{
                       borderRadius: 1,
                       mb: 0.5,
