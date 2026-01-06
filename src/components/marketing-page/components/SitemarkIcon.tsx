@@ -1,39 +1,98 @@
 import * as React from 'react';
-import SvgIcon from '@mui/material/SvgIcon';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { keyframes } from '@emotion/react';
+
+const pulseGlow = keyframes`
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3), 0 0 20px rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 30px rgba(16, 185, 129, 0.4);
+  }
+`;
+
+const gradientShift = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
 
 export default function SitemarkIcon() {
   return (
-    <SvgIcon sx={{ height: 21, width: 120, mr: 2 }}>
-      <svg
-        width={120}
-        height={19}
-        viewBox="0 0 120 19"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+    <Box sx={{ display: 'flex', alignItems: 'center', mr: 2, position: 'relative' }}>
+      {/* Декоративный градиентный фон вокруг логотипа */}
+      <Box
+        sx={{
+          position: 'relative',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          mr: 1.5,
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            width: '120%',
+            height: '120%',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(16, 185, 129, 0.3) 50%, rgba(139, 92, 246, 0.3) 100%)',
+            backgroundSize: '200% 200%',
+            animation: `${gradientShift} 3s ease infinite`,
+            zIndex: 0,
+            filter: 'blur(4px)',
+          },
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)',
+            zIndex: 1,
+          },
+        }}
       >
-        <path
-          fill="#B4C0D3"
-          d="m.787 12.567 6.055-2.675 3.485 2.006.704 6.583-4.295-.035.634-4.577-.74-.422-3.625 2.817-2.218-3.697Z"
+        <Box
+          component="img"
+          src="/viktorija-logo.jpg"
+          alt="Viktorija"
+          sx={{
+            height: { xs: 36, sm: 40 }, // Немного меньше на мобильных
+            width: { xs: 36, sm: 40 },
+            objectFit: 'cover',
+            borderRadius: '50%',
+            position: 'relative',
+            zIndex: 2,
+            border: '2px solid',
+            borderColor: 'rgba(255, 255, 255, 0.3)',
+            animation: `${pulseGlow} 2s ease-in-out infinite`,
+            flexShrink: 0, // Предотвращаем деформацию
+          }}
         />
-        <path
-          fill="#00D3AB"
-          d="m10.714 11.616 5.352 3.908 2.112-3.767-4.295-1.725v-.845l4.295-1.76-2.112-3.732-5.352 3.908v4.013Z"
-        />
-        <path
-          fill="#4876EF"
-          d="m10.327 7.286.704-6.583-4.295.07.634 4.577-.74.422-3.66-2.816L.786 6.617l6.055 2.676 3.485-2.007Z"
-        />
-        <text
-          x="32"
-          y="15"
-          fontFamily="Arial, sans-serif"
-          fontSize="12"
-          fontWeight="bold"
-          fill="#4876EE"
-        >
-          Viktorija  
-        </text>
-      </svg>
-    </SvgIcon>
+      </Box>
+      <Typography
+        variant="h6"
+        component="span"
+        sx={{
+          fontWeight: 600,
+          fontSize: { xs: '0.9rem', sm: '1rem' },
+          background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 50%, #8b5cf6 100%)',
+          backgroundSize: '200% 200%',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          animation: `${gradientShift} 3s ease infinite`,
+          display: { xs: 'none', md: 'inline' }, // Скрываем текст на мобильных устройствах
+        }}
+      >
+        Viktorija Autokool Nõmme
+      </Typography>
+    </Box>
   );
 }

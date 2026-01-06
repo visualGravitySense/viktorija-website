@@ -6,6 +6,10 @@ import ruTranslation from './locales/ru.json';
 import etTranslation from './locales/et.json';
 import enTranslation from './locales/en.json';
 
+import ruBotTranslation from '../../locales/ru/bot.json';
+import etBotTranslation from '../../locales/et/bot.json';
+import enBotTranslation from '../../locales/en/bot.json';
+
 // Initialize i18n synchronously
 i18n
   .use(LanguageDetector)
@@ -13,13 +17,13 @@ i18n
   .init({
     resources: {
       ru: {
-        translation: ruTranslation,
+        translation: { ...ruTranslation, bot: ruBotTranslation },
       },
       et: {
-        translation: etTranslation,
+        translation: { ...etTranslation, bot: etBotTranslation },
       },
       en: {
-        translation: enTranslation,
+        translation: { ...enTranslation, bot: enBotTranslation },
       }
     },
     fallbackLng: 'ru',
