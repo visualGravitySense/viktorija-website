@@ -10,6 +10,7 @@ const LandingPage = lazy(() => import('./pages/LandingPage.tsx'));
 const Features = lazy(() => import('./pages/Features.tsx'));
 const About = lazy(() => import('./pages/About.tsx'));
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage.tsx'));
+const BotPage = lazy(() => import('./pages/BotPage.tsx'));
 
 interface AppProps {
   toggleColorMode: () => void;
@@ -40,6 +41,7 @@ function App({ toggleColorMode }: AppProps) {
             <Route path="/features" element={<Features toggleColorMode={toggleColorMode} />} />
             <Route path="/about" element={<About toggleColorMode={toggleColorMode} />} />
             <Route path="/checkout" element={<CheckoutPage toggleColorMode={toggleColorMode} />} />
+            <Route path="/bot" element={<BotPage toggleColorMode={toggleColorMode} />} />
             <Route path="*" element={<MarketingPage toggleColorMode={toggleColorMode} />} />
           </Routes>
         </Suspense>

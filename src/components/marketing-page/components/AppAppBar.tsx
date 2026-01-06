@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled, alpha, useTheme } from '@mui/material/styles';
+import { keyframes } from '@emotion/react';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -38,6 +39,18 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+
+const gradientShift = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -358,7 +371,26 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     mb: 2,
                   }}
                 >
-                  <Sitemark />
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Sitemark />
+                    <Typography
+                      variant="h6"
+                      component="span"
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: '0.95rem',
+                        background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 50%, #8b5cf6 100%)',
+                        backgroundSize: '200% 200%',
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        display: { xs: 'block', md: 'none' }, // Показываем только в мобильном меню
+                        animation: `${gradientShift} 3s ease infinite`,
+                      }}
+                    >
+                      Viktorija Autokool Nõmme
+                    </Typography>
+                  </Box>
                   <IconButton onClick={toggleDrawer(false)} color="primary">
                     <CloseRoundedIcon />
                   </IconButton>
