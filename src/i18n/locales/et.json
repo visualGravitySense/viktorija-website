@@ -168,7 +168,18 @@
       "offer_title": "🔥 Alusta oma teekonda juhiloani täna – tee ootab sind! 🚦",
       "offer_text": "Kursuse alguskuupäevad: 03.02.2025 – 17.30",
       "button_text": "Manööverda oma unistuse poole — registreeru kursusele! →",
-      "limit_text": "Sinu juhiluba — meie missioon. Alustame koos!"
+      "limit_text": "Sinu juhiluba — meie missioon. Alustame koos!",
+      "course_contents_title": "Mis kuulub kursustesse?",
+      "theory": "Teooria - 28 akadeemilist tundi",
+      "driving": "Sõit - 28 akadeemilist tundi",
+      "first_aid": "Esmaabi kursused - 16 tundi",
+      "special_courses": "Pimeda ja libeda tee sõidukursused",
+      "requirements_title": "Mida vajad registreerimiseks?",
+      "cta_text": "Alusta oma teekonda juhiloani täna – tee ootab sind!",
+      "course_date": "Kursuse alguskuupäevad: 03.02.2025 - 17.30",
+      "footer_text": "Sinu juhiluba — meie missioon. Alustame koos!",
+      "urgency_spots": "Jäänud kohti: {{spots}}",
+      "urgency_today": "{{count}} inimest registreerisid täna"
     },
     "exam_prep": {
       "title": "🚦 ETTEVALMISTUS ARK EKSAMIKS",
@@ -190,7 +201,10 @@
       "offer_title": "📅 Vali endale sobiv alguskuupäev:",
       "offer_text": "🎯 Esimene grupp: 10.02.2025 – 09.00 🎯 Teine grupp: 25.02.2025 – 09.00",
       "button_text": "Registreeru mootorrattakursusele →",
-      "limit_text": "Kohtade arv on piiratud!"
+      "limit_text": "Kohtade arv on piiratud!",
+      "offer_text_2": "Teine grupp: 25.02.2025 - 09.00",
+      "urgency_spots": "Jäänud kohti: {{spots}}",
+      "urgency_today": "{{count}} inimest registreerisid täna"
     },
     "first_aid": {
       "title": "🚑 Esmaabikursused – oluline samm sinu ohutuse poole!",
@@ -201,7 +215,13 @@
       "offer_title": "🔥 Registreeru täna ja saa enesekindlaks juhiks! 🚦",
       "offer_text": "Kursuse alguskuupäevad: 01.02.2025",
       "button_text": "Registreeru kursustele →",
-      "limit_text": "Kohtade arv on piiratud!"
+      "limit_text": "Kohtade arv on piiratud!",
+      "why_title": "Miks see on oluline?",
+      "why_text": "Abi enne kiirabi saabumist võib päästa elu. Õpid tegutsema õnnetuste, vigastuste ja teiste kriitiliste juhtumite korral. Kursuste läbimise tunnistus on vajalik eksami sooritamiseks.",
+      "urgency_spots": "Jäänud kohti: {{spots}}",
+      "urgency_today": "{{count}} inimest registreerisid täna",
+      "success_label": "Läbimise määr",
+      "students_label": "Lõpetanud"
     },
     "final_course": {
       "title": "🏁 Viimane etapp teel alalise juhiloani – valmista end ette võiduks!",
@@ -212,7 +232,188 @@
       "offer_title": "📅 Vali endale sobiv alguskuupäev:",
       "offer_text": "🎯 Esimene grupp: 07.02.2025 – 08.00 🎯 Teine grupp: 22.02.2025 – 08.00",
       "button_text": "Registreeru lõppkursusele →",
-      "limit_text": "Kohtade arv on piiratud!"
+      "limit_text": "Kohtade arv on piiratud!",
+      "page_title": "ETTEVALMISTUS ARK EKSAMIKS",
+      "intro": "ARK eksam on nagu pimekohting: sa ei tea kunagi, kuidas see lõppeb.",
+      "recipe_title": "Meie salajane eduretsept:",
+      "recipe_1": "Eksami marsruudi simulaator",
+      "recipe_2": "Psühholoogiline ettevalmistus 'Ka inspektor on inimene'",
+      "recipe_3": "Paralleelparkimine (parem hoia silmad lahti)",
+      "recipe_4": "Õnnesoov kooli direktorilt",
+      "web_courses_title": "VEEBIKURSUSED: TEOORIA ILMA IGAVUSETA",
+      "web_courses_text": "Õpi oma pidžaamas! Meie kursused on mõeldud neile, kes soovivad õppida liikluseeskirju koos kassi ja teekruusiga. Unusta igavad loengud!",
+      "includes_title": "Sisaldab:",
+      "includes_1": "Interaktiivsed tunnid",
+      "includes_2": "Testid ilma aknast välja hüppamise soovita",
+      "includes_3": "Animeeritud liiklusolukorrad",
+      "includes_4": "24/7 juurdepääs",
+      "urgency_spots": "Jäänud kohti: {{spots}}",
+      "urgency_today": "{{count}} inimest registreerisid täna"
+    }
+  },
+  "create": {
+    "benefits": {
+      "title": "Mida sa saad?",
+      "subtitle": "Sinu eelised pärast kursuse läbimist",
+      "subtitle_final": "Sinu eelised pärast ettevalmistust",
+      "subtitle_medical": "Sinu eelised pärast kursuse läbimist",
+      "freedom": {
+        "title": "Liikumisvabadus",
+        "desc": "Sõida kuhu tahad, millal tahad"
+      },
+      "speed": {
+        "title": "Kiirus ja adrenaliin",
+        "desc": "Tunne tõelist vabadust kahel rattal"
+      },
+      "independence": {
+        "title": "Sõltumatus",
+        "desc": "Pole enam vaja oodata bussi või takso"
+      },
+      "confidence": {
+        "title": "Enesekindlus",
+        "desc": "Saa mootorratta juhtimise meistriks",
+        "desc_final": "Tee eksam esimesel korral",
+        "desc_medical": "Tunne end teel turvalisemalt"
+      },
+      "expertise": {
+        "title": "Professionaalne õpe",
+        "desc": "Kogenud instruktorid üle 15 aasta kogemusega"
+      },
+      "psychological": {
+        "title": "Psühholoogiline ettevalmistus",
+        "desc": "Ületa hirm eksami ees"
+      },
+      "practice": {
+        "title": "Praktika",
+        "desc": "Harjuta kõiki keerulisi elemente"
+      },
+      "lifesaving": {
+        "title": "Elu päästmine",
+        "desc": "Õpi tegutsema hädaolukorras"
+      },
+      "certificate": {
+        "title": "Sertifikaat",
+        "desc": "Saa ametlik sertifikaat"
+      }
+    },
+    "process": {
+      "title": "Kuidas see toimub?",
+      "subtitle": "Ainult 4 lihtsat sammu sinu juhiloani",
+      "subtitle_final": "Ainult 4 lihtsat sammu eksami edukaks sooritamiseks",
+      "subtitle_medical": "Ainult 4 lihtsat sammu sertifikaadini",
+      "step1": "Täida vorm või helista",
+      "step2": "Maksa kursus",
+      "step3": "Alusta õppimist",
+      "step4": "Saa juhiluba!",
+      "step4_final": "Tee eksam ja saa juhiluba!",
+      "step4_medical": "Saa sertifikaat!"
+    },
+    "reaction": {
+      "title": "Edu lugu",
+      "subtitle": "Meie õpilase päris lugu",
+      "story": "\"Ma olen alati unistanud mootorratast, kuid kartsin alustada õppimist. Viktorija instruktorid aitasid mul hirmu ületada ja vaid 4 nädalaga sain A-kategooria juhiloa. Nüüd olen vaba!\"",
+      "author": "— Martin, 28 aastat",
+      "story_b": "\"Sain B-kategooria juhiloa vaid 5 nädalaga! Instruktorid olid kannatlikud ja professionaalsed. Nüüd saan sõita tööle oma autoga. Tänan Viktorija!\"",
+      "author_b": "— Katrin, 34 aastat",
+      "story_final": "\"ARK eksam oli mulle hirmutav, kuid Viktorija ettevalmistus aitas mul see edukalt sooritada. Nüüd mul on alaline juhiluba!\"",
+      "author_final": "— Jaan, 25 aastat",
+      "story_medical": "\"Esmaabikursused olid väga kasulikud. Nüüd tunnen end teel turvalisemalt ja tean, mida teha hädaolukorras.\"",
+      "author_medical": "— Liis, 30 aastat"
+    },
+    "execution": {
+      "ready": "✅ Valmis alustama? Registreerimine võtab vaid 2 minutit!"
+    }
+  },
+  "spectrum": {
+    "habits": {
+      "title": "Kiire kontroll: Kas oled valmis?",
+      "subtitle": "Kui kõik punktid on märgitud - oled valmis alustama!",
+      "check1": "Mul on pass või ID-kaart",
+      "check2": "Olen saanud 18-aastaseks",
+      "check3": "Olen valmis õppima alustama"
+    },
+    "active": {
+      "title": "Võrdlus: Käsikäigukast vs Automaat",
+      "subtitle": "Vali variant, mis sobib sulle",
+      "table": {
+        "feature": "Omadus",
+        "manual": "Käsikäigukast",
+        "auto": "Automaat"
+      },
+      "feature1": "Õppimise keerukus",
+      "manual1": "Keskmine",
+      "auto1": "Lihtne",
+      "feature2": "Maksumus",
+      "feature3": "Õppimise aeg",
+      "manual3": "4-5 nädalat",
+      "auto3": "4-5 nädalat",
+      "feature4": "Juhiluba",
+      "manual4": "Ainult käsikäigukast",
+      "auto4": "Käsikäigukast + automaat"
+    },
+    "heuristics": {
+      "title": "Kiired otsustamisreeglid",
+      "subtitle": "Lihtne juhend valikuks",
+      "rule": "Reegel",
+      "rule1": {
+        "condition": "Kui sul on piiratud eelarve",
+        "action": "→ Vali käsikäigukast (700€)"
+      },
+      "rule2": {
+        "condition": "Kui tahad sõita mis tahes autoga",
+        "action": "→ Vali automaat (840€)"
+      },
+      "rule3": {
+        "condition": "Kui kahtled",
+        "action": "→ Alusta käsikäigukastiga, lisa hiljem automaat"
+      }
+    },
+    "focused": {
+      "title": "Üksikasjalik teave",
+      "subtitle": "Vastused olulistele küsimustele otsuse tegemiseks",
+      "faq1": {
+        "q": "Kui kaua kestab õppimine?",
+        "a": "Õppimine kestab 4-5 nädalat, sealhulgas teooria (28 tundi), praktika (28 tundi) ja esmaabikursused (16 tundi)."
+      },
+      "faq2": {
+        "q": "Kas saab maksta osade kaupa?",
+        "a": "Jah, pakume võimalust maksta osade kaupa. Võta meiega ühendust tingimuste selgitamiseks."
+      },
+      "faq3": {
+        "q": "Mis on kursuse hinnas?",
+        "a": "Hinnas on kaasas: teooria (28 tundi), praktika (28 tundi), esmaabikursused (16 tundi), libeda ja pime tee sõidukursused."
+      },
+      "faq4": {
+        "q": "Kui suur on eksami edukalt sooritamise protsent?",
+        "a": "98% meie õpilastest sooritavad eksami esimesel korral tänu kvaliteetsele ettevalmistusele ja kogenud juhendajatele."
+      }
+    }
+  },
+  "dual": {
+    "system1": {
+      "title": "⚡ Kiire otsus? Vali 30 sekundiga!",
+      "quick_manual": "Käsikäigukast",
+      "quick_manual_desc": "Kiiresti ja soodsalt",
+      "quick_auto": "Automaat",
+      "quick_auto_desc": "Rohkem võimalusi",
+      "quick_theory": "Teooria",
+      "quick_theory_desc": "Ainult teooria",
+      "toggle_detailed": "Vajad üksikasju? (System 2)",
+      "visual_cue": "💡 Visuaalsed vihjed: Sinine = turvaline, Roheline = soovitatav, Oranž = kiireloomuline"
+    },
+    "system2": {
+      "title": "🧠 Üksikasjalik teave kaalutletud otsuse tegemiseks",
+      "considerations": "Mida arvestada:",
+      "consideration1": "Eelarve: käsikäigukast on 140€ odavam",
+      "consideration2": "Paindlikkus: automaat annab õigused mõlemale tüübile",
+      "consideration3": "Õppimise aeg on sama: 4-5 nädalat",
+      "warnings": "Oluline teada:",
+      "warning1": "Käsikäigukastiga õigustega ei saa automaati juhtida",
+      "warning2": "Automaatiga õigustega saab juhtida mõlemat tüüpi"
+    },
+    "validation": {
+      "title": "✅ Kvaliteedi garantii",
+      "message": "Garanteerime juhiloa saamise 4-5 nädalaga või raha tagastamise. Kõik juhendajad on sertifitseeritud."
     }
   },
   "admin_automation": {
