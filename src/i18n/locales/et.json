@@ -83,6 +83,10 @@
     "profile": "Profiil",
     "about": "Meist",
     "services": "Teenused",
+    "category_a": "Kategooria A (Mootorratas)",
+    "category_b": "Kategooria B (Sõiduauto)",
+    "first_aid": "Esmaabi",
+    "final_test": "Lõppeksam",
     "reviews": "Arvustused",
     "advantages": "Eelised",
     "prices": "Hinnad",
@@ -156,6 +160,19 @@
       "description": "Meie autokool aitab sul omandada autojuhtimise kunsti ja saada B-kategooria juhiloa. Kogenud instruktorid, kaasaegsed autod ja individuaalne lähenemine igale õpilasele.",
       "button": "Pargi meiega — ja juhiluba on sinu! →",
       "image_alt": "Autokooli teenused"
+    },
+    "category_b": {
+      "title": "Valitse teed B-kategooriaga!",
+      "subtitle": "Tere tulemast Viktorija Autokooli Nõmme! Oled valmis saama oma juhiloa? Meie autokool pakub professionaalset õpetust kategooriatele A (mootorratas) ja B (sõiduauto) juba üle 15 aasta. Meie unikaalne garantii: juhiluba 4-5 nädalaga või tagastame sulle raha tagasi!",
+      "course_image_alt": "B-kategooria kursus",
+      "theory": "Teooria - 28 akadeemilist tundi",
+      "driving": "Sõit - 28 akadeemilist tundi",
+      "special_courses": "Pimeda ja libeda tee sõidukursused",
+      "cta_text": "Alusta oma teekonda juhiloani täna – tee ootab sind!",
+      "course_date": "Kursuse alguskuupäevad: 03.02.2025 - 17.30",
+      "button_text": "Manööverda oma unistuse poole — registreeru kursusele!",
+      "urgency_spots": "Jäänud kohti: {{spots}}",
+      "urgency_today": "{{count}} inimest registreerisid täna"
     }
   },
   "urgency": {
@@ -271,7 +288,7 @@
       },
       "confidence": {
         "title": "Enesekindlus",
-        "desc": "Saa mootorratta juhtimise meistriks",
+        "desc": "Saa enesekindlaks juhiks 4-5 nädalaga",
         "desc_final": "Tee eksam esimesel korral",
         "desc_medical": "Tunne end teel turvalisemalt"
       },
@@ -399,6 +416,8 @@
       "quick_theory": "Teooria",
       "quick_theory_desc": "Ainult teooria",
       "toggle_detailed": "Vajad üksikasju? (System 2)",
+      "toggle_hide": "Peida üksikasjad",
+      "toggle_show": "Vajad üksikasju? (System 2)",
       "visual_cue": "💡 Visuaalsed vihjed: Sinine = turvaline, Roheline = soovitatav, Oranž = kiireloomuline"
     },
     "system2": {
