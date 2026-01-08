@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -85,6 +86,7 @@ interface AppAppBarProps {
 export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
   const [open, setOpen] = React.useState(false);
   const [expandedSection, setExpandedSection] = React.useState<string | null>(null);
+  const [servicesMenuAnchor, setServicesMenuAnchor] = React.useState<null | HTMLElement>(null);
   const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -103,6 +105,19 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
   const handleLinkClick = () => {
     toggleDrawer(false)();
     // Scroll to top when navigating to a new page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleServicesMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setServicesMenuAnchor(event.currentTarget);
+  };
+
+  const handleServicesMenuClose = () => {
+    setServicesMenuAnchor(null);
+  };
+
+  const handleCategoryClick = (path: string) => {
+    handleServicesMenuClose();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -203,9 +218,7 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                 variant="text"
                 color="primary"
                 size="small"
-                component={RouterLink}
-                to="/features"
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                onClick={handleServicesMenuOpen}
                 sx={{ 
                   textDecoration: 'none',
                   '&:hover': { 
@@ -216,6 +229,46 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
               >
                 {t('navigation.services')}
               </Button>
+              <Menu
+                anchorEl={servicesMenuAnchor}
+                open={Boolean(servicesMenuAnchor)}
+                onClose={handleServicesMenuClose}
+                MenuListProps={{
+                  'aria-labelledby': 'services-button',
+                }}
+                sx={{
+                  mt: 1,
+                }}
+              >
+                <MenuItem
+                  component={RouterLink}
+                  to="/a-kategooria"
+                  onClick={handleCategoryClick}
+                >
+                  {t('navigation.category_a')}
+                </MenuItem>
+                <MenuItem
+                  component={RouterLink}
+                  to="/b-kategooria"
+                  onClick={handleCategoryClick}
+                >
+                  {t('navigation.category_b')}
+                </MenuItem>
+                <MenuItem
+                  component={RouterLink}
+                  to="/esmaabi"
+                  onClick={handleCategoryClick}
+                >
+                  {t('navigation.first_aid')}
+                </MenuItem>
+                <MenuItem
+                  component={RouterLink}
+                  to="/final-test"
+                  onClick={handleCategoryClick}
+                >
+                  {t('navigation.final_test')}
+                </MenuItem>
+              </Menu>
               <Button
                 variant="text"
                 color="primary"
@@ -487,11 +540,10 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     <ListItemText primary={t('navigation.home')} />
                   </ListItem>
 
-                  {/* Teenused - Direct link to /features */}
+                  {/* Teenused - Expandable menu with categories */}
                   <ListItem
-                    component={RouterLink}
-                    to="/features"
-                    onClick={handleLinkClick}
+                    button
+                    onClick={() => handleSectionClick('services')}
                     sx={{
                       borderRadius: 1,
                       mb: 0.5,
@@ -504,7 +556,72 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                       <DirectionsCarIcon />
                     </ListItemIcon>
                     <ListItemText primary={t('navigation.services')} />
+                    {expandedSection === 'services' ? <ExpandLess /> : <ExpandMore />}
                   </ListItem>
+                  <Collapse in={expandedSection === 'services'} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItem
+                        component={RouterLink}
+                        to="/a-kategooria"
+                        onClick={handleLinkClick}
+                        sx={{
+                          pl: 4,
+                          borderRadius: 1,
+                          mb: 0.5,
+                          '&:hover': {
+                            backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                          },
+                        }}
+                      >
+                        <ListItemText primary={t('navigation.category_a')} />
+                      </ListItem>
+                      <ListItem
+                        component={RouterLink}
+                        to="/b-kategooria"
+                        onClick={handleLinkClick}
+                        sx={{
+                          pl: 4,
+                          borderRadius: 1,
+                          mb: 0.5,
+                          '&:hover': {
+                            backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                          },
+                        }}
+                      >
+                        <ListItemText primary={t('navigation.category_b')} />
+                      </ListItem>
+                      <ListItem
+                        component={RouterLink}
+                        to="/esmaabi"
+                        onClick={handleLinkClick}
+                        sx={{
+                          pl: 4,
+                          borderRadius: 1,
+                          mb: 0.5,
+                          '&:hover': {
+                            backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                          },
+                        }}
+                      >
+                        <ListItemText primary={t('navigation.first_aid')} />
+                      </ListItem>
+                      <ListItem
+                        component={RouterLink}
+                        to="/final-test"
+                        onClick={handleLinkClick}
+                        sx={{
+                          pl: 4,
+                          borderRadius: 1,
+                          mb: 0.5,
+                          '&:hover': {
+                            backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                          },
+                        }}
+                      >
+                        <ListItemText primary={t('navigation.final_test')} />
+                      </ListItem>
+                    </List>
+                  </Collapse>
 
                   <ListItem
                     component={RouterLink}

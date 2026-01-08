@@ -69,7 +69,7 @@ export default function CategoryAPage({ disableCustomTheme, toggleColorMode }: C
   const benefits = [
     { icon: <EmojiEventsIcon sx={{ color: 'warning.main', fontSize: 40 }} />, title: t('create.benefits.freedom.title', { defaultValue: 'Свобода передвижения' }), description: t('create.benefits.freedom.desc', { defaultValue: 'Поезжай куда хочешь, когда хочешь' }) },
     { icon: <SpeedIcon sx={{ color: 'error.main', fontSize: 40 }} />, title: t('create.benefits.speed.title', { defaultValue: 'Скорость и адреналин' }), description: t('create.benefits.speed.desc', { defaultValue: 'Ощути настоящую свободу на двух колесах' }) },
-    { icon: <SecurityIcon sx={{ color: 'success.main', fontSize: 40 }} />, title: t('create.benefits.confidence.title', { defaultValue: 'Уверенность' }), description: t('create.benefits.confidence.desc', { defaultValue: 'Стань мастером управления мотоциклом' }) },
+    { icon: <SecurityIcon sx={{ color: 'success.main', fontSize: 40 }} />, title: t('create.benefits.confidence.title', { defaultValue: 'Уверенность' }), description: t('create.benefits.confidence.desc_motorcycle', { defaultValue: 'Стань мастером управления мотоциклом' }) },
     { icon: <SchoolIcon sx={{ color: 'primary.main', fontSize: 40 }} />, title: t('create.benefits.expertise.title', { defaultValue: 'Профессиональное обучение' }), description: t('create.benefits.expertise.desc', { defaultValue: 'Опытные инструкторы с 15+ лет опыта' }) },
   ];
 

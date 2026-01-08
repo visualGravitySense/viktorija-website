@@ -384,7 +384,7 @@ export default function CategoryBPage({ disableCustomTheme, toggleColorMode }: C
                   endIcon={showDetailedInfo ? <ExpandMoreIcon sx={{ transform: 'rotate(180deg)' }} /> : <ExpandMoreIcon />}
                   sx={{ color: 'text.secondary' }}
                 >
-                  {t('dual.system1.toggle_detailed', { defaultValue: showDetailedInfo ? 'Скрыть детали' : 'Нужны детали? (System 2)' })}
+                  {showDetailedInfo ? t('dual.system1.toggle_hide', { defaultValue: 'Peida üksikasjad' }) : t('dual.system1.toggle_show', { defaultValue: 'Vajad üksikasju? (System 2)' })}
                 </Button>
               </Box>
             </Box>

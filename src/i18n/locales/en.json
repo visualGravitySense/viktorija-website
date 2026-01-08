@@ -81,6 +81,10 @@
     "profile": "Profile",
     "about": "About",
     "services": "Services",
+    "category_a": "Category A (Motorcycle)",
+    "category_b": "Category B (Car)",
+    "first_aid": "First Aid",
+    "final_test": "Final Test",
     "reviews": "Reviews",
     "advantages": "Advantages",
     "prices": "Prices",
@@ -155,6 +159,19 @@
       "description": "Our driving school will help you master the art of driving and get your category B license. Experienced instructors, modern cars, and an individual approach to each student.",
       "button": "Park with us — and get your license! →",
       "image_alt": "Driving School Services"
+    },
+    "category_b": {
+      "title": "Master the Road with Category B!",
+      "subtitle": "Welcome to Viktorija Driving School Nõmme! Ready to get your driver's license? Our driving school offers professional training for categories A (motorcycle) and B (passenger car) for over 15 years. Our unique guarantee: a driver's license in 4-5 weeks or we'll give you your money back!",
+      "course_image_alt": "Category B Course",
+      "theory": "Theory - 28 academic hours",
+      "driving": "Driving - 28 academic hours",
+      "special_courses": "Dark and slippery road driving courses",
+      "cta_text": "Start your journey to a driver's license today – the road awaits you!",
+      "course_date": "Course start dates: 03.02.2025 - 17.30",
+      "button_text": "Maneuver towards your dream — register for the course!",
+      "urgency_spots": "Spots left: {{spots}}",
+      "urgency_today": "{{count}} people registered today"
     }
   },
   "urgency": {
