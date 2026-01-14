@@ -146,7 +146,7 @@ const DrivingSchoolBot = () => {
               setScreen('anxiety');
             }
           } catch (err) {
-            console.error('Ошибка загрузки пользователя:', err);
+            console.error('Error loading user:', err);
             // Если не удалось загрузить, очищаем сохраненные данные
             localStorage.removeItem('bot_user_id');
             localStorage.removeItem('bot_user_name');
@@ -155,7 +155,7 @@ const DrivingSchoolBot = () => {
           }
         }
       } catch (err) {
-        console.error('Ошибка загрузки сохраненных данных:', err);
+        console.error('Error loading saved data:', err);
       }
     };
 
@@ -204,12 +204,47 @@ const DrivingSchoolBot = () => {
           setError(null); // Очищаем ошибку при успешной загрузке
         } else {
           // Если данных нет в БД, используем fallback
-          console.warn('Инструкторы не найдены в БД, используем fallback данные');
+          console.warn('Instructors not found in the database, using fallback data');
           setInstructors(fallbackInstructors);
           setError(null); // Не показываем ошибку, если есть fallback данные
         }
-      } catch (err) {
-        console.error('Ошибка загрузки инструкторов:', err);
+      } catch (err: any) {
+        console.error('Error loading instructors:', err);
+        
+        // Проверяем, является ли ошибка проблемой подключения к Supabase
+        const isConnectionError = err?.message?.includes('Failed to fetch') || 
+                                  err?.message?.includes('ERR_NAME_NOT_RESOLVED') ||
+                                  err?.code === 'ENOTFOUND';
+        
+        if (isConnectionError) {
+          const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+          const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+          
+          if (!supabaseUrl || !supabaseKey) {
+            console.error(`
+⚠️ CRITICAL: Supabase environment variables are not set!
+
+This usually means:
+1. Variables are not configured in Vercel (Settings → Environment Variables)
+2. Project was not rebuilt after adding variables
+3. Variable names are incorrect (must start with VITE_)
+
+
+            `);
+          } else {
+            console.error(`
+⚠️ Supabase connection failed even though variables are set.
+
+Check:
+1. VITE_SUPABASE_URL is correct: ${supabaseUrl}
+2. CORS is configured in Supabase for Vercel domain
+3. Network connectivity
+
+
+            `);
+          }
+        }
+        
         // Используем fallback данные вместо показа ошибки
         setInstructors(fallbackInstructors);
         setError(null); // Не показываем ошибку пользователю, если есть fallback данные
@@ -224,8 +259,22 @@ const DrivingSchoolBot = () => {
       try {
         const data = await BotService.getTestimonials(10);
         setTestimonials(data);
-      } catch (err) {
-        console.error('Ошибка загрузки отзывов:', err);
+      } catch (err: any) {
+        console.error('Error loading reviews:', err);
+        
+        // Проверяем, является ли ошибка проблемой подключения к Supabase
+        const isConnectionError = err?.message?.includes('Failed to fetch') || 
+                                  err?.message?.includes('ERR_NAME_NOT_RESOLVED') ||
+                                  err?.code === 'ENOTFOUND';
+        
+        if (isConnectionError) {
+          const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+          const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+          
+          if (!supabaseUrl || !supabaseKey) {
+            console.error('⚠️ Supabase environment variables are not configured. ');
+          }
+        }
       }
     };
     loadTestimonials();
@@ -307,7 +356,7 @@ const DrivingSchoolBot = () => {
           setSkills(userSkills);
         }
       } catch (err) {
-        console.error('Ошибка загрузки прогресса:', err);
+        console.error('Error loading progress:', err);
       }
     };
     loadProgress();
@@ -334,8 +383,8 @@ const DrivingSchoolBot = () => {
       
       setScreen('anxiety');
     } catch (err) {
-      console.error('Ошибка регистрации:', err);
-      setError('Не удалось зарегистрироваться. Попробуйте еще раз.');
+      console.error('Registration error:', err);
+      setError('Failed to register. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -354,8 +403,8 @@ const DrivingSchoolBot = () => {
       
       setScreen('menu');
     } catch (err) {
-      console.error('Ошибка сохранения теста:', err);
-      setError('Не удалось сохранить результат теста');
+      console.error('Error saving test:', err);
+      setError('Failed to save test result');
     } finally {
       setLoading(false);
     }
@@ -392,8 +441,8 @@ const DrivingSchoolBot = () => {
       });
       setUser(updatedUser);
     } catch (err) {
-      console.error('Ошибка сохранения инструктора:', err);
-      setError('Не удалось сохранить выбор инструктора. Попробуйте еще раз.');
+      console.error('Error saving instructor:', err);
+      setError('Failed to save instructor selection. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -498,26 +547,26 @@ const DrivingSchoolBot = () => {
         <div className="text-center space-y-4">
           {/* Визуальный индикатор - иконка для System 1 */}
           <div className="relative inline-block">
-            <div className="text-6xl animate-bounce">🚗</div>
+            <div className="text-4xl sm:text-5xl md:text-6xl animate-bounce">🚗</div>
             {/* Визуальная подсказка - бейдж для System 1 */}
-            <div className="absolute -top-1 -right-1 bg-green-500 dark:bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+            <div className="absolute -top-1 -right-1 bg-green-500 dark:bg-green-600 text-white text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full">
               {t('bot.welcome.freeBadge')}
             </div>
           </div>
           
           {/* System 1: Эмоциональный заголовок для быстрого восприятия */}
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 leading-tight px-2">
             {t('bot.welcome.title')}
           </h1>
           
           {/* System 2: Дополнительная информация для обдуманного решения */}
-          <p className="text-base text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-md mx-auto px-2">
             {t('bot.welcome.subtitle')}
           </p>
         </div>
 
         {/* Основная форма - поддержка обоих систем */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 p-6 lg:p-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 p-4 sm:p-6 lg:p-8">
           {error && (
             <div className="bg-red-50 dark:bg-red-900/30 border-2 border-red-300 dark:border-red-700 rounded-lg p-3 mb-4 flex items-start gap-2">
               <span className="text-red-500 text-lg">⚠️</span>
@@ -538,7 +587,7 @@ const DrivingSchoolBot = () => {
               <input
                 type="text"
                 placeholder={t('bot.welcome.namePlaceholder')}
-                className={`w-full px-4 py-3.5 border-2 rounded-lg focus:ring-2 transition-all text-base bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 ${
+                className={`w-full px-3 sm:px-4 py-3 sm:py-3.5 border-2 rounded-lg focus:ring-2 transition-all text-sm sm:text-base bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 ${
                   isValidName && !isEmpty
                     ? 'border-green-400 dark:border-green-500 focus:ring-green-400 dark:focus:ring-green-500 focus:border-green-500 dark:focus:border-green-600'
                     : isEmpty
@@ -581,7 +630,7 @@ const DrivingSchoolBot = () => {
           <button
             onClick={handleStart}
             disabled={!isValidName || loading}
-            className={`w-full py-4 rounded-lg font-semibold text-base transition-all shadow-md hover:shadow-lg transform ${
+            className={`w-full py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all shadow-md hover:shadow-lg transform ${
               isValidName && !loading
                 ? 'bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 hover:scale-[1.02] active:scale-[0.98]'
                 : 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
@@ -602,58 +651,58 @@ const DrivingSchoolBot = () => {
           </button>
 
           {/* System 1: Визуальные подсказки для быстрого сканирования */}
-          <div className="flex items-center justify-center gap-6 mt-5 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 md:gap-6 mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-700">
             <span className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
-              <span className="text-green-500 text-base">✓</span>
+              <span className="text-green-500 text-sm sm:text-base">✓</span>
               <span className="font-medium">{t('bot.welcome.free')}</span>
             </span>
             <span className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
-              <span className="text-green-500 text-base">✓</span>
+              <span className="text-green-500 text-sm sm:text-base">✓</span>
               <span className="font-medium">{t('bot.welcome.noRegistration')}</span>
             </span>
             <span className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
-              <span className="text-green-500 text-base">✓</span>
+              <span className="text-green-500 text-sm sm:text-base">✓</span>
               <span className="font-medium">{t('bot.welcome.quickStart')}</span>
             </span>
           </div>
         </div>
 
         {/* System 1: Визуальное социальное доказательство для быстрого доверия */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-5 rounded-xl text-center border-2 border-blue-200 dark:border-blue-700 transform hover:scale-105 transition cursor-default">
-            <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl text-center border-2 border-blue-200 dark:border-blue-700 transform hover:scale-105 transition cursor-default">
+            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-1 sm:mb-2">
               {passRate}%
             </div>
-            <div className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
+            <div className="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
               {t('bot.welcome.passFirstTime')}
             </div>
-            <div className="text-xs text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
+            <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
               <span>⭐</span> {t('bot.welcome.bestResult')}
             </div>
           </div>
-          <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 p-5 rounded-xl text-center border-2 border-green-200 dark:border-green-700 transform hover:scale-105 transition cursor-default">
-            <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">
+          <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl text-center border-2 border-green-200 dark:border-green-700 transform hover:scale-105 transition cursor-default">
+            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 dark:text-green-400 mb-1 sm:mb-2">
               {studentsCount}+
             </div>
-            <div className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
+            <div className="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
               {t('bot.welcome.satisfiedStudents')}
             </div>
-            <div className="text-xs text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
+            <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
               <span>💚</span> {t('bot.welcome.highRating')}
             </div>
           </div>
         </div>
 
         {/* System 1: Визуальная подсказка срочности для эмоционального триггера */}
-        <div className="bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/30 dark:to-amber-900/30 border-2 border-orange-300 dark:border-orange-700 rounded-xl p-4 text-center">
+        <div className="bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/30 dark:to-amber-900/30 border-2 border-orange-300 dark:border-orange-700 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-1">
-            <span className="text-xl animate-pulse">⚡</span>
-            <p className="text-sm font-bold text-orange-800 dark:text-orange-200">
+            <span className="text-lg sm:text-xl animate-pulse">⚡</span>
+            <p className="text-xs sm:text-sm font-bold text-orange-800 dark:text-orange-200">
               {t('bot.welcome.todaySignedUp', { count: todayCount })}
             </p>
           </div>
-          <p className="text-xs text-orange-700 dark:text-orange-300">
-            {t('bot.welcome.spotsLeftPrefix')} <span className="font-bold text-base">5</span> {t('bot.welcome.spotsLeftSuffix')}
+          <p className="text-[10px] sm:text-xs text-orange-700 dark:text-orange-300">
+            {t('bot.welcome.spotsLeftPrefix')} <span className="font-bold text-sm sm:text-base">5</span> {t('bot.welcome.spotsLeftSuffix')}
             </p>
         </div>
 
@@ -674,40 +723,40 @@ const DrivingSchoolBot = () => {
   };
 
   const renderAnxietyTest = () => (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3 mb-6">
-        <Heart className="text-red-500 dark:text-red-400" size={32} />
-        <div>
-          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{t('bot.anxiety.title')}</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400">{t('bot.anxiety.subtitle')}</p>
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+        <Heart className="text-red-500 dark:text-red-400 flex-shrink-0" size={28} />
+        <div className="min-w-0">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-100">{t('bot.anxiety.title')}</h2>
+          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{t('bot.anxiety.subtitle')}</p>
         </div>
       </div>
 
-      <div className="space-y-4">
-        <p className="text-gray-700 dark:text-gray-300">Насколько сильно вы переживаете о вождении?</p>
+      <div className="space-y-3 sm:space-y-4">
+        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">Насколько сильно вы переживаете о вождении?</p>
 
         <div className="space-y-2">
           {[1, 2, 3, 4, 5].map((level) => (
             <button
               key={level}
               onClick={() => setAnxietyLevel(level)}
-              className={`w-full p-4 rounded-lg border-2 transition ${
+              className={`w-full p-3 sm:p-4 rounded-lg border-2 transition ${
                 anxietyLevel === level
                   ? 'border-blue-600 dark:border-blue-400 bg-blue-50 dark:bg-blue-900/30'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-gray-800'
               }`}
             >
-              <div className="flex items-center justify-between">
-                <span className="font-medium text-gray-800 dark:text-gray-200">
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-medium text-xs sm:text-sm text-gray-800 dark:text-gray-200 text-left break-words">
                   {level === 1 && t('bot.anxiety.level1')}
                   {level === 2 && t('bot.anxiety.level2')}
                   {level === 3 && t('bot.anxiety.level3')}
                   {level === 4 && t('bot.anxiety.level4')}
                   {level === 5 && t('bot.anxiety.level5')}
                 </span>
-                <div className="flex gap-1">
+                <div className="flex gap-0.5 sm:gap-1 flex-shrink-0">
                   {[...Array(level)].map((_, i) => (
-                    <Heart key={i} size={16} className="fill-red-400 dark:fill-red-500 text-red-400 dark:text-red-500" />
+                    <Heart key={i} size={14} className="fill-red-400 dark:fill-red-500 text-red-400 dark:text-red-500" />
                   ))}
                 </div>
               </div>
@@ -718,7 +767,7 @@ const DrivingSchoolBot = () => {
         <button
           onClick={handleAnxietySubmit}
           disabled={!anxietyLevel || loading}
-          className="w-full bg-blue-600 dark:bg-blue-500 text-white py-3 rounded-lg font-medium hover:bg-blue-700 dark:hover:bg-blue-600 transition disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed"
+          className="w-full bg-blue-600 dark:bg-blue-500 text-white py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-base hover:bg-blue-700 dark:hover:bg-blue-600 transition disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed"
         >
           {loading ? t('bot.common.loading') : t('bot.anxiety.continue')}
         </button>
@@ -768,10 +817,10 @@ const DrivingSchoolBot = () => {
         if (!support) return null;
 
         return (
-          <div className={`${support.bgColor} border ${support.borderColor} rounded-lg p-4`}>
-            <p className={`text-sm ${support.textColor} flex items-start gap-2`}>
-              <span className="text-lg">{support.icon}</span>
-              <span>{support.message}</span>
+          <div className={`${support.bgColor} border ${support.borderColor} rounded-lg p-3 sm:p-4`}>
+            <p className={`text-xs sm:text-sm ${support.textColor} flex items-start gap-2`}>
+              <span className="text-base sm:text-lg flex-shrink-0">{support.icon}</span>
+              <span className="break-words">{support.message}</span>
             </p>
           </div>
         );
@@ -786,23 +835,23 @@ const DrivingSchoolBot = () => {
       ============================================ */}
       
       {/* CUE: Яркий визуальный сигнал - персонализированное приветствие */}
-      <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 dark:from-blue-500 dark:via-blue-600 dark:to-purple-500 text-white p-6 rounded-xl shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 animate-pulse"></div>
-        <div className="relative">
+      <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 dark:from-blue-500 dark:via-blue-600 dark:to-purple-500 text-white p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-white/10 rounded-full -mr-12 -mt-12 sm:-mr-16 sm:-mt-16 animate-pulse"></div>
+        <div className="relative pr-16 sm:pr-20">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-3xl animate-bounce">👋</span>
-            <h2 className="text-2xl sm:text-3xl font-bold">{t('bot.menu.greeting')}, {userName}!</h2>
+            <span className="text-2xl sm:text-3xl animate-bounce">👋</span>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold break-words">{t('bot.menu.greeting')}, {userName}!</h2>
           </div>
-          <p className="text-blue-100 dark:text-blue-200 text-base mb-1 font-medium">
+          <p className="text-blue-100 dark:text-blue-200 text-sm sm:text-base mb-1 font-medium">
             {t('bot.menu.greeting')}
           </p>
-          <p className="text-blue-200 dark:text-blue-300 text-sm">
+          <p className="text-blue-200 dark:text-blue-300 text-xs sm:text-sm">
             {t('bot.menu.simple')}
           </p>
         </div>
         <button
           onClick={handleLogout}
-          className="absolute top-4 right-4 text-blue-100 dark:text-blue-200 hover:text-white text-sm font-medium transition-colors"
+          className="absolute top-2 right-2 sm:top-4 sm:right-4 text-blue-100 dark:text-blue-200 hover:text-white text-xs sm:text-sm font-medium transition-colors px-2 py-1"
           title="Выйти из аккаунта"
         >
           {t('bot.common.logout')}
@@ -828,25 +877,25 @@ const DrivingSchoolBot = () => {
       <div className="space-y-4">
         <button
           onClick={() => setScreen('instructors')}
-          className="w-full bg-white dark:bg-gray-800 border-2 border-blue-200 dark:border-blue-700 p-5 rounded-xl hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl transition-all transform hover:scale-[1.01] group relative overflow-hidden"
+          className="w-full bg-white dark:bg-gray-800 border-2 border-blue-200 dark:border-blue-700 p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-xl transition-all transform hover:scale-[1.01] group relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-24 h-24 bg-blue-100 dark:bg-blue-900/30 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform"></div>
-          <div className="relative flex items-center gap-4">
-            <div className="flex-shrink-0 p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50 transition">
-              <User className="text-blue-600 dark:text-blue-400" size={40} />
+          <div className="absolute top-0 right-0 w-16 h-16 sm:w-24 sm:h-24 bg-blue-100 dark:bg-blue-900/30 rounded-full -mr-8 -mt-8 sm:-mr-12 sm:-mt-12 group-hover:scale-150 transition-transform"></div>
+          <div className="relative flex items-center gap-2 sm:gap-3 md:gap-4">
+            <div className="flex-shrink-0 p-2 sm:p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg sm:rounded-xl group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50 transition">
+              <User className="text-blue-600 dark:text-blue-400" size={32} />
             </div>
-            <div className="flex-1 text-left">
-              <div className="font-bold text-lg text-gray-800 dark:text-gray-200 mb-1">
+            <div className="flex-1 text-left min-w-0">
+              <div className="font-bold text-base sm:text-lg text-gray-800 dark:text-gray-200 mb-1">
                 {t('bot.menu.selectInstructor')}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
                 {t('bot.menu.selectInstructorDesc')}
               </div>
-              <div className="flex items-center gap-2">
-                <div className="text-xs text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2">
+                <div className="text-[10px] sm:text-xs text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
                   {t('bot.menu.selectInstructorBadge')}
                 </div>
-                <span className="text-blue-600 dark:text-blue-400 font-medium text-sm ml-auto">
+                <span className="text-blue-600 dark:text-blue-400 font-medium text-xs sm:text-sm sm:ml-auto">
                   {t('bot.menu.selectInstructorAction')} →
                 </span>
               </div>
@@ -856,25 +905,25 @@ const DrivingSchoolBot = () => {
 
         <button
           onClick={() => setScreen('progress')}
-          className="w-full bg-white dark:bg-gray-800 border-2 border-green-200 dark:border-green-700 p-5 rounded-xl hover:border-green-500 dark:hover:border-green-400 hover:shadow-xl transition-all transform hover:scale-[1.01] group relative overflow-hidden"
+          className="w-full bg-white dark:bg-gray-800 border-2 border-green-200 dark:border-green-700 p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl hover:border-green-500 dark:hover:border-green-400 hover:shadow-xl transition-all transform hover:scale-[1.01] group relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform"></div>
-          <div className="relative flex items-center gap-4">
-            <div className="flex-shrink-0 p-3 bg-green-50 dark:bg-green-900/30 rounded-xl group-hover:bg-green-100 dark:group-hover:bg-green-900/50 transition">
-              <BarChart3 className="text-green-600 dark:text-green-400" size={40} />
+          <div className="absolute top-0 right-0 w-16 h-16 sm:w-24 sm:h-24 bg-green-100 dark:bg-green-900/30 rounded-full -mr-8 -mt-8 sm:-mr-12 sm:-mt-12 group-hover:scale-150 transition-transform"></div>
+          <div className="relative flex items-center gap-2 sm:gap-3 md:gap-4">
+            <div className="flex-shrink-0 p-2 sm:p-3 bg-green-50 dark:bg-green-900/30 rounded-lg sm:rounded-xl group-hover:bg-green-100 dark:group-hover:bg-green-900/50 transition">
+              <BarChart3 className="text-green-600 dark:text-green-400" size={32} />
             </div>
-            <div className="flex-1 text-left">
-              <div className="font-bold text-lg text-gray-800 dark:text-gray-200 mb-1">
+            <div className="flex-1 text-left min-w-0">
+              <div className="font-bold text-base sm:text-lg text-gray-800 dark:text-gray-200 mb-1">
                 {t('bot.menu.progress')}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
                 {t('bot.menu.progressDesc')}
               </div>
-              <div className="flex items-center gap-2">
-                <div className="text-xs text-green-600 dark:text-green-400 font-semibold bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2">
+                <div className="text-[10px] sm:text-xs text-green-600 dark:text-green-400 font-semibold bg-green-50 dark:bg-green-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
                   {t('bot.menu.progressBadge')}
                 </div>
-                <span className="text-green-600 dark:text-green-400 font-medium text-sm ml-auto">
+                <span className="text-green-600 dark:text-green-400 font-medium text-xs sm:text-sm sm:ml-auto">
                   {t('bot.menu.progressAction')} →
                 </span>
               </div>
@@ -884,25 +933,25 @@ const DrivingSchoolBot = () => {
 
         <button
           onClick={() => setScreen('testimonials')}
-          className="w-full bg-white dark:bg-gray-800 border-2 border-purple-200 dark:border-purple-700 p-5 rounded-xl hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl transition-all transform hover:scale-[1.01] group relative overflow-hidden"
+          className="w-full bg-white dark:bg-gray-800 border-2 border-purple-200 dark:border-purple-700 p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl hover:border-purple-500 dark:hover:border-purple-400 hover:shadow-xl transition-all transform hover:scale-[1.01] group relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-24 h-24 bg-purple-100 dark:bg-purple-900/30 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform"></div>
-          <div className="relative flex items-center gap-4">
-            <div className="flex-shrink-0 p-3 bg-purple-50 dark:bg-purple-900/30 rounded-xl group-hover:bg-purple-100 dark:group-hover:bg-purple-900/50 transition">
-              <Video className="text-purple-600 dark:text-purple-400" size={40} />
+          <div className="absolute top-0 right-0 w-16 h-16 sm:w-24 sm:h-24 bg-purple-100 dark:bg-purple-900/30 rounded-full -mr-8 -mt-8 sm:-mr-12 sm:-mt-12 group-hover:scale-150 transition-transform"></div>
+          <div className="relative flex items-center gap-2 sm:gap-3 md:gap-4">
+            <div className="flex-shrink-0 p-2 sm:p-3 bg-purple-50 dark:bg-purple-900/30 rounded-lg sm:rounded-xl group-hover:bg-purple-100 dark:group-hover:bg-purple-900/50 transition">
+              <Video className="text-purple-600 dark:text-purple-400" size={32} />
             </div>
-            <div className="flex-1 text-left">
-              <div className="font-bold text-lg text-gray-800 dark:text-gray-200 mb-1">
+            <div className="flex-1 text-left min-w-0">
+              <div className="font-bold text-base sm:text-lg text-gray-800 dark:text-gray-200 mb-1">
                 {t('bot.menu.testimonials')}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
                 {t('bot.menu.testimonialsDesc')}
               </div>
-              <div className="flex items-center gap-2">
-                <div className="text-xs text-purple-600 dark:text-purple-400 font-semibold bg-purple-50 dark:bg-purple-900/30 px-2 py-1 rounded">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2">
+                <div className="text-[10px] sm:text-xs text-purple-600 dark:text-purple-400 font-semibold bg-purple-50 dark:bg-purple-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
                   {t('bot.menu.testimonialsBadge')}
                 </div>
-                <span className="text-purple-600 dark:text-purple-400 font-medium text-sm ml-auto">
+                <span className="text-purple-600 dark:text-purple-400 font-medium text-xs sm:text-sm sm:ml-auto">
                   {t('bot.menu.testimonialsAction')} →
                 </span>
               </div>
@@ -912,25 +961,25 @@ const DrivingSchoolBot = () => {
 
         <button
           onClick={() => setScreen('support')}
-          className="w-full bg-white dark:bg-gray-800 border-2 border-red-200 dark:border-red-700 p-5 rounded-xl hover:border-red-500 dark:hover:border-red-400 hover:shadow-xl transition-all transform hover:scale-[1.01] group relative overflow-hidden"
+          className="w-full bg-white dark:bg-gray-800 border-2 border-red-200 dark:border-red-700 p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl hover:border-red-500 dark:hover:border-red-400 hover:shadow-xl transition-all transform hover:scale-[1.01] group relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-24 h-24 bg-red-100 dark:bg-red-900/30 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform"></div>
-          <div className="relative flex items-center gap-4">
-            <div className="flex-shrink-0 p-3 bg-red-50 dark:bg-red-900/30 rounded-xl group-hover:bg-red-100 dark:group-hover:bg-red-900/50 transition">
-              <Heart className="text-red-600 dark:text-red-400" size={40} />
+          <div className="absolute top-0 right-0 w-16 h-16 sm:w-24 sm:h-24 bg-red-100 dark:bg-red-900/30 rounded-full -mr-8 -mt-8 sm:-mr-12 sm:-mt-12 group-hover:scale-150 transition-transform"></div>
+          <div className="relative flex items-center gap-2 sm:gap-3 md:gap-4">
+            <div className="flex-shrink-0 p-2 sm:p-3 bg-red-50 dark:bg-red-900/30 rounded-lg sm:rounded-xl group-hover:bg-red-100 dark:group-hover:bg-red-900/50 transition">
+              <Heart className="text-red-600 dark:text-red-400" size={32} />
             </div>
-            <div className="flex-1 text-left">
-              <div className="font-bold text-lg text-gray-800 dark:text-gray-200 mb-1">
+            <div className="flex-1 text-left min-w-0">
+              <div className="font-bold text-base sm:text-lg text-gray-800 dark:text-gray-200 mb-1">
                 {t('bot.menu.support')}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
+              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
                 {t('bot.menu.supportDesc')}
               </div>
-              <div className="flex items-center gap-2">
-                <div className="text-xs text-red-600 dark:text-red-400 font-semibold bg-red-50 dark:bg-red-900/30 px-2 py-1 rounded">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2">
+                <div className="text-[10px] sm:text-xs text-red-600 dark:text-red-400 font-semibold bg-red-50 dark:bg-red-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
                   {t('bot.menu.supportBadge')}
                 </div>
-                <span className="text-red-600 dark:text-red-400 font-medium text-sm ml-auto">
+                <span className="text-red-600 dark:text-red-400 font-medium text-xs sm:text-sm sm:ml-auto">
                   {t('bot.menu.supportAction')} →
                 </span>
               </div>
@@ -964,12 +1013,12 @@ const DrivingSchoolBot = () => {
       {/* EXECUTION: Главная CTA кнопка - яркая и заметная */}
       <button
         onClick={handleBookLesson}
-        className="w-full bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 dark:from-blue-500 dark:via-blue-600 dark:to-purple-500 text-white py-5 rounded-xl font-bold text-lg hover:from-blue-700 hover:via-blue-800 hover:to-purple-700 dark:hover:from-blue-600 dark:hover:via-blue-700 dark:hover:to-purple-600 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-2xl flex items-center justify-center gap-3 relative overflow-hidden"
+        className="w-full bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 dark:from-blue-500 dark:via-blue-600 dark:to-purple-500 text-white py-3 sm:py-4 md:py-5 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base md:text-lg hover:from-blue-700 hover:via-blue-800 hover:to-purple-700 dark:hover:from-blue-600 dark:hover:via-blue-700 dark:hover:to-purple-600 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-2xl flex items-center justify-center gap-2 sm:gap-3 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-        <Calendar size={24} className="relative z-10" />
+        <Calendar size={20} className="relative z-10" />
         <span className="relative z-10">{t('bot.menu.bookLesson')}</span>
-        <span className="text-2xl relative z-10">→</span>
+        <span className="text-lg sm:text-xl md:text-2xl relative z-10">→</span>
       </button>
     </div>
   );
@@ -990,7 +1039,7 @@ const DrivingSchoolBot = () => {
           ← {t('bot.common.back')}
         </button>
 
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">{t('bot.instructors.title')}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">{t('bot.instructors.title')}</h2>
 
         {error && (
           <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-3 text-red-800 dark:text-red-200 text-sm">
@@ -1000,21 +1049,21 @@ const DrivingSchoolBot = () => {
 
         {/* Подтверждение выбора */}
         {showConfirmation && confirmingInstructor && (
-          <div className="bg-blue-50 dark:bg-blue-900/30 border-2 border-blue-300 dark:border-blue-600 rounded-xl p-5 mb-4">
-            <div className="flex items-start gap-3">
-              <span className="text-3xl">✅</span>
-              <div className="flex-1">
-                <h3 className="font-bold text-blue-900 dark:text-blue-100 mb-2">
+          <div className="bg-blue-50 dark:bg-blue-900/30 border-2 border-blue-300 dark:border-blue-600 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4">
+            <div className="flex items-start gap-2 sm:gap-3">
+              <span className="text-2xl sm:text-3xl flex-shrink-0">✅</span>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-sm sm:text-base text-blue-900 dark:text-blue-100 mb-2">
                   Подтвердите выбор инструктора
                 </h3>
-                <p className="text-sm text-blue-800 dark:text-blue-200 mb-4">
+                <p className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 mb-3 sm:mb-4 break-words">
                   Вы хотите выбрать <span className="font-semibold">{getSelectedInstructorName()}</span> в качестве вашего инструктора?
                 </p>
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                   <button
                     onClick={handleConfirmInstructor}
                     disabled={loading}
-                    className="flex-1 bg-blue-600 dark:bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 dark:hover:bg-blue-600 transition disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed"
+                    className="flex-1 bg-blue-600 dark:bg-blue-500 text-white py-2 sm:py-2.5 rounded-lg font-semibold text-sm sm:text-base hover:bg-blue-700 dark:hover:bg-blue-600 transition disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed"
                   >
                     {loading ? 'Сохранение...' : 'Да, выбрать'}
                   </button>
@@ -1024,7 +1073,7 @@ const DrivingSchoolBot = () => {
                       setConfirmingInstructor(null);
                     }}
                     disabled={loading}
-                    className="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-2 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition disabled:opacity-50"
+                    className="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-2 sm:py-2.5 rounded-lg font-semibold text-sm sm:text-base hover:bg-gray-300 dark:hover:bg-gray-600 transition disabled:opacity-50"
                   >
                     Отмена
                   </button>
@@ -1036,10 +1085,10 @@ const DrivingSchoolBot = () => {
 
         {/* Индикатор выбранного инструктора */}
         {selectedInstructor && !showConfirmation && (
-          <div className="bg-green-50 dark:bg-green-900/30 border-2 border-green-300 dark:border-green-600 rounded-xl p-4 mb-4">
+          <div className="bg-green-50 dark:bg-green-900/30 border-2 border-green-300 dark:border-green-600 rounded-lg sm:rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
             <div className="flex items-center gap-2">
-              <span className="text-xl">✓</span>
-              <p className="text-sm text-green-800 dark:text-green-200">
+              <span className="text-lg sm:text-xl flex-shrink-0">✓</span>
+              <p className="text-xs sm:text-sm text-green-800 dark:text-green-200 break-words">
                 <span className="font-semibold">Выбран:</span> {instructors.find(i => i.id === selectedInstructor)?.name || 'Инструктор'}
               </p>
             </div>
@@ -1056,7 +1105,7 @@ const DrivingSchoolBot = () => {
             return (
               <div
                 key={instructor.id}
-                className={`border-2 rounded-xl p-5 transition ${
+                className={`border-2 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 transition ${
                   isSelected
                     ? 'border-green-500 dark:border-green-400 bg-green-50 dark:bg-green-900/30'
                     : isConfirming
@@ -1064,28 +1113,28 @@ const DrivingSchoolBot = () => {
                     : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-gray-800'
                 }`}
               >
-                <div className="flex gap-4 mb-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-3 sm:mb-4">
                   {instructor.photo_url && (instructor.photo_url.startsWith('/') || instructor.photo_url.startsWith('http')) ? (
                     <img 
                       src={instructor.photo_url} 
                       alt={instructor.name}
-                      className="w-20 h-20 rounded-full object-cover flex-shrink-0"
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover flex-shrink-0 mx-auto sm:mx-0"
                     />
                   ) : (
-                    <div className="text-5xl flex-shrink-0">{instructor.photo_url || '👨‍🏫'}</div>
+                    <div className="text-4xl sm:text-5xl flex-shrink-0 mx-auto sm:mx-0">{instructor.photo_url || '👨‍🏫'}</div>
                   )}
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">{instructor.name}</h3>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                      <h3 className="font-bold text-base sm:text-lg text-gray-800 dark:text-gray-100 break-words">{instructor.name}</h3>
                       {isSelected && (
-                        <span className="bg-green-500 dark:bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        <span className="bg-green-500 dark:bg-green-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full self-start sm:self-auto">
                           ВЫБРАН
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{instructor.style}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2 sm:mb-3 break-words">{instructor.style}</p>
 
-                    <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-3">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2 sm:mb-3">
                       <span className="flex items-center gap-1">
                         <span>⭐</span>
                         <span className="font-semibold">{instructor.rating.toFixed(1)}</span>
@@ -1096,20 +1145,20 @@ const DrivingSchoolBot = () => {
                       </span>
                     </div>
 
-                    <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 mb-3">
-                      <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">Сдают с первого раза</div>
-                      <div className="font-bold text-lg text-green-600 dark:text-green-400">{instructor.pass_rate}</div>
+                    <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-2 sm:p-3 mb-2 sm:mb-3">
+                      <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-1">Сдают с первого раза</div>
+                      <div className="font-bold text-base sm:text-lg text-green-600 dark:text-green-400">{instructor.pass_rate}</div>
                     </div>
 
                     {instructor.specialty && (
-                      <div className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-3">
+                      <div className="text-[10px] sm:text-xs text-blue-600 dark:text-blue-400 font-medium mb-2 sm:mb-3 break-words">
                         ✨ {instructor.specialty}
                       </div>
                     )}
                   </div>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   {!isSelected ? (
                     <button
                       onClick={(e) => {
@@ -1117,14 +1166,14 @@ const DrivingSchoolBot = () => {
                         handleSelectInstructor(instructor.id);
                       }}
                       disabled={loading || showConfirmation}
-                      className="flex-1 bg-blue-600 dark:bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 dark:hover:bg-blue-600 transition disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed"
+                      className="flex-1 bg-blue-600 dark:bg-blue-500 text-white py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base hover:bg-blue-700 dark:hover:bg-blue-600 transition disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed"
                     >
                       {isConfirming ? 'Подтверждение...' : 'Выбрать инструктора'}
                     </button>
                   ) : (
                     <button
                       disabled
-                      className="flex-1 bg-green-600 dark:bg-green-500 text-white py-3 rounded-lg font-semibold cursor-default"
+                      className="flex-1 bg-green-600 dark:bg-green-500 text-white py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base cursor-default"
                     >
                       ✓ Выбран
                     </button>
@@ -1134,7 +1183,7 @@ const DrivingSchoolBot = () => {
                       e.stopPropagation();
                       // TODO: Открыть видеоотзывы
                     }}
-                    className="px-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    className="px-3 sm:px-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-base hover:bg-gray-300 dark:hover:bg-gray-600 transition"
                   >
                     🎥
                   </button>
@@ -1264,27 +1313,27 @@ const DrivingSchoolBot = () => {
         </div>
 
         {/* SYSTEM 1: Быстрое визуальное понимание - цветовой индикатор статуса */}
-        <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
+        <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 shadow-sm">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {/* SYSTEM 1: Цветовой индикатор для мгновенного понимания */}
-              <div className={`w-4 h-4 rounded-full animate-pulse ${
+              <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full animate-pulse ${
                 progressPercentage === 100 
                   ? 'bg-green-500 shadow-lg shadow-green-500/50' 
                   : progressPercentage >= 50 
                     ? 'bg-yellow-500 shadow-lg shadow-yellow-500/50'
                     : 'bg-blue-500 shadow-lg shadow-blue-500/50'
               }`}></div>
-              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{t('bot.progress.overall')}</span>
+              <span className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">{t('bot.progress.overall')}</span>
             </div>
             {/* SYSTEM 1: Большое число для быстрого сканирования */}
-            <div className="text-3xl font-bold text-gray-800 dark:text-gray-100">{Math.round(progressPercentage)}%</div>
+            <div className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">{Math.round(progressPercentage)}%</div>
           </div>
           
           {/* SYSTEM 1: Визуальный прогресс-бар с эмоциональной окраской */}
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-7 mb-3 shadow-inner">
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-5 sm:h-6 md:h-7 mb-2 sm:mb-3 shadow-inner">
             <div
-              className={`rounded-full h-7 transition-all duration-700 shadow-lg ${
+              className={`rounded-full h-5 sm:h-6 md:h-7 transition-all duration-700 shadow-lg ${
                 progressPercentage === 100 
                   ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-600' 
                   : progressPercentage >= 50 
@@ -1296,80 +1345,82 @@ const DrivingSchoolBot = () => {
           </div>
           
           {/* SYSTEM 1: Быстрое сканирование ключевых чисел */}
-          <div className="flex items-center justify-between text-sm mb-3">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-0 text-xs sm:text-sm mb-2 sm:mb-3">
             <span className="text-gray-600 dark:text-gray-400 font-medium">
               {progress.completed_lessons} / {progress.total_lessons} {t('bot.progress.lessons')}
             </span>
             {remainingLessons > 0 && (
-              <span className="text-gray-500 dark:text-gray-400">
+              <span className="text-gray-500 dark:text-gray-400 text-xs">
                 {t('bot.progress.remaining', { count: remainingLessons })}
               </span>
             )}
           </div>
 
           {/* Кнопки для самостоятельного обновления прогресса */}
-          <div className="flex items-center gap-2 pt-3 border-t border-gray-200 dark:border-gray-700">
-            <span className="text-xs text-gray-600 dark:text-gray-400">{t('bot.progress.completedLessonsLabel')}</span>
-            <button
-              onClick={async () => {
-                if (!user?.id || loading || progress.completed_lessons <= 0) return;
-                try {
-                  setLoading(true);
-                  const updated = await BotService.updateProgress(user.id, {
-                    completed_lessons: Math.max(0, progress.completed_lessons - 1)
-                  });
-                  setProgress(updated);
-                } catch (err) {
-                  console.error('Error updating progress:', err);
-                  setError(t('bot.errors.updateProgressFailed'));
-                } finally {
-                  setLoading(false);
-                }
-              }}
-              disabled={loading || progress.completed_lessons <= 0}
-              className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition"
-            >
-              <Minus size={14} className="text-gray-600 dark:text-gray-400" />
-            </button>
-            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 min-w-[2rem] text-center">
-              {progress.completed_lessons}
-            </span>
-            <button
-              onClick={async () => {
-                if (!user?.id || loading || progress.completed_lessons >= progress.total_lessons) return;
-                try {
-                  setLoading(true);
-                  const updated = await BotService.updateProgress(user.id, {
-                    completed_lessons: Math.min(progress.total_lessons, progress.completed_lessons + 1)
-                  });
-                  setProgress(updated);
-                } catch (err) {
-                  console.error('Error updating progress:', err);
-                  setError(t('bot.errors.updateProgressFailed'));
-                } finally {
-                  setLoading(false);
-                }
-              }}
-              disabled={loading || progress.completed_lessons >= progress.total_lessons}
-              className="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-            >
-              <Plus size={14} className="text-blue-600 dark:text-blue-400" />
-            </button>
+          <div className="flex flex-wrap items-center gap-2 pt-2 sm:pt-3 border-t border-gray-200 dark:border-gray-700">
+            <span className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 w-full sm:w-auto">{t('bot.progress.completedLessonsLabel')}</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto justify-center sm:justify-start">
+              <button
+                onClick={async () => {
+                  if (!user?.id || loading || progress.completed_lessons <= 0) return;
+                  try {
+                    setLoading(true);
+                    const updated = await BotService.updateProgress(user.id, {
+                      completed_lessons: Math.max(0, progress.completed_lessons - 1)
+                    });
+                    setProgress(updated);
+                  } catch (err) {
+                    console.error('Error updating progress:', err);
+                    setError(t('bot.errors.updateProgressFailed'));
+                  } finally {
+                    setLoading(false);
+                  }
+                }}
+                disabled={loading || progress.completed_lessons <= 0}
+                className="p-1.5 sm:p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition"
+              >
+                <Minus size={14} className="text-gray-600 dark:text-gray-400" />
+              </button>
+              <span className="text-sm sm:text-base font-semibold text-gray-700 dark:text-gray-300 min-w-[2rem] text-center">
+                {progress.completed_lessons}
+              </span>
+              <button
+                onClick={async () => {
+                  if (!user?.id || loading || progress.completed_lessons >= progress.total_lessons) return;
+                  try {
+                    setLoading(true);
+                    const updated = await BotService.updateProgress(user.id, {
+                      completed_lessons: Math.min(progress.total_lessons, progress.completed_lessons + 1)
+                    });
+                    setProgress(updated);
+                  } catch (err) {
+                    console.error('Error updating progress:', err);
+                    setError(t('bot.errors.updateProgressFailed'));
+                  } finally {
+                    setLoading(false);
+                  }
+                }}
+                disabled={loading || progress.completed_lessons >= progress.total_lessons}
+                className="p-1.5 sm:p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+              >
+                <Plus size={14} className="text-blue-600 dark:text-blue-400" />
+              </button>
+            </div>
           </div>
 
           {/* SYSTEM 2: Кнопка для углубления в детали (опционально) */}
           <button
             onClick={() => setShowDetails(!showDetails)}
-            className="w-full text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center justify-center gap-1 mt-2"
+            className="w-full text-[10px] sm:text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center justify-center gap-1 mt-2"
           >
             {showDetails ? t('bot.progress.hideDetails') : t('bot.progress.showDetails')}
-            <span className="text-lg">{showDetails ? '↑' : '↓'}</span>
+            <span className="text-base sm:text-lg">{showDetails ? '↑' : '↓'}</span>
           </button>
 
           {/* SYSTEM 2: Детальная информация для аналитического мышления */}
           {showDetails && (
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
-              <div className="grid grid-cols-2 gap-3 text-xs">
+            <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 text-[10px] sm:text-xs">
                 <div>
                   <span className="text-gray-500 dark:text-gray-400">{t('bot.progress.theoryLabel')}</span>
                   <span className="ml-1 font-semibold text-gray-700 dark:text-gray-300">{progress.theory_progress}%</span>
@@ -1602,10 +1653,10 @@ const DrivingSchoolBot = () => {
           ← {t('bot.common.back')}
         </button>
 
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">{t('bot.testimonials.title')}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">{t('bot.testimonials.title')}</h2>
 
-        <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-4">
-          <p className="text-sm text-yellow-800 dark:text-yellow-200">
+        <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+          <p className="text-xs sm:text-sm text-yellow-800 dark:text-yellow-200">
             💡 {t('bot.testimonials.motivation')}
           </p>
         </div>
@@ -1613,21 +1664,21 @@ const DrivingSchoolBot = () => {
         {/* Кнопка для добавления отзыва */}
         <button
           onClick={() => setShowReviewForm(!showReviewForm)}
-          className="w-full bg-blue-600 dark:bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 dark:hover:bg-blue-600 transition flex items-center justify-center gap-2 mb-4"
+          className="w-full bg-blue-600 dark:bg-blue-500 text-white py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base hover:bg-blue-700 dark:hover:bg-blue-600 transition flex items-center justify-center gap-2 mb-3 sm:mb-4"
         >
-          <Star size={18} />
+          <Star size={16} />
           <span>{showReviewForm ? t('bot.testimonials.hideForm') : t('bot.testimonials.leaveReview')}</span>
         </button>
 
         {/* Форма для создания отзыва */}
         {showReviewForm && (
-          <div className="bg-white dark:bg-gray-800 border-2 border-blue-200 dark:border-blue-700 rounded-lg p-5 mb-4">
-            <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100 mb-4">{t('bot.testimonials.leaveReviewTitle')}</h3>
+          <div className="bg-white dark:bg-gray-800 border-2 border-blue-200 dark:border-blue-700 rounded-lg p-3 sm:p-4 md:p-5 mb-3 sm:mb-4">
+            <h3 className="font-bold text-base sm:text-lg text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">{t('bot.testimonials.leaveReviewTitle')}</h3>
             
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {/* Имя ученика */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
                   {t('bot.testimonials.yourName')}
                 </label>
                 <input
@@ -1635,19 +1686,19 @@ const DrivingSchoolBot = () => {
                   value={reviewStudentName}
                   onChange={(e) => setReviewStudentName(e.target.value)}
                   placeholder={t('bot.testimonials.namePlaceholder')}
-                  className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                  className="w-full p-2.5 sm:p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm sm:text-base"
                 />
               </div>
 
               {/* Выбор инструктора */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
                   {t('bot.testimonials.selectInstructor')}
                 </label>
                 <select
                   value={selectedInstructor || ''}
                   onChange={(e) => setSelectedInstructor(e.target.value || null)}
-                  className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                  className="w-full p-2.5 sm:p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm sm:text-base"
                 >
                   <option value="">{t('bot.testimonials.selectInstructorPlaceholder')}</option>
                   {instructors.map((instructor) => (
@@ -1660,27 +1711,27 @@ const DrivingSchoolBot = () => {
 
               {/* Рейтинг */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
                   {t('bot.testimonials.rating')}
                 </label>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   {[1, 2, 3, 4, 5].map((rating) => (
                     <button
                       key={rating}
                       onClick={() => setReviewRating(rating)}
-                      className={`p-2 rounded-lg transition ${
+                      className={`p-1.5 sm:p-2 rounded-lg transition ${
                         reviewRating >= rating
                           ? 'bg-yellow-400 dark:bg-yellow-500 text-yellow-900'
                           : 'bg-gray-200 dark:bg-gray-700 text-gray-400'
                       }`}
                     >
                       <Star
-                        size={24}
+                        size={18}
                         className={reviewRating >= rating ? 'fill-current' : ''}
                       />
                     </button>
                   ))}
-                  <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                  <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {t('bot.testimonials.ratingOf', { rating: reviewRating })}
                   </span>
                 </div>
@@ -1688,20 +1739,20 @@ const DrivingSchoolBot = () => {
 
               {/* Текст отзыва */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
                   {t('bot.testimonials.yourReview')}
                 </label>
                 <textarea
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
                   placeholder={t('bot.testimonials.reviewPlaceholder')}
-                  className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 resize-none"
+                  className="w-full p-2.5 sm:p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 resize-none text-sm sm:text-base"
                   rows={5}
                 />
               </div>
 
               {/* Кнопки */}
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <button
                   onClick={() => {
                     setShowReviewForm(false);
@@ -1710,7 +1761,7 @@ const DrivingSchoolBot = () => {
                     setReviewStudentName('');
                     setError(null);
                   }}
-                  className="flex-1 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium"
+                  className="flex-1 py-2.5 sm:py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium text-sm sm:text-base"
                 >
                   {t('bot.testimonials.cancel')}
                 </button>
@@ -1747,15 +1798,15 @@ const DrivingSchoolBot = () => {
                     }
                   }}
                   disabled={!reviewText.trim() || !reviewStudentName.trim() || !selectedInstructor || loading}
-                  className="flex-1 py-3 rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition font-semibold"
+                  className="flex-1 py-2.5 sm:py-3 rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition font-semibold text-sm sm:text-base"
                 >
                   {loading ? t('bot.testimonials.sending') : t('bot.testimonials.submit')}
                 </button>
               </div>
 
               {error && (
-                <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-3">
-                  <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+                <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-2 sm:p-3">
+                  <p className="text-xs sm:text-sm text-red-800 dark:text-red-200">{error}</p>
                 </div>
               )}
             </div>
@@ -1766,27 +1817,27 @@ const DrivingSchoolBot = () => {
           <div className="text-center py-8 text-gray-500 dark:text-gray-400">{t('bot.testimonials.loading')}</div>
         ) : (
           testimonials.map((testimonial) => (
-            <div key={testimonial.id} className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-4 rounded-lg">
-              <div className="flex items-start gap-3 mb-3">
-                <div className="text-4xl">👤</div>
-                <div className="flex-1">
-                  <div className="font-bold text-gray-800 dark:text-gray-100">{testimonial.student_name}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div key={testimonial.id} className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-3 sm:p-4 rounded-lg">
+              <div className="flex items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
+                <div className="text-3xl sm:text-4xl flex-shrink-0">👤</div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold text-sm sm:text-base text-gray-800 dark:text-gray-100 break-words">{testimonial.student_name}</div>
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-words">
                     {t('bot.testimonials.instructor', { name: getInstructorName(testimonial.instructor_id) })}
                   </div>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-0.5 sm:gap-1 flex-shrink-0">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} size={16} className="fill-yellow-400 dark:fill-yellow-500 text-yellow-400 dark:text-yellow-500" />
+                    <Star key={i} size={14} className="fill-yellow-400 dark:fill-yellow-500 text-yellow-400 dark:text-yellow-500" />
                   ))}
                 </div>
               </div>
 
-              <p className="text-gray-700 dark:text-gray-300 mb-3">{testimonial.text}</p>
+              <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mb-2 sm:mb-3 break-words">{testimonial.text}</p>
 
               {testimonial.video_url && (
-                <button className="w-full bg-purple-600 dark:bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 dark:hover:bg-purple-600 transition flex items-center justify-center gap-2">
-                  <Video size={16} />
+                <button className="w-full bg-purple-600 dark:bg-purple-500 text-white py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium hover:bg-purple-700 dark:hover:bg-purple-600 transition flex items-center justify-center gap-2">
+                  <Video size={14} />
                   {t('bot.testimonials.watchVideo')}
                 </button>
               )}
@@ -1951,17 +2002,17 @@ const DrivingSchoolBot = () => {
           ← {t('bot.common.back')}
         </button>
 
-        <div className="flex items-center gap-3 mb-4">
-          <Heart className="text-red-500 dark:text-red-400" size={32} />
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{t('bot.support.title')}</h2>
+        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <Heart className="text-red-500 dark:text-red-400 flex-shrink-0" size={28} />
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100">{t('bot.support.title')}</h2>
         </div>
 
         {currentAnxietyLevel > 0 && (
-          <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-4">
-            <div className="font-bold text-red-900 dark:text-red-200 mb-2">
+          <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-3 sm:p-4">
+            <div className="font-bold text-sm sm:text-base text-red-900 dark:text-red-200 mb-1.5 sm:mb-2">
               {t('bot.support.anxietyLevel', { level: currentAnxietyLevel })}
             </div>
-            <p className="text-sm text-red-800 dark:text-red-200">
+            <p className="text-xs sm:text-sm text-red-800 dark:text-red-200">
               {currentAnxietyLevel >= 4
                 ? t('bot.support.highAnxiety')
                 : t('bot.support.normalAnxiety')}
@@ -1969,9 +2020,9 @@ const DrivingSchoolBot = () => {
           </div>
         )}
 
-        <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-4 rounded-lg">
-          <h3 className="font-bold mb-3 text-gray-800 dark:text-gray-100">{t('bot.support.tipTitle')}</h3>
-          <p className="text-gray-700 dark:text-gray-300 text-sm bg-blue-50 dark:bg-blue-900/30 p-3 rounded">
+        <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-3 sm:p-4 rounded-lg">
+          <h3 className="font-bold text-sm sm:text-base mb-2 sm:mb-3 text-gray-800 dark:text-gray-100">{t('bot.support.tipTitle')}</h3>
+          <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 bg-blue-50 dark:bg-blue-900/30 p-2.5 sm:p-3 rounded break-words">
             {(() => {
               const tips = getAnxietyTips();
               return tips[Math.floor(Math.random() * tips.length)];
@@ -2011,50 +2062,50 @@ const DrivingSchoolBot = () => {
         {/* Кнопка для открытия формы сообщения */}
         <button 
           onClick={() => setShowSupportForm(!showSupportForm)}
-          className="w-full bg-green-600 dark:bg-green-500 text-white py-4 rounded-lg font-semibold hover:bg-green-700 dark:hover:bg-green-600 transition flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+          className="w-full bg-green-600 dark:bg-green-500 text-white py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base hover:bg-green-700 dark:hover:bg-green-600 transition flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
         >
-          <MessageCircle size={20} />
+          <MessageCircle size={18} />
           <span>{showSupportForm ? t('bot.support.hideForm') : t('bot.support.writePsychologist')}</span>
         </button>
 
         {/* Форма для отправки сообщения психологу */}
         {showSupportForm && (
-          <div className="bg-white dark:bg-gray-800 border-2 border-green-200 dark:border-green-700 rounded-lg p-5 mt-4">
-            <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100 mb-4">
+          <div className="bg-white dark:bg-gray-800 border-2 border-green-200 dark:border-green-700 rounded-lg p-3 sm:p-4 md:p-5 mt-3 sm:mt-4">
+            <h3 className="font-bold text-base sm:text-lg text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">
               {t('bot.support.writeTitle')}
             </h3>
             
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {/* Информационное сообщение */}
-              <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-3">
-                <p className="text-xs text-blue-800 dark:text-blue-200">
+              <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-2.5 sm:p-3">
+                <p className="text-[10px] sm:text-xs text-blue-800 dark:text-blue-200">
                   💬 {t('bot.support.info')}
                 </p>
               </div>
 
               {/* Поле для ввода сообщения */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
                   {t('bot.support.yourMessage')}
                 </label>
                 <textarea
                   value={supportMessage}
                   onChange={(e) => setSupportMessage(e.target.value)}
                   placeholder={t('bot.support.messagePlaceholder')}
-                  className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 resize-none"
+                  className="w-full p-2.5 sm:p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 resize-none text-sm sm:text-base"
                   rows={6}
                 />
               </div>
 
               {/* Кнопки */}
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <button
                   onClick={() => {
                     setShowSupportForm(false);
                     setSupportMessage('');
                     setError(null);
                   }}
-                  className="flex-1 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium"
+                  className="flex-1 py-2.5 sm:py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium text-sm sm:text-base"
                 >
                   {t('bot.support.cancel')}
                 </button>
@@ -2084,15 +2135,15 @@ const DrivingSchoolBot = () => {
                     }
                   }}
                   disabled={!supportMessage.trim() || loading}
-                  className="flex-1 py-3 rounded-lg bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition font-semibold"
+                  className="flex-1 py-2.5 sm:py-3 rounded-lg bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition font-semibold text-sm sm:text-base"
                 >
                   {loading ? t('bot.support.sending') : t('bot.support.send')}
                 </button>
               </div>
 
               {error && (
-                <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-3">
-                  <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+                <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-2.5 sm:p-3">
+                  <p className="text-xs sm:text-sm text-red-800 dark:text-red-200">{error}</p>
                 </div>
               )}
             </div>
@@ -2159,7 +2210,7 @@ const DrivingSchoolBot = () => {
   return (
     <div 
       ref={containerRef}
-      className="max-w-md mx-auto bg-gray-50 dark:bg-[hsl(220,35%,3%)] min-h-screen p-4 transition-colors duration-200 relative"
+      className="w-full max-w-md mx-auto bg-gray-50 dark:bg-[hsl(220,35%,3%)] min-h-screen p-3 sm:p-4 md:p-6 transition-colors duration-200 relative"
     >
       {screen === 'welcome' && renderWelcome()}
       {screen === 'anxiety' && renderAnxietyTest()}
@@ -2172,10 +2223,10 @@ const DrivingSchoolBot = () => {
 
       {/* Модальное окно для записи на занятие */}
       {showBookingForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">{t('bot.booking.title')}</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 sm:p-4 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">{t('bot.booking.title')}</h3>
               <button
                 onClick={() => {
                   setShowBookingForm(false);
@@ -2183,17 +2234,17 @@ const DrivingSchoolBot = () => {
                   setBookingTime('');
                   setError(null);
                 }}
-                className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 p-1"
               >
-                <X size={24} />
+                <X size={20} />
               </button>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {/* Информация об инструкторе */}
               {selectedInstructor && (
-                <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-3">
-                  <p className="text-sm text-blue-800 dark:text-blue-200">
+                <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-2 sm:p-3">
+                  <p className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 break-words">
                     <span className="font-semibold">{t('bot.booking.instructorLabel')}</span>{' '}
                     {instructors.find(i => i.id === selectedInstructor)?.name || t('bot.booking.notSelected')}
                   </p>
@@ -2202,33 +2253,33 @@ const DrivingSchoolBot = () => {
 
               {/* Тип занятия */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t('bot.booking.lessonType')}
                 </label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   <button
                     onClick={() => setBookingType('theory')}
-                    className={`p-4 rounded-lg border-2 transition ${
+                    className={`p-3 sm:p-4 rounded-lg border-2 transition ${
                       bookingType === 'theory'
                         ? 'border-blue-500 dark:border-blue-400 bg-blue-50 dark:bg-blue-900/30'
                         : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'
                     }`}
                   >
-                    <div className="text-2xl mb-2">📚</div>
-                    <div className={`font-semibold ${bookingType === 'theory' ? 'text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300'}`}>
+                    <div className="text-xl sm:text-2xl mb-1 sm:mb-2">📚</div>
+                    <div className={`font-semibold text-xs sm:text-sm ${bookingType === 'theory' ? 'text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300'}`}>
                       {t('bot.booking.theory')}
                     </div>
                   </button>
                   <button
                     onClick={() => setBookingType('driving')}
-                    className={`p-4 rounded-lg border-2 transition ${
+                    className={`p-3 sm:p-4 rounded-lg border-2 transition ${
                       bookingType === 'driving'
                         ? 'border-green-500 dark:border-green-400 bg-green-50 dark:bg-green-900/30'
                         : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'
                     }`}
                   >
-                    <div className="text-2xl mb-2">🚗</div>
-                    <div className={`font-semibold ${bookingType === 'driving' ? 'text-green-700 dark:text-green-300' : 'text-gray-700 dark:text-gray-300'}`}>
+                    <div className="text-xl sm:text-2xl mb-1 sm:mb-2">🚗</div>
+                    <div className={`font-semibold text-xs sm:text-sm ${bookingType === 'driving' ? 'text-green-700 dark:text-green-300' : 'text-gray-700 dark:text-gray-300'}`}>
                       {t('bot.booking.practice')}
                     </div>
                   </button>
@@ -2237,7 +2288,7 @@ const DrivingSchoolBot = () => {
 
               {/* Дата */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t('bot.booking.date')}
                 </label>
                 <input
@@ -2245,38 +2296,38 @@ const DrivingSchoolBot = () => {
                   value={bookingDate}
                   onChange={(e) => setBookingDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                  className="w-full p-2.5 sm:p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm sm:text-base"
                 />
               </div>
 
               {/* Время */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t('bot.booking.time')}
                 </label>
                 <input
                   type="time"
                   value={bookingTime}
                   onChange={(e) => setBookingTime(e.target.value)}
-                  className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                  className="w-full p-2.5 sm:p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm sm:text-base"
                 />
               </div>
 
               {/* Информация */}
-              <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg p-3">
-                <p className="text-xs text-yellow-800 dark:text-yellow-200">
+              <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg p-2 sm:p-3">
+                <p className="text-[10px] sm:text-xs text-yellow-800 dark:text-yellow-200">
                   💡 {t('bot.booking.info')}
                 </p>
               </div>
 
               {error && (
-                <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-3">
-                  <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+                <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg p-2 sm:p-3">
+                  <p className="text-xs sm:text-sm text-red-800 dark:text-red-200">{error}</p>
                 </div>
               )}
 
               {/* Кнопки */}
-              <div className="flex gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
                 <button
                   onClick={() => {
                     setShowBookingForm(false);
@@ -2284,14 +2335,14 @@ const DrivingSchoolBot = () => {
                     setBookingTime('');
                     setError(null);
                   }}
-                  className="flex-1 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium"
+                  className="flex-1 py-2.5 sm:py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition font-medium text-sm sm:text-base"
                 >
                   {t('bot.booking.cancel')}
                 </button>
                 <button
                   onClick={handleSubmitBooking}
                   disabled={!bookingDate || !bookingTime || loading}
-                  className="flex-1 py-3 rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition font-semibold"
+                  className="flex-1 py-2.5 sm:py-3 rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition font-semibold text-sm sm:text-base"
                 >
                   {loading ? t('bot.booking.booking') : t('bot.booking.book')}
                 </button>
