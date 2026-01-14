@@ -4,6 +4,7 @@ export type Platform = 'web' | 'telegram' | 'whatsapp';
 
 export interface BotUser {
   id: string;
+  auth_user_id: string; // Связь с auth.users
   name: string | null;
   phone: string | null;
   email: string | null;

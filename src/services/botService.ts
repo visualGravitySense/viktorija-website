@@ -13,93 +13,88 @@ import type {
   UserNote,
   Platform,
 } from '../types/bot';
+import type { User } from '@supabase/supabase-js';
 
 export class BotService {
-  // Регистрация/создание пользователя
-  static async registerUser(data: {
-    name?: string;
-    phone?: string;
-    email?: string;
-    platform: Platform;
-    telegram_id?: number;
-    whatsapp_id?: string;
-  }): Promise<BotUser> {
-    const { data: user, error } = await supabase
+  // Получить или создать профиль пользователя бота из auth.users
+  static async getOrCreateBotProfile(authUser: User): Promise<BotUser> {
+    // Проверяем, есть ли уже профиль в bot_users
+    const { data: existingProfile, error: fetchError } = await supabase
+      .from('bot_users')
+      .select('*')
+      .eq('auth_user_id', authUser.id)
+      .maybeSingle();
+
+    if (fetchError && fetchError.code !== 'PGRST116') {
+      throw fetchError;
+    }
+
+    // Если профиль существует, обновляем last_active_at и возвращаем
+    if (existingProfile) {
+      await supabase
+        .from('bot_users')
+        .update({ last_active_at: new Date().toISOString() })
+        .eq('id', existingProfile.id);
+      return existingProfile;
+    }
+
+    // Создаем новый профиль
+    const { data: newProfile, error: insertError } = await supabase
       .from('bot_users')
       .insert({
-        name: data.name || null,
-        phone: data.phone || null,
-        email: data.email || null,
-        platform: data.platform,
-        telegram_id: data.telegram_id || null,
-        whatsapp_id: data.whatsapp_id || null,
+        auth_user_id: authUser.id,
+        name: authUser.user_metadata?.name || authUser.email?.split('@')[0] || null,
+        email: authUser.email || null,
+        phone: authUser.phone || null,
+        platform: 'web',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        last_active_at: new Date().toISOString(),
       })
       .select()
       .single();
 
-    if (error) throw error;
-    return user;
+    if (insertError) throw insertError;
+    return newProfile;
   }
 
-  // Получить или создать пользователя
-  static async getOrCreateUser(data: {
-    name?: string;
-    phone?: string;
-    email?: string;
-    platform: Platform;
-    telegram_id?: number;
-    whatsapp_id?: string;
-  }): Promise<BotUser> {
-    // Попытка найти существующего пользователя
-    let query = supabase.from('bot_users').select('*');
-
-    if (data.telegram_id) {
-      query = query.eq('telegram_id', data.telegram_id);
-    } else if (data.whatsapp_id) {
-      query = query.eq('whatsapp_id', data.whatsapp_id);
-    } else if (data.email) {
-      query = query.eq('email', data.email);
-    } else if (data.phone) {
-      query = query.eq('phone', data.phone);
-    } else {
-      // Если нет идентификаторов, создаем нового
-      return this.registerUser(data);
-    }
-
-    const { data: existingUser, error } = await query.single();
-
-    if (error && error.code === 'PGRST116') {
-      // Пользователь не найден, создаем нового
-      return this.registerUser(data);
-    }
-
-    if (error) throw error;
-
-    // Обновляем last_active_at
-    await supabase
+  // Получить профиль пользователя бота по auth_user_id
+  static async getBotProfile(authUserId: string): Promise<BotUser | null> {
+    const { data, error } = await supabase
       .from('bot_users')
-      .update({ last_active_at: new Date().toISOString() })
-      .eq('id', existingUser.id);
+      .select('*')
+      .eq('auth_user_id', authUserId)
+      .maybeSingle();
 
-    return existingUser;
+    if (error && error.code !== 'PGRST116') {
+      throw error;
+    }
+
+    return data || null;
   }
 
   // Сохранить результат теста на тревожность
-  static async saveAnxietyTest(userId: string, anxietyLevel: number): Promise<void> {
+  static async saveAnxietyTest(authUserId: string, anxietyLevel: number): Promise<void> {
+    // Сначала получаем профиль бота
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      throw new Error('Bot profile not found');
+    }
+
     const { error } = await supabase
       .from('bot_users')
       .update({ anxiety_level: anxietyLevel })
-      .eq('id', userId);
+      .eq('auth_user_id', authUserId);
 
     if (error) throw error;
   }
 
   // Сохранить выбранного инструктора
-  static async saveSelectedInstructor(userId: string, instructorId: string): Promise<void> {
+  static async saveSelectedInstructor(authUserId: string, instructorId: string): Promise<void> {
     const { error } = await supabase
       .from('bot_users')
       .update({ selected_instructor_id: instructorId })
-      .eq('id', userId);
+      .eq('auth_user_id', authUserId);
 
     if (error) throw error;
   }
@@ -142,14 +137,19 @@ export class BotService {
     return data || [];
   }
 
-  // Создать отзыв
-  static async createReview(data: {
+  // Создать отзыв (используем auth_user_id)
+  static async createReview(authUserId: string, data: {
     instructor_id: string;
     student_name: string;
     text: string;
     rating: number;
     video_url?: string;
   }): Promise<Review> {
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      throw new Error('Bot profile not found');
+    }
+
     const { data: review, error } = await supabase
       .from('bot_reviews')
       .insert({
@@ -167,18 +167,22 @@ export class BotService {
     return review;
   }
 
-  // Получить прогресс пользователя
-  static async getProgress(userId: string): Promise<Progress | null> {
+  // Получить прогресс пользователя (используем auth_user_id)
+  static async getProgress(authUserId: string): Promise<Progress | null> {
     try {
+      // Получаем профиль бота
+      const profile = await this.getBotProfile(authUserId);
+      if (!profile) {
+        return null;
+      }
+
       const { data, error } = await supabase
         .from('bot_progress')
         .select('*')
-        .eq('user_id', userId)
-        .maybeSingle(); // Используем maybeSingle вместо single для избежания ошибок 406
+        .eq('user_id', profile.id)
+        .maybeSingle();
 
-      // Если ошибка и это не "не найдено", выбрасываем её
       if (error) {
-        // PGRST116 = "The result contains 0 rows" - это нормально
         if (error.code === 'PGRST116' || error.message?.includes('0 rows')) {
           return null;
         }
@@ -189,14 +193,13 @@ export class BotService {
       return data;
     } catch (err) {
       console.error('Exception in getProgress:', err);
-      // Возвращаем null вместо выброса ошибки, чтобы не ломать UI
       return null;
     }
   }
 
-  // Создать или обновить прогресс
+  // Создать или обновить прогресс (используем auth_user_id)
   static async upsertProgress(
-    userId: string,
+    authUserId: string,
     progress: {
       theory_progress?: number;
       driving_progress?: number;
@@ -204,11 +207,17 @@ export class BotService {
       total_lessons?: number;
     }
   ): Promise<Progress> {
+    // Получаем профиль бота
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      throw new Error('Bot profile not found');
+    }
+
     const { data, error } = await supabase
       .from('bot_progress')
       .upsert(
         {
-          user_id: userId,
+          user_id: profile.id,
           ...progress,
         },
         { onConflict: 'user_id' }
@@ -220,12 +229,17 @@ export class BotService {
     return data;
   }
 
-  // Получить навыки пользователя
-  static async getSkills(userId: string): Promise<Skill[]> {
+  // Получить навыки пользователя (используем auth_user_id)
+  static async getSkills(authUserId: string): Promise<Skill[]> {
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      return [];
+    }
+
     const { data, error } = await supabase
       .from('bot_skills')
       .select('*')
-      .eq('user_id', userId)
+      .eq('user_id', profile.id)
       .order('created_at', { ascending: true });
 
     if (error) throw error;
@@ -245,12 +259,17 @@ export class BotService {
     return data;
   }
 
-  // Создать навык
-  static async createSkill(userId: string, skillName: string): Promise<Skill> {
+  // Создать навык (используем auth_user_id)
+  static async createSkill(authUserId: string, skillName: string): Promise<Skill> {
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      throw new Error('Bot profile not found');
+    }
+
     const { data, error } = await supabase
       .from('bot_skills')
       .insert({
-        user_id: userId,
+        user_id: profile.id,
         skill_name: skillName,
         completed: false,
       })
@@ -261,15 +280,20 @@ export class BotService {
     return data;
   }
 
-  // Записаться на занятие
-  static async bookLesson(request: BookLessonRequest): Promise<Lesson> {
+  // Записаться на занятие (используем auth_user_id)
+  static async bookLesson(authUserId: string, instructorId: string, date: string, type: 'theory' | 'driving'): Promise<Lesson> {
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      throw new Error('Bot profile not found');
+    }
+
     const { data, error } = await supabase
       .from('bot_lessons')
       .insert({
-        user_id: request.user_id,
-        instructor_id: request.instructor_id,
-        date: request.date,
-        type: request.type,
+        user_id: profile.id,
+        instructor_id: instructorId,
+        date,
+        type,
         status: 'scheduled',
       })
       .select()
@@ -279,24 +303,34 @@ export class BotService {
     return data;
   }
 
-  // Получить занятия пользователя
-  static async getLessons(userId: string): Promise<Lesson[]> {
+  // Получить занятия пользователя (используем auth_user_id)
+  static async getLessons(authUserId: string): Promise<Lesson[]> {
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      return [];
+    }
+
     const { data, error } = await supabase
       .from('bot_lessons')
       .select('*')
-      .eq('user_id', userId)
+      .eq('user_id', profile.id)
       .order('date', { ascending: true });
 
     if (error) throw error;
     return data || [];
   }
 
-  // Отправить сообщение в поддержку
-  static async sendSupportMessage(userId: string, message: string): Promise<SupportMessage> {
+  // Отправить сообщение в поддержку (используем auth_user_id)
+  static async sendSupportMessage(authUserId: string, message: string): Promise<SupportMessage> {
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      throw new Error('Bot profile not found');
+    }
+
     const { data, error } = await supabase
       .from('bot_support_messages')
       .insert({
-        user_id: userId,
+        user_id: profile.id,
         message,
         status: 'pending',
       })
@@ -307,31 +341,41 @@ export class BotService {
     return data;
   }
 
-  // Получить сообщения поддержки пользователя
-  static async getSupportMessages(userId: string): Promise<SupportMessage[]> {
+  // Получить сообщения поддержки пользователя (используем auth_user_id)
+  static async getSupportMessages(authUserId: string): Promise<SupportMessage[]> {
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      return [];
+    }
+
     const { data, error } = await supabase
       .from('bot_support_messages')
       .select('*')
-      .eq('user_id', userId)
+      .eq('user_id', profile.id)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
     return data || [];
   }
 
-  // Обновить прогресс пользователя (для самостоятельного обновления)
+  // Обновить прогресс пользователя (используем auth_user_id)
   static async updateProgress(
-    userId: string,
+    authUserId: string,
     updates: {
       theory_progress?: number;
       driving_progress?: number;
       completed_lessons?: number;
     }
   ): Promise<Progress> {
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      throw new Error('Bot profile not found');
+    }
+
     const { data, error } = await supabase
       .from('bot_progress')
       .update(updates)
-      .eq('user_id', userId)
+      .eq('user_id', profile.id)
       .select()
       .single();
 
@@ -362,12 +406,17 @@ export class BotService {
     return data;
   }
 
-  // Добавить заметку
-  static async addNote(userId: string, noteText: string, lessonId?: string): Promise<UserNote> {
+  // Добавить заметку (используем auth_user_id)
+  static async addNote(authUserId: string, noteText: string, lessonId?: string): Promise<UserNote> {
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      throw new Error('Bot profile not found');
+    }
+
     const { data, error } = await supabase
       .from('bot_user_notes')
       .insert({
-        user_id: userId,
+        user_id: profile.id,
         note_text: noteText,
         lesson_id: lessonId || null,
       })
@@ -378,12 +427,17 @@ export class BotService {
     return data;
   }
 
-  // Получить заметки пользователя
-  static async getNotes(userId: string): Promise<UserNote[]> {
+  // Получить заметки пользователя (используем auth_user_id)
+  static async getNotes(authUserId: string): Promise<UserNote[]> {
+    const profile = await this.getBotProfile(authUserId);
+    if (!profile) {
+      return [];
+    }
+
     const { data, error } = await supabase
       .from('bot_user_notes')
       .select('*')
-      .eq('user_id', userId)
+      .eq('user_id', profile.id)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
