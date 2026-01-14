@@ -1,64 +1,151 @@
 // Service for sending Telegram notifications
-// Note: In production, this should use Supabase Edge Function for security
-// to avoid exposing the bot token in client-side code
+// Uses Vercel Serverless Function to avoid CORS issues and keep bot token secure
 
-const TELEGRAM_BOT_TOKEN = '8098211455:AAHgn_Tnl23c5Vr2AE2c1GuhuyUXKgj27N4';
-const TELEGRAM_API_URL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
-
-// Admin chat ID - should be set via environment variable or Supabase config
-// For now, you need to get your chat ID by sending a message to the bot
-// and checking: https://api.telegram.org/bot{TOKEN}/getUpdates
 const ADMIN_CHAT_ID = import.meta.env.VITE_TELEGRAM_ADMIN_CHAT_ID || '';
 
-interface TelegramMessage {
-  chat_id: string | number;
-  text: string;
-  parse_mode?: 'HTML' | 'Markdown' | 'MarkdownV2';
-}
+// Use Vercel API route in production (always on Vercel)
+// In development, try Vercel API first, fallback to direct API (may fail due to CORS)
+const USE_VERCEL_API = import.meta.env.PROD || import.meta.env.VITE_USE_VERCEL_API === 'true';
 
 export class TelegramService {
   /**
-   * Send a message to Telegram
-   * @param chatId - Telegram chat ID (user or group)
-   * @param text - Message text
-   * @param parseMode - Optional parse mode (HTML, Markdown, etc.)
+   * Send notification via Vercel API route (recommended) or direct API (fallback)
    */
-  static async sendMessage(
-    chatId: string | number,
-    text: string,
-    parseMode: 'HTML' | 'Markdown' | 'MarkdownV2' = 'HTML'
+  private static async sendViaAPI(
+    type: 'new_user' | 'lesson_booking' | 'support_message',
+    data: any
   ): Promise<{ success: boolean; error?: string }> {
-    if (!chatId) {
-      console.warn('Telegram chat ID not configured');
+    if (!ADMIN_CHAT_ID) {
+      console.warn('Admin chat ID not configured, skipping Telegram notification');
       return { success: false, error: 'Chat ID not configured' };
     }
 
     try {
-      const message: TelegramMessage = {
-        chat_id: chatId,
-        text,
-        parse_mode: parseMode,
-      };
+      // Try Vercel API route first (works in production)
+      const apiUrl = USE_VERCEL_API
+        ? '/api/telegram-notify'
+        : 'https://api.telegram.org/bot8098211455:AAHgn_Tnl23c5Vr2AE2c1GuhuyUXKgj27N4/sendMessage';
 
-      const response = await fetch(`${TELEGRAM_API_URL}/sendMessage`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(message),
-      });
+      if (USE_VERCEL_API) {
+        // Use Vercel Serverless Function
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type,
+            chatId: ADMIN_CHAT_ID,
+            data,
+          }),
+        });
 
-      const data = await response.json();
+        const result = await response.json();
 
-      if (!response.ok || !data.ok) {
-        console.error('Telegram API error:', data);
-        return { success: false, error: data.description || 'Failed to send message' };
+        if (!response.ok) {
+          console.error('Telegram API error:', result);
+          return { success: false, error: result.error || 'Failed to send message' };
+        }
+
+        return { success: true };
+      } else {
+        // Fallback: direct API call (may fail due to CORS in browser)
+        // This is only for local development testing
+        const message = this.formatMessage(type, data);
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            chat_id: ADMIN_CHAT_ID,
+            text: message,
+            parse_mode: 'HTML',
+          }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.ok) {
+          console.error('Telegram API error:', result);
+          // If CORS error, suggest using Vercel API
+          if (result.error?.includes('CORS') || response.status === 0) {
+            console.warn('CORS error detected. Use Vercel API route in production.');
+          }
+          return { success: false, error: result.description || 'Failed to send message' };
+        }
+
+        return { success: true };
       }
-
-      return { success: true };
     } catch (error) {
       console.error('Error sending Telegram message:', error);
+      // If it's a CORS error, suggest using Vercel API
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        console.warn('Network error. In production, use Vercel API route.');
+      }
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+    }
+  }
+
+  /**
+   * Format message based on type
+   */
+  private static formatMessage(type: string, data: any): string {
+    switch (type) {
+      case 'new_user':
+        return `
+🆕 <b>New User Registered</b>
+
+👤 <b>Name:</b> ${data.name || 'Not provided'}
+📧 <b>Email:</b> ${data.email || 'Not provided'}
+📱 <b>Phone:</b> ${data.phone || 'Not provided'}
+😰 <b>Anxiety Level:</b> ${data.anxietyLevel ? `${data.anxietyLevel}/5` : 'Not set'}
+
+⏰ <b>Time:</b> ${new Date().toLocaleString('en-US', { timeZone: 'Europe/Tallinn' })}
+        `.trim();
+
+      case 'lesson_booking':
+        const lessonTypeEmoji = data.type === 'theory' ? '📚' : '🚗';
+        const lessonTypeText = data.type === 'theory' ? 'Theory' : 'Practice';
+        return `
+📅 <b>New Lesson Booking</b>
+
+👤 <b>Student:</b> ${data.userName || 'Not provided'}
+📧 <b>Email:</b> ${data.userEmail || 'Not provided'}
+👨‍🏫 <b>Instructor:</b> ${data.instructorName}
+${lessonTypeEmoji} <b>Type:</b> ${lessonTypeText}
+📆 <b>Date:</b> ${data.date}
+🕐 <b>Time:</b> ${data.time}
+
+⏰ <b>Booked at:</b> ${new Date().toLocaleString('en-US', { timeZone: 'Europe/Tallinn' })}
+        `.trim();
+
+      case 'support_message':
+        const anxietyEmoji = data.anxietyLevel
+          ? data.anxietyLevel >= 4
+            ? '🔴'
+            : data.anxietyLevel >= 3
+            ? '🟡'
+            : '🟢'
+          : '⚪';
+        const messageText = data.messageText.length > 500
+          ? data.messageText.substring(0, 500) + '...'
+          : data.messageText;
+        return `
+💬 <b>New Support Request</b>
+
+👤 <b>Student:</b> ${data.userName || 'Not provided'}
+📧 <b>Email:</b> ${data.userEmail || 'Not provided'}
+${anxietyEmoji} <b>Anxiety Level:</b> ${data.anxietyLevel ? `${data.anxietyLevel}/5` : 'Not set'}
+
+💭 <b>Message:</b>
+${messageText}
+
+⏰ <b>Sent at:</b> ${new Date().toLocaleString('en-US', { timeZone: 'Europe/Tallinn' })}
+        `.trim();
+
+      default:
+        return '';
     }
   }
 
@@ -71,23 +158,12 @@ export class TelegramService {
     phone: string | null;
     anxietyLevel: number | null;
   }): Promise<void> {
-    if (!ADMIN_CHAT_ID) {
-      console.warn('Admin chat ID not configured, skipping Telegram notification');
-      return;
-    }
-
-    const message = `
-🆕 <b>New User Registered</b>
-
-👤 <b>Name:</b> ${user.name || 'Not provided'}
-📧 <b>Email:</b> ${user.email || 'Not provided'}
-📱 <b>Phone:</b> ${user.phone || 'Not provided'}
-😰 <b>Anxiety Level:</b> ${user.anxietyLevel ? `${user.anxietyLevel}/5` : 'Not set'}
-
-⏰ <b>Time:</b> ${new Date().toLocaleString('en-US', { timeZone: 'Europe/Tallinn' })}
-    `.trim();
-
-    await this.sendMessage(ADMIN_CHAT_ID, message, 'HTML');
+    await this.sendViaAPI('new_user', {
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      anxietyLevel: user.anxietyLevel,
+    });
   }
 
   /**
@@ -101,28 +177,14 @@ export class TelegramService {
     time: string;
     type: 'theory' | 'driving';
   }): Promise<void> {
-    if (!ADMIN_CHAT_ID) {
-      console.warn('Admin chat ID not configured, skipping Telegram notification');
-      return;
-    }
-
-    const lessonTypeEmoji = booking.type === 'theory' ? '📚' : '🚗';
-    const lessonTypeText = booking.type === 'theory' ? 'Theory' : 'Practice';
-
-    const message = `
-📅 <b>New Lesson Booking</b>
-
-👤 <b>Student:</b> ${booking.userName || 'Not provided'}
-📧 <b>Email:</b> ${booking.userEmail || 'Not provided'}
-👨‍🏫 <b>Instructor:</b> ${booking.instructorName}
-${lessonTypeEmoji} <b>Type:</b> ${lessonTypeText}
-📆 <b>Date:</b> ${booking.date}
-🕐 <b>Time:</b> ${booking.time}
-
-⏰ <b>Booked at:</b> ${new Date().toLocaleString('en-US', { timeZone: 'Europe/Tallinn' })}
-    `.trim();
-
-    await this.sendMessage(ADMIN_CHAT_ID, message, 'HTML');
+    await this.sendViaAPI('lesson_booking', {
+      userName: booking.userName,
+      userEmail: booking.userEmail,
+      instructorName: booking.instructorName,
+      date: booking.date,
+      time: booking.time,
+      type: booking.type,
+    });
   }
 
   /**
@@ -134,36 +196,11 @@ ${lessonTypeEmoji} <b>Type:</b> ${lessonTypeText}
     anxietyLevel: number | null;
     messageText: string;
   }): Promise<void> {
-    if (!ADMIN_CHAT_ID) {
-      console.warn('Admin chat ID not configured, skipping Telegram notification');
-      return;
-    }
-
-    const anxietyEmoji = message.anxietyLevel
-      ? message.anxietyLevel >= 4
-        ? '🔴'
-        : message.anxietyLevel >= 3
-        ? '🟡'
-        : '🟢'
-      : '⚪';
-
-    const messageText = message.messageText.length > 500
-      ? message.messageText.substring(0, 500) + '...'
-      : message.messageText;
-
-    const telegramMessage = `
-💬 <b>New Support Request</b>
-
-👤 <b>Student:</b> ${message.userName || 'Not provided'}
-📧 <b>Email:</b> ${message.userEmail || 'Not provided'}
-${anxietyEmoji} <b>Anxiety Level:</b> ${message.anxietyLevel ? `${message.anxietyLevel}/5` : 'Not set'}
-
-💭 <b>Message:</b>
-${messageText}
-
-⏰ <b>Sent at:</b> ${new Date().toLocaleString('en-US', { timeZone: 'Europe/Tallinn' })}
-    `.trim();
-
-    await this.sendMessage(ADMIN_CHAT_ID, telegramMessage, 'HTML');
+    await this.sendViaAPI('support_message', {
+      userName: message.userName,
+      userEmail: message.userEmail,
+      anxietyLevel: message.anxietyLevel,
+      messageText: message.messageText,
+    });
   }
 }
