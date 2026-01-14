@@ -3,7 +3,10 @@ import { MessageCircle, User, BarChart3, Heart, Star, Video, Calendar, CheckCirc
 import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { BotService } from '../../services/botService';
+import { AuthService } from '../../services/authService';
+import { supabase } from '../../lib/supabase';
 import type { BotUser, Instructor, Review, Progress, Skill } from '../../types/bot';
+import type { User as AuthUser } from '@supabase/supabase-js';
 
 const DrivingSchoolBot = () => {
   const theme = useTheme();
@@ -17,6 +20,8 @@ const DrivingSchoolBot = () => {
   const [selectedInstructor, setSelectedInstructor] = useState<string | null>(null);
   const [userName, setUserName] = useState('');
   const [user, setUser] = useState<BotUser | null>(null);
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [instructors, setInstructors] = useState<Instructor[]>([]);
   const [testimonials, setTestimonials] = useState<Review[]>([]);
   const [progress, setProgress] = useState<Progress | null>(null);
@@ -59,16 +64,32 @@ const DrivingSchoolBot = () => {
     }
   }, [screen, user]);
   
-  // Функция для выхода (очистка данных)
-  const handleLogout = () => {
-    localStorage.removeItem('bot_user_id');
-    localStorage.removeItem('bot_user_name');
-    localStorage.removeItem('bot_anxiety_level');
-    localStorage.removeItem('bot_screen');
-    setUser(null);
-    setUserName('');
-    setAnxietyLevel(0);
-    setScreen('welcome');
+  // Функция для выхода (очистка данных и выход из Supabase Auth)
+  const handleLogout = async () => {
+    try {
+      await AuthService.signOut();
+      localStorage.removeItem('bot_user_id');
+      localStorage.removeItem('bot_user_name');
+      localStorage.removeItem('bot_anxiety_level');
+      localStorage.removeItem('bot_screen');
+      setUser(null);
+      setAuthUser(null);
+      setUserName('');
+      setAnxietyLevel(0);
+      setScreen('welcome');
+    } catch (err) {
+      console.error('Error signing out:', err);
+      // Все равно очищаем локальные данные
+      localStorage.removeItem('bot_user_id');
+      localStorage.removeItem('bot_user_name');
+      localStorage.removeItem('bot_anxiety_level');
+      localStorage.removeItem('bot_screen');
+      setUser(null);
+      setAuthUser(null);
+      setUserName('');
+      setAnxietyLevel(0);
+      setScreen('welcome');
+    }
   };
   
   // Синхронизация класса dark с темой Material-UI
@@ -101,66 +122,87 @@ const DrivingSchoolBot = () => {
     }
   }, [screen]);
 
-  // Загрузка сохраненных данных пользователя при монтировании
+  // Инициализация аутентификации и загрузка пользователя
   useEffect(() => {
-    const loadSavedUser = async () => {
+    const initAuth = async () => {
       try {
-        const savedUserId = localStorage.getItem('bot_user_id');
-        const savedUserName = localStorage.getItem('bot_user_name');
-        const savedAnxietyLevel = localStorage.getItem('bot_anxiety_level');
-        const savedScreen = localStorage.getItem('bot_screen');
-
-        if (savedUserId && savedUserName) {
-          // Восстанавливаем имя
-          setUserName(savedUserName);
+        setAuthLoading(true);
+        
+        // Проверяем текущую сессию
+        const currentUser = await AuthService.getCurrentUser();
+        
+        if (currentUser) {
+          setAuthUser(currentUser);
           
-          // Пытаемся загрузить пользователя из базы
+          // Получаем или создаем профиль бота
           try {
-            const savedUser = await BotService.getOrCreateUser({
-              name: savedUserName,
-              platform: 'web',
-            });
-            setUser(savedUser);
+            const botProfile = await BotService.getOrCreateBotProfile(currentUser);
+            setUser(botProfile);
+            setUserName(botProfile.name || currentUser.email?.split('@')[0] || '');
             
             // Восстанавливаем выбранного инструктора, если он был
-            if (savedUser.selected_instructor_id) {
-              setSelectedInstructor(savedUser.selected_instructor_id);
+            if (botProfile.selected_instructor_id) {
+              setSelectedInstructor(botProfile.selected_instructor_id);
             }
             
             // Восстанавливаем уровень тревожности, если он был
-            if (savedAnxietyLevel) {
-              const level = parseInt(savedAnxietyLevel, 10);
-              setAnxietyLevel(level);
+            if (botProfile.anxiety_level) {
+              setAnxietyLevel(botProfile.anxiety_level);
             }
             
-            // Восстанавливаем экран
-            if (savedAnxietyLevel && parseInt(savedAnxietyLevel, 10) > 0) {
-              // Если прошел тест тревожности, используем сохраненный экран или идем в меню
+            // Определяем экран
+            const savedScreen = localStorage.getItem('bot_screen');
+            if (botProfile.anxiety_level && botProfile.anxiety_level > 0) {
               if (savedScreen && ['menu', 'instructors', 'progress', 'testimonials', 'support'].includes(savedScreen)) {
                 setScreen(savedScreen);
               } else {
                 setScreen('menu');
               }
             } else {
-              // Если не прошел тест, идем на тест тревожности
               setScreen('anxiety');
             }
           } catch (err) {
-            console.error('Error loading user:', err);
-            // Если не удалось загрузить, очищаем сохраненные данные
-            localStorage.removeItem('bot_user_id');
-            localStorage.removeItem('bot_user_name');
-            localStorage.removeItem('bot_anxiety_level');
-            localStorage.removeItem('bot_screen');
+            console.error('Error loading bot profile:', err);
+            setError('Failed to load profile. Please try again.');
           }
+        } else {
+          // Пользователь не аутентифицирован
+          setScreen('welcome');
         }
       } catch (err) {
-        console.error('Error loading saved data:', err);
+        console.error('Error initializing auth:', err);
+        setScreen('welcome');
+      } finally {
+        setAuthLoading(false);
       }
     };
 
-    loadSavedUser();
-  }, []); // Запускаем только при монтировании
+    initAuth();
+
+    // Подписываемся на изменения аутентификации
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const user = session?.user ?? null;
+      if (user) {
+        setAuthUser(user);
+        try {
+          const botProfile = await BotService.getOrCreateBotProfile(user);
+          setUser(botProfile);
+          setUserName(botProfile.name || user.email?.split('@')[0] || '');
+        } catch (err) {
+          console.error('Error loading bot profile:', err);
+        }
+      } else {
+        setAuthUser(null);
+        setUser(null);
+        setUserName('');
+        setScreen('welcome');
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   // Загрузка инструкторов
   useEffect(() => {
@@ -169,28 +211,28 @@ const DrivingSchoolBot = () => {
       const fallbackInstructors: Instructor[] = [
         {
           id: 'igor-1',
-          name: 'Игорь Нагорский',
-          style: 'Основатель и руководитель автошколы "Viktorija", опытный инструктор по вождению',
-          experience: 'Многолетний опыт',
+          name: 'Igor Nagorski',
+          style: 'Founder and director of the driving school "Viktorija", experienced driving instructor',
+          experience: 'Many years of experience',
           pass_rate: '95%',
           photo_url: '/igor-ready.png',
           reviews_count: 0,
           rating: 5.0,
-          specialty: 'Основатель автошколы, профессиональная подготовка водителей. Автомобиль: Toyota Corolla',
+          specialty: 'Founder of a driving school, professional driver training. Car: Toyota Corolla',
           is_active: true,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         },
         {
           id: 'stas-1',
-          name: 'Станислав Зигадло',
-          style: 'Инструктор по вождению, педагогический стаж 18 лет',
-          experience: '18 лет',
+          name: 'Stanislav Zigadlo',
+          style: 'Driving instructor, 18 years of teaching experience',
+          experience: '18 aastat',
           pass_rate: '93%',
           photo_url: '/stas-ready.png',
           reviews_count: 0,
           rating: 4.9,
-          specialty: 'Профессиональная подготовка водителей. Автомобиль: Skoda Octavia',
+          specialty: 'Professional driver training. Vehicle: Skoda Octavia',
           is_active: true,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
@@ -305,28 +347,28 @@ Check:
   // Загрузка сообщений поддержки при открытии страницы поддержки
   useEffect(() => {
     const loadSupportMessages = async () => {
-      if (!user || screen !== 'support') return;
+      if (!authUser || screen !== 'support') return;
       try {
-        const messages = await BotService.getSupportMessages(user.id);
+        const messages = await BotService.getSupportMessages(authUser.id);
         setSupportMessages(messages);
       } catch (err) {
         console.error('Error loading support messages:', err);
       }
     };
     loadSupportMessages();
-  }, [user, screen]);
+  }, [authUser, screen]);
 
   // Загрузка прогресса при входе пользователя
   useEffect(() => {
     const loadProgress = async () => {
-      if (!user) return;
+      if (!authUser) return;
       try {
-        const userProgress = await BotService.getProgress(user.id);
+        const userProgress = await BotService.getProgress(authUser.id);
         if (userProgress) {
           setProgress(userProgress);
         } else {
           // Создаем начальный прогресс
-          const newProgress = await BotService.upsertProgress(user.id, {
+          const newProgress = await BotService.upsertProgress(authUser.id, {
             theory_progress: 0,
             driving_progress: 0,
             completed_lessons: 0,
@@ -336,10 +378,9 @@ Check:
         }
 
         // Загружаем навыки
-        const userSkills = await BotService.getSkills(user.id);
+        const userSkills = await BotService.getSkills(authUser.id);
         if (userSkills.length === 0) {
           // Создаем начальные навыки
-          // Создаем навыки с локализованными названиями в зависимости от текущего языка
           const defaultSkills = [
             t('bot.progress.skillNames.parking'),
             t('bot.progress.skillNames.laneChange'),
@@ -348,9 +389,9 @@ Check:
             t('bot.progress.skillNames.examRoute'),
           ];
           for (const skillName of defaultSkills) {
-            await BotService.createSkill(user.id, skillName);
+            await BotService.createSkill(authUser.id, skillName);
           }
-          const updatedSkills = await BotService.getSkills(user.id);
+          const updatedSkills = await BotService.getSkills(authUser.id);
           setSkills(updatedSkills);
         } else {
           setSkills(userSkills);
@@ -360,42 +401,32 @@ Check:
       }
     };
     loadProgress();
-  }, [user]);
+  }, [authUser, t]);
 
-  const handleStart = async () => {
-    if (!userName.trim()) return;
-
+  // Вход через Google
+  const handleSignInWithGoogle = async () => {
     setLoading(true);
     setError(null);
-
     try {
-      // Создаем или получаем пользователя
-      const newUser = await BotService.getOrCreateUser({
-        name: userName,
-        platform: 'web',
-      });
-      setUser(newUser);
-      
-      // Сохраняем данные пользователя в localStorage
-      localStorage.setItem('bot_user_id', newUser.id);
-      localStorage.setItem('bot_user_name', userName.trim());
-      localStorage.setItem('bot_screen', 'anxiety');
-      
-      setScreen('anxiety');
-    } catch (err) {
-      console.error('Registration error:', err);
-      setError('Failed to register. Please try again.');
+      const { error } = await AuthService.signInWithGoogle();
+      if (error) {
+        setError(error.message || 'Failed to sign in with Google');
+      }
+      // Редирект произойдет автоматически
+    } catch (err: any) {
+      console.error('Google sign in error:', err);
+      setError(err.message || 'Failed to sign in with Google');
     } finally {
       setLoading(false);
     }
   };
 
   const handleAnxietySubmit = async () => {
-    if (!anxietyLevel || !user) return;
+    if (!anxietyLevel || !authUser) return;
 
     setLoading(true);
     try {
-      await BotService.saveAnxietyTest(user.id, anxietyLevel);
+      await BotService.saveAnxietyTest(authUser.id, anxietyLevel);
       
       // Сохраняем уровень тревожности и экран в localStorage
       localStorage.setItem('bot_anxiety_level', anxietyLevel.toString());
@@ -412,8 +443,8 @@ Check:
 
   // Обработка выбора инструктора
   const handleSelectInstructor = async (instructorId: string) => {
-    if (!user) {
-      setError('Необходимо войти в систему');
+    if (!authUser) {
+      setError('You must log in');
       return;
     }
 
@@ -423,23 +454,22 @@ Check:
 
   // Подтверждение выбора инструктора
   const handleConfirmInstructor = async () => {
-    if (!confirmingInstructor || !user) return;
+    if (!confirmingInstructor || !authUser) return;
 
     setLoading(true);
     setError(null);
 
     try {
-      await BotService.saveSelectedInstructor(user.id, confirmingInstructor);
+      await BotService.saveSelectedInstructor(authUser.id, confirmingInstructor);
       setSelectedInstructor(confirmingInstructor);
       setShowConfirmation(false);
       setConfirmingInstructor(null);
       
       // Обновляем данные пользователя
-      const updatedUser = await BotService.getOrCreateUser({
-        name: userName,
-        platform: 'web',
-      });
-      setUser(updatedUser);
+      if (authUser) {
+        const updatedProfile = await BotService.getOrCreateBotProfile(authUser);
+        setUser(updatedProfile);
+      }
     } catch (err) {
       console.error('Error saving instructor:', err);
       setError('Failed to save instructor selection. Please try again.');
@@ -449,13 +479,13 @@ Check:
   };
 
   const handleBookLesson = async () => {
-    if (!user) {
-      setError('Войдите в систему');
+    if (!authUser) {
+      setError('Log in');
       return;
     }
 
     if (!selectedInstructor) {
-      setError('Сначала выберите инструктора');
+      setError('First, choose an instructor');
       setScreen('instructors');
       return;
     }
@@ -465,7 +495,7 @@ Check:
   };
 
   const handleSubmitBooking = async () => {
-    if (!user || !selectedInstructor || !bookingDate || !bookingTime) {
+    if (!authUser || !selectedInstructor || !bookingDate || !bookingTime) {
       setError(t('bot.booking.fillAll'));
       return;
     }
@@ -484,12 +514,12 @@ Check:
         return;
       }
 
-      await BotService.bookLesson({
-        user_id: user.id,
-        instructor_id: selectedInstructor,
-        date: dateTime.toISOString(),
-        type: bookingType,
-      });
+      await BotService.bookLesson(
+        authUser.id,
+        selectedInstructor,
+        dateTime.toISOString(),
+        bookingType
+      );
 
       // Сохраняем информацию о записи для экрана подтверждения
       const instructorName = instructors.find(i => i.id === selectedInstructor)?.name || 'Инструктор';
@@ -523,18 +553,25 @@ Check:
     } catch {
       // Fallback на русские советы, если локализация не загружена
       return [
-        'Глубоко дышите перед началом занятия - 4 секунды вдох, 6 секунд выдох',
-        'Помните: ошибки - это часть обучения, не ругайте себя',
-        'Визуализируйте успешное выполнение маневра перед его выполнением',
-        'Если чувствуете панику - скажите инструктору, мы остановимся и подышим',
+        'Breathe deeply before starting the lesson - inhale for 4 seconds, exhale for 6 seconds',
+"Remember: mistakes are part of learning, don't beat yourself up",
+'Visualize successfully completing a maneuver before performing it',
+"If you feel panicked, tell the instructor, we'll stop and breathe",
       ];
     }
   };
 
   const renderWelcome = () => {
-    // Валидация для System 2 (обдуманное мышление) - визуальная обратная связь
-    const isValidName = userName.trim().length >= 2;
-    const isEmpty = userName.trim().length === 0;
+    if (authLoading) {
+      return (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <div className="animate-spin text-4xl mb-4">⏳</div>
+            <p className="text-gray-600 dark:text-gray-400">{t('bot.common.loading')}</p>
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div className="space-y-8">
@@ -577,62 +614,13 @@ Check:
             </div>
           )}
 
-          {/* System 1: Визуальные подсказки + System 2: Четкие инструкции */}
-          <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center gap-2">
-              <span className="text-blue-500">👤</span>
-              {t('bot.welcome.namePlaceholder')}
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder={t('bot.welcome.namePlaceholder')}
-                className={`w-full px-3 sm:px-4 py-3 sm:py-3.5 border-2 rounded-lg focus:ring-2 transition-all text-sm sm:text-base bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 ${
-                  isValidName && !isEmpty
-                    ? 'border-green-400 dark:border-green-500 focus:ring-green-400 dark:focus:ring-green-500 focus:border-green-500 dark:focus:border-green-600'
-                    : isEmpty
-                    ? 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400'
-                    : 'border-orange-300 dark:border-orange-600 focus:ring-orange-400 dark:focus:ring-orange-500 focus:border-orange-500 dark:focus:border-orange-600'
-                }`}
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && isValidName && handleStart()}
-                disabled={loading}
-                autoFocus
-                maxLength={50}
-              />
-              {/* System 1: Визуальная обратная связь - индикатор валидности */}
-              {!isEmpty && (
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  {isValidName ? (
-                    <span className="text-green-500 text-xl">✓</span>
-                  ) : (
-                    <span className="text-orange-500 text-sm">⚠</span>
-                  )}
-                </div>
-              )}
-            </div>
-            
-            {/* System 2: Подробная обратная связь для обдуманного решения */}
-            {!isEmpty && !isValidName && (
-              <p className="mt-2 text-xs text-orange-600 dark:text-orange-400 flex items-center gap-1">
-                <span>ℹ️</span> {t('bot.welcome.nameMinLength')}
-              </p>
-            )}
-            {isValidName && (
-              <p className="mt-2 text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
-                <span>✓</span> {t('bot.welcome.nameValid')}
-              </p>
-            )}
-          </div>
-
-          {/* System 1: Яркая CTA кнопка для быстрого действия */}
+          {/* System 1: Яркая CTA кнопка для входа через Google */}
           <button
-            onClick={handleStart}
-            disabled={!isValidName || loading}
-            className={`w-full py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all shadow-md hover:shadow-lg transform ${
-              isValidName && !loading
-                ? 'bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 hover:scale-[1.02] active:scale-[0.98]'
+            onClick={handleSignInWithGoogle}
+            disabled={loading}
+            className={`w-full py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all shadow-md hover:shadow-lg transform mb-4 ${
+              !loading
+                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-2 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 hover:scale-[1.02] active:scale-[0.98]'
                 : 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
             }`}
           >
@@ -643,9 +631,13 @@ Check:
               </span>
             ) : (
               <span className="flex items-center justify-center gap-2">
-                <span className="text-lg">🚀</span>
-                {t('bot.welcome.startButton')}
-                <span className="text-xl">→</span>
+                <svg className="w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                <span>Войти через Google</span>
               </span>
             )}
           </button>
@@ -658,7 +650,7 @@ Check:
             </span>
             <span className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
               <span className="text-green-500 text-sm sm:text-base">✓</span>
-              <span className="font-medium">{t('bot.welcome.noRegistration')}</span>
+              <span className="font-medium">Безопасный вход</span>
             </span>
             <span className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
               <span className="text-green-500 text-sm sm:text-base">✓</span>
@@ -733,7 +725,7 @@ Check:
       </div>
 
       <div className="space-y-3 sm:space-y-4">
-        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">Насколько сильно вы переживаете о вождении?</p>
+        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">How nervous are you about driving?</p>
 
         <div className="space-y-2">
           {[1, 2, 3, 4, 5].map((level) => (
@@ -781,35 +773,35 @@ Check:
             bgColor: 'bg-blue-50 dark:bg-blue-900/30',
             borderColor: 'border-blue-200 dark:border-blue-700',
             textColor: 'text-blue-800 dark:text-blue-200',
-            message: 'Отлично! У вас уверенный настрой. Мы поможем вам отточить навыки и стать еще более уверенным водителем.'
+            message: "Excellent! You're confident. We'll help you hone your skills and become an even more confident driver."
           },
           2: {
             icon: '👍',
             bgColor: 'bg-green-50 dark:bg-green-900/30',
             borderColor: 'border-green-200 dark:border-green-700',
             textColor: 'text-green-800 dark:text-green-200',
-            message: 'Понимаем ваше волнение - это нормально! Наши инструкторы помогут вам чувствовать себя комфортно за рулем.'
+            message: "We understand your anxiety—it's normal! Our instructors will help you feel comfortable behind the wheel."
           },
           3: {
             icon: '✅',
             bgColor: 'bg-green-50 dark:bg-green-900/30',
             borderColor: 'border-green-200 dark:border-green-700',
             textColor: 'text-green-800 dark:text-green-200',
-            message: 'Отлично! Мы специализируемся на работе с тревожными учениками. Вы получите дополнительную психологическую поддержку и терпеливого инструктора.'
+            message: "We understand how challenging this can be. Our experienced instructors will create a safe and supportive environment for your learning. You're not alone!"
           },
           4: {
             icon: '💚',
             bgColor: 'bg-emerald-50 dark:bg-emerald-900/30',
             borderColor: 'border-emerald-200 dark:border-emerald-700',
             textColor: 'text-emerald-800 dark:text-emerald-200',
-            message: 'Мы понимаем, как это может быть сложно. Наши опытные инструкторы создадут безопасную и поддерживающую среду для вашего обучения. Вы не одни!'
+            message: "We understand how challenging this can be. Our experienced instructors will create a safe and supportive environment for your learning. You're not alone!"
           },
           5: {
             icon: '🤝',
             bgColor: 'bg-purple-50 dark:bg-purple-900/30',
             borderColor: 'border-purple-200 dark:border-purple-700',
             textColor: 'text-purple-800 dark:text-purple-200',
-            message: 'Мы глубоко понимаем вашу ситуацию. Наша команда имеет опыт работы с травматическими переживаниями. Вы получите максимальную поддержку, индивидуальный подход и столько времени, сколько нужно. Мы поможем вам преодолеть страх шаг за шагом.'
+            message: "We deeply understand your situation. Our team has experience working with traumatic experiences. You'll receive maximum support, a personalized approach, and as much time as you need. We'll help you overcome your fears step by step."
           }
         };
 
@@ -1089,14 +1081,14 @@ Check:
             <div className="flex items-center gap-2">
               <span className="text-lg sm:text-xl flex-shrink-0">✓</span>
               <p className="text-xs sm:text-sm text-green-800 dark:text-green-200 break-words">
-                <span className="font-semibold">Выбран:</span> {instructors.find(i => i.id === selectedInstructor)?.name || 'Инструктор'}
+                <span className="font-semibold">Selected:</span> {instructors.find(i => i.id === selectedInstructor)?.name || 'Instructor'}
               </p>
             </div>
           </div>
         )}
 
         {instructors.length === 0 ? (
-          <div className="text-center py-8 text-gray-500 dark:text-gray-400">Загрузка инструкторов...</div>
+          <div className="text-center py-8 text-gray-500 dark:text-gray-400">Loading instructors...</div>
         ) : (
           instructors.map((instructor) => {
             const isSelected = selectedInstructor === instructor.id;
@@ -1237,48 +1229,48 @@ Check:
       if (progressPercentage === 0) {
         return {
           icon: '🚀',
-          title: 'Начните свой путь к свободе!',
-          message: 'Первое занятие - это первый шаг к независимости. Вы уже на правильном пути!',
+          title: 'Start your journey to freedom!',
+          message: "Your first lesson is your first step toward independence. You're already on the right path! Первое занятие - это первый шаг к независимости. Вы уже на правильном пути!",
           bgClass: 'bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30',
           borderClass: 'border-blue-200 dark:border-blue-700'
         };
       } else if (progressPercentage < 25) {
         return {
           icon: '💪',
-          title: 'Отличное начало!',
-          message: 'Вы уже начали! Каждое занятие приближает вас к получению прав.',
+          title: 'Great start!',
+          message: "You've already started! Every lesson brings you closer to getting your license.",
           bgClass: 'bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30',
           borderClass: 'border-green-200 dark:border-green-700'
         };
       } else if (progressPercentage < 50) {
         return {
           icon: '⭐',
-          title: 'Вы на четверти пути!',
-          message: 'Продолжайте в том же духе! Вы делаете отличные успехи.',
+          title: "You're a quarter of the way there.!",
+          message: "Keep up the good work! You're making great progress.",
           bgClass: 'bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30',
           borderClass: 'border-purple-200 dark:border-purple-700'
         };
       } else if (progressPercentage < 75) {
         return {
           icon: '🎯',
-          title: 'Больше половины пройдено!',
-          message: 'Вы уже освоили больше половины программы. Осталось совсем немного!',
+          title: 'More than halfway through!',
+          message: "You've already mastered more than half of the program. Just a little bit more to go!",
           bgClass: 'bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/30',
           borderClass: 'border-orange-200 dark:border-orange-700'
         };
       } else if (progressPercentage < 100) {
         return {
           icon: '🏁',
-          title: 'Финишная прямая!',
-          message: 'Вы почти у цели! Осталось всего несколько занятий до получения прав.',
+          title: 'The finish line!',
+          message: "You're almost there! Just a few more lessons until you get your license.",
           bgClass: 'bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30',
           borderClass: 'border-green-200 dark:border-green-700'
         };
       } else {
         return {
           icon: '🎉',
-          title: 'Поздравляем!',
-          message: 'Вы завершили все занятия! Готовы к экзамену и получению прав!',
+          title: 'Congratulations!',
+          message: "You've completed all the lessons! Ready to take the exam and get your license!",
           bgClass: 'bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30',
           borderClass: 'border-green-300 dark:border-green-600'
         };
@@ -1362,10 +1354,10 @@ Check:
             <div className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto justify-center sm:justify-start">
               <button
                 onClick={async () => {
-                  if (!user?.id || loading || progress.completed_lessons <= 0) return;
+                  if (!authUser || loading || progress.completed_lessons <= 0) return;
                   try {
                     setLoading(true);
-                    const updated = await BotService.updateProgress(user.id, {
+                    const updated = await BotService.updateProgress(authUser.id, {
                       completed_lessons: Math.max(0, progress.completed_lessons - 1)
                     });
                     setProgress(updated);
@@ -1386,10 +1378,10 @@ Check:
               </span>
               <button
                 onClick={async () => {
-                  if (!user?.id || loading || progress.completed_lessons >= progress.total_lessons) return;
+                  if (!authUser || loading || progress.completed_lessons >= progress.total_lessons) return;
                   try {
                     setLoading(true);
-                    const updated = await BotService.updateProgress(user.id, {
+                    const updated = await BotService.updateProgress(authUser.id, {
                       completed_lessons: Math.min(progress.total_lessons, progress.completed_lessons + 1)
                     });
                     setProgress(updated);
@@ -1532,7 +1524,7 @@ Check:
                 <div 
                   key={skill.id} 
                   onClick={async () => {
-                    if (!user?.id || loading) return;
+                    if (!authUser || loading) return;
                     try {
                       setLoading(true);
                       const updated = await BotService.toggleSkill(skill.id);
@@ -1767,14 +1759,14 @@ Check:
                 </button>
                 <button
                   onClick={async () => {
-                    if (!user?.id || !reviewText.trim() || !reviewStudentName.trim() || !selectedInstructor || loading) {
+                    if (!authUser || !reviewText.trim() || !reviewStudentName.trim() || !selectedInstructor || loading) {
                       setError(t('bot.errors.fillAllFields'));
                       return;
                     }
                     try {
                       setLoading(true);
                       setError(null);
-                      await BotService.createReview({
+                      await BotService.createReview(authUser.id, {
                         instructor_id: selectedInstructor,
                         student_name: reviewStudentName.trim(),
                         text: reviewText.trim(),
@@ -2111,21 +2103,21 @@ Check:
                 </button>
                 <button
                   onClick={async () => {
-                    if (!user?.id || !supportMessage.trim() || loading) {
+                    if (!authUser || !supportMessage.trim() || loading) {
                       setError(t('bot.errors.fillAllFields'));
                       return;
                     }
                     try {
                       setLoading(true);
                       setError(null);
-                      await BotService.sendSupportMessage(user.id, supportMessage.trim());
+                      await BotService.sendSupportMessage(authUser.id, supportMessage.trim());
                       // Очищаем форму
                       setSupportMessage('');
                       setShowSupportForm(false);
                       // Показываем сообщение об успехе
                       alert(t('bot.support.thanks'));
                       // Загружаем обновленный список сообщений
-                      const updated = await BotService.getSupportMessages(user.id);
+                      const updated = await BotService.getSupportMessages(authUser.id);
                       setSupportMessages(updated);
                     } catch (err) {
                       console.error('Error sending support message:', err);
