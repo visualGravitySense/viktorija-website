@@ -127,6 +127,16 @@ const DrivingSchoolBot = () => {
     const initAuth = async () => {
       try {
         setAuthLoading(true);
+
+        // If Supabase isn't configured in this environment, don't hang on auth calls.
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey);
+        if (!isSupabaseConfigured) {
+          setError('Supabase is not configured. Please check Vercel environment variables.');
+          setScreen('welcome');
+          return;
+        }
         
         // Handle OAuth redirect - check for token in URL
         const hashParams = new URLSearchParams(window.location.hash.substring(1));
