@@ -11,10 +11,10 @@ import type { User as AuthUser } from '@supabase/supabase-js';
 const DrivingSchoolBot = () => {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
-  // Определяем режим темы из Material-UI темы
+  // Determine theme mode from Material-UI theme
   const isDarkMode = theme.palette.mode === 'dark';
   const containerRef = useRef<HTMLDivElement>(null);
-  // Все состояния должны быть объявлены первыми
+  // All states must be declared first
   const [screen, setScreen] = useState('welcome');
   const [anxietyLevel, setAnxietyLevel] = useState(0);
   const [selectedInstructor, setSelectedInstructor] = useState<string | null>(null);
@@ -30,7 +30,7 @@ const DrivingSchoolBot = () => {
   const [error, setError] = useState<string | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmingInstructor, setConfirmingInstructor] = useState<string | null>(null);
-  const [showDetails, setShowDetails] = useState(false); // Для System 2: детали прогресса
+  const [showDetails, setShowDetails] = useState(false); // For System 2: progress details
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [newNote, setNewNote] = useState('');
   const [notes, setNotes] = useState<any[]>([]);
@@ -52,19 +52,19 @@ const DrivingSchoolBot = () => {
     type: 'theory' | 'driving';
   } | null>(null);
   
-  // Состояния для анимации счетчиков (социальное доказательство)
+  // States for counter animation (social proof)
   const [studentsCount] = useState(500);
   const [passRate, setPassRate] = useState(0);
   const [todayCount, setTodayCount] = useState(0);
   
-  // Автоматическое сохранение экрана в localStorage при изменении
+  // Automatically save screen to localStorage on change
   useEffect(() => {
     if (user && screen !== 'welcome') {
       localStorage.setItem('bot_screen', screen);
     }
   }, [screen, user]);
   
-  // Функция для выхода (очистка данных и выход из Supabase Auth)
+  // Function for logout (clear data and sign out from Supabase Auth)
   const handleLogout = async () => {
     try {
       await AuthService.signOut();
@@ -79,7 +79,7 @@ const DrivingSchoolBot = () => {
       setScreen('welcome');
     } catch (err) {
       console.error('Error signing out:', err);
-      // Все равно очищаем локальные данные
+      // Still clear local data
       localStorage.removeItem('bot_user_id');
       localStorage.removeItem('bot_user_name');
       localStorage.removeItem('bot_anxiety_level');
@@ -92,18 +92,18 @@ const DrivingSchoolBot = () => {
     }
   };
   
-  // Синхронизация класса dark с темой Material-UI
+  // Sync dark class with Material-UI theme
   useEffect(() => {
     const rootElement = document.documentElement;
     const container = containerRef.current;
     
-    // Всегда удаляем класс сначала, чтобы избежать конфликтов
+    // Always remove class first to avoid conflicts
     rootElement.classList.remove('dark');
     if (container) {
       container.classList.remove('dark');
     }
     
-    // Затем добавляем, если нужна темная тема
+    // Then add if dark theme is needed
     if (isDarkMode) {
       rootElement.classList.add('dark');
       if (container) {
@@ -112,23 +112,23 @@ const DrivingSchoolBot = () => {
     }
   }, [isDarkMode]);
 
-  // Автоматическая прокрутка вверх при изменении экрана
+  // Auto scroll to top on screen change
   useEffect(() => {
-    // Прокрутка вверх при переходе на новый экран
+    // Scroll to top when transitioning to new screen
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // Также прокручиваем контейнер бота, если он есть
+    // Also scroll bot container if it exists
     if (containerRef.current) {
       containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [screen]);
 
-  // Инициализация аутентификации и загрузка пользователя
+  // Initialize authentication and load user
   useEffect(() => {
     const initAuth = async () => {
       try {
         setAuthLoading(true);
         
-        // Обработка OAuth редиректа - проверяем наличие токена в URL
+        // Handle OAuth redirect - check for token in URL
         const hashParams = new URLSearchParams(window.location.hash.substring(1));
         const hasAccessToken = hashParams.get('access_token');
         
@@ -145,26 +145,26 @@ const DrivingSchoolBot = () => {
           
           if (oauthResult.user) {
             console.log('OAuth authentication successful:', oauthResult.user.email);
-            // Пользователь успешно аутентифицирован через OAuth
+            // User successfully authenticated via OAuth
             setAuthUser(oauthResult.user);
             
-            // Получаем или создаем профиль бота
+            // Get or create bot profile
             try {
               const botProfile = await BotService.getOrCreateBotProfile(oauthResult.user);
               setUser(botProfile);
               setUserName(botProfile.name || oauthResult.user.email?.split('@')[0] || '');
               
-              // Восстанавливаем выбранного инструктора, если он был
+              // Restore selected instructor if it was set
               if (botProfile.selected_instructor_id) {
                 setSelectedInstructor(botProfile.selected_instructor_id);
               }
               
-              // Восстанавливаем уровень тревожности, если он был
+              // Restore anxiety level if it was set
               if (botProfile.anxiety_level) {
                 setAnxietyLevel(botProfile.anxiety_level);
               }
               
-              // Определяем экран
+              // Determine screen
               if (botProfile.anxiety_level && botProfile.anxiety_level > 0) {
                 setScreen('menu');
               } else {
@@ -182,29 +182,29 @@ const DrivingSchoolBot = () => {
           }
         }
         
-        // Проверяем текущую сессию (для обычного входа)
+        // Check current session (for regular login)
         const currentUser = await AuthService.getCurrentUser();
         
         if (currentUser) {
           setAuthUser(currentUser);
           
-          // Получаем или создаем профиль бота
+          // Get or create bot profile
           try {
             const botProfile = await BotService.getOrCreateBotProfile(currentUser);
             setUser(botProfile);
             setUserName(botProfile.name || currentUser.email?.split('@')[0] || '');
             
-            // Восстанавливаем выбранного инструктора, если он был
+            // Restore selected instructor if it was set
             if (botProfile.selected_instructor_id) {
               setSelectedInstructor(botProfile.selected_instructor_id);
             }
             
-            // Восстанавливаем уровень тревожности, если он был
+            // Restore anxiety level if it was set
             if (botProfile.anxiety_level) {
               setAnxietyLevel(botProfile.anxiety_level);
             }
             
-            // Определяем экран
+            // Determine screen
             const savedScreen = localStorage.getItem('bot_screen');
             if (botProfile.anxiety_level && botProfile.anxiety_level > 0) {
               if (savedScreen && ['menu', 'instructors', 'progress', 'testimonials', 'support'].includes(savedScreen)) {
@@ -220,7 +220,7 @@ const DrivingSchoolBot = () => {
             setError('Failed to load profile. Please try again.');
           }
         } else {
-          // Пользователь не аутентифицирован
+          // User is not authenticated
           setScreen('welcome');
         }
       } catch (err) {
@@ -233,7 +233,7 @@ const DrivingSchoolBot = () => {
 
     initAuth();
 
-    // Подписываемся на изменения аутентификации
+    // Subscribe to authentication changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       const user = session?.user ?? null;
       if (user) {
@@ -258,10 +258,10 @@ const DrivingSchoolBot = () => {
     };
   }, []);
 
-  // Загрузка инструкторов
+  // Load instructors
   useEffect(() => {
     const loadInstructors = async () => {
-      // Fallback данные инструкторов (если не удалось загрузить из Supabase)
+      // Fallback instructor data (if failed to load from Supabase)
       const fallbackInstructors: Instructor[] = [
         {
           id: 'igor-1',
@@ -297,17 +297,17 @@ const DrivingSchoolBot = () => {
         const data = await BotService.getInstructors();
         if (data && data.length > 0) {
           setInstructors(data);
-          setError(null); // Очищаем ошибку при успешной загрузке
+          setError(null); // Clear error on successful load
         } else {
-          // Если данных нет в БД, используем fallback
+          // If no data in DB, use fallback
           console.warn('Instructors not found in the database, using fallback data');
           setInstructors(fallbackInstructors);
-          setError(null); // Не показываем ошибку, если есть fallback данные
+          setError(null); // Don't show error if fallback data exists
         }
       } catch (err: any) {
         console.error('Error loading instructors:', err);
         
-        // Проверяем, является ли ошибка проблемой подключения к Supabase
+        // Check if error is a Supabase connection issue
         const isConnectionError = err?.message?.includes('Failed to fetch') || 
                                   err?.message?.includes('ERR_NAME_NOT_RESOLVED') ||
                                   err?.code === 'ENOTFOUND';
@@ -341,15 +341,15 @@ Check:
           }
         }
         
-        // Используем fallback данные вместо показа ошибки
+        // Use fallback data instead of showing error
         setInstructors(fallbackInstructors);
-        setError(null); // Не показываем ошибку пользователю, если есть fallback данные
+        setError(null); // Don't show error to user if fallback data exists
       }
     };
     loadInstructors();
   }, []);
 
-  // Загрузка отзывов
+  // Load testimonials
   useEffect(() => {
     const loadTestimonials = async () => {
       try {
@@ -358,7 +358,7 @@ Check:
       } catch (err: any) {
         console.error('Error loading reviews:', err);
         
-        // Проверяем, является ли ошибка проблемой подключения к Supabase
+        // Check if error is a Supabase connection issue
         const isConnectionError = err?.message?.includes('Failed to fetch') || 
                                   err?.message?.includes('ERR_NAME_NOT_RESOLVED') ||
                                   err?.code === 'ENOTFOUND';
@@ -376,7 +376,7 @@ Check:
     loadTestimonials();
   }, []);
 
-  // Анимация счетчиков для социального доказательства
+  // Counter animation for social proof
   useEffect(() => {
     if (screen === 'welcome') {
       let currentPassRate = 0;
@@ -398,7 +398,7 @@ Check:
     }
   }, [screen]);
 
-  // Загрузка сообщений поддержки при открытии страницы поддержки
+  // Load support messages when support page opens
   useEffect(() => {
     const loadSupportMessages = async () => {
       if (!authUser || screen !== 'support') return;
@@ -412,7 +412,7 @@ Check:
     loadSupportMessages();
   }, [authUser, screen]);
 
-  // Загрузка прогресса при входе пользователя
+  // Load progress when user logs in
   useEffect(() => {
     const loadProgress = async () => {
       if (!authUser) return;
@@ -421,7 +421,7 @@ Check:
         if (userProgress) {
           setProgress(userProgress);
         } else {
-          // Создаем начальный прогресс
+          // Create initial progress
           const newProgress = await BotService.upsertProgress(authUser.id, {
             theory_progress: 0,
             driving_progress: 0,
@@ -431,10 +431,10 @@ Check:
           setProgress(newProgress);
         }
 
-        // Загружаем навыки
+        // Load skills
         const userSkills = await BotService.getSkills(authUser.id);
         if (userSkills.length === 0) {
-          // Создаем начальные навыки
+          // Create initial skills
           const defaultSkills = [
             t('bot.progress.skillNames.parking'),
             t('bot.progress.skillNames.laneChange'),
@@ -457,7 +457,7 @@ Check:
     loadProgress();
   }, [authUser, t]);
 
-  // Вход через Google
+  // Sign in with Google
   const handleSignInWithGoogle = async () => {
     setLoading(true);
     setError(null);
@@ -466,7 +466,7 @@ Check:
       if (error) {
         setError(error.message || 'Failed to sign in with Google');
       }
-      // Редирект произойдет автоматически
+      // Redirect will happen automatically
     } catch (err: any) {
       console.error('Google sign in error:', err);
       setError(err.message || 'Failed to sign in with Google');
@@ -482,7 +482,7 @@ Check:
     try {
       await BotService.saveAnxietyTest(authUser.id, anxietyLevel);
       
-      // Сохраняем уровень тревожности и экран в localStorage
+      // Save anxiety level and screen to localStorage
       localStorage.setItem('bot_anxiety_level', anxietyLevel.toString());
       localStorage.setItem('bot_screen', 'menu');
       
@@ -495,7 +495,7 @@ Check:
     }
   };
 
-  // Обработка выбора инструктора
+  // Handle instructor selection
   const handleSelectInstructor = async (instructorId: string) => {
     if (!authUser) {
       setError('You must log in');
@@ -506,7 +506,7 @@ Check:
     setShowConfirmation(true);
   };
 
-  // Подтверждение выбора инструктора
+  // Confirm instructor selection
   const handleConfirmInstructor = async () => {
     if (!confirmingInstructor || !authUser) return;
 
@@ -519,7 +519,7 @@ Check:
       setShowConfirmation(false);
       setConfirmingInstructor(null);
       
-      // Обновляем данные пользователя
+      // Update user data
       if (authUser) {
         const updatedProfile = await BotService.getOrCreateBotProfile(authUser);
         setUser(updatedProfile);
@@ -544,7 +544,7 @@ Check:
       return;
     }
 
-    // Открываем форму записи
+    // Open booking form
     setShowBookingForm(true);
   };
 
@@ -558,12 +558,12 @@ Check:
       setLoading(true);
       setError(null);
 
-      // Объединяем дату и время
+      // Combine date and time
       const dateTime = new Date(`${bookingDate}T${bookingTime}`);
       
-      // Проверяем, что дата не в прошлом
+      // Check that the date is not in the past
       if (dateTime < new Date()) {
-        setError('Нельзя записаться на занятие в прошлом');
+        setError('Cannot book a lesson in the past');
         setLoading(false);
         return;
       }
@@ -575,8 +575,8 @@ Check:
         bookingType
       );
 
-      // Сохраняем информацию о записи для экрана подтверждения
-      const instructorName = instructors.find(i => i.id === selectedInstructor)?.name || 'Инструктор';
+      // Save booking information for confirmation screen
+      const instructorName = instructors.find(i => i.id === selectedInstructor)?.name || 'Instructor';
       setBookingSuccess({
         instructorName,
         date: bookingDate,
@@ -584,13 +584,13 @@ Check:
         type: bookingType,
       });
 
-      // Очищаем форму
+      // Clear form
       setBookingDate('');
       setBookingTime('');
       setBookingType('driving');
       setShowBookingForm(false);
 
-      // Переходим на экран подтверждения
+      // Navigate to confirmation screen
       setScreen('booking-success');
     } catch (err) {
       console.error('Error booking lesson:', err);
@@ -600,12 +600,12 @@ Check:
     }
   };
 
-  // Локализованные советы (будут загружены из i18n)
+  // Localized tips (will be loaded from i18n)
   const getAnxietyTips = () => {
     try {
       return t('bot.support.tips', { returnObjects: true }) as string[];
     } catch {
-      // Fallback на русские советы, если локализация не загружена
+      // Fallback to English tips if localization not loaded
       return [
         'Breathe deeply before starting the lesson - inhale for 4 seconds, exhale for 6 seconds',
 "Remember: mistakes are part of learning, don't beat yourself up",
@@ -631,32 +631,32 @@ Check:
       <div className="space-y-8">
         {/* ============================================
             DUAL PROCESS THEORY: System 1 (Intuitive) + System 2 (Deliberate)
-            Поддержка обоих типов мышления
+            Support for both types of thinking
         ============================================ */}
         
-        {/* System 1: Визуальные подсказки для быстрого понимания */}
+        {/* System 1: Visual cues for quick understanding */}
         <div className="text-center space-y-4">
-          {/* Визуальный индикатор - иконка для System 1 */}
+          {/* Visual indicator - icon for System 1 */}
           <div className="relative inline-block">
             <div className="text-4xl sm:text-5xl md:text-6xl animate-bounce">🚗</div>
-            {/* Визуальная подсказка - бейдж для System 1 */}
+            {/* Visual cue - badge for System 1 */}
             <div className="absolute -top-1 -right-1 bg-green-500 dark:bg-green-600 text-white text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full">
               {t('bot.welcome.freeBadge')}
             </div>
           </div>
           
-          {/* System 1: Эмоциональный заголовок для быстрого восприятия */}
+          {/* System 1: Emotional headline for quick perception */}
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 leading-tight px-2">
             {t('bot.welcome.title')}
           </h1>
           
-          {/* System 2: Дополнительная информация для обдуманного решения */}
+          {/* System 2: Additional information for deliberate decision */}
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-md mx-auto px-2">
             {t('bot.welcome.subtitle')}
           </p>
         </div>
 
-        {/* Основная форма - поддержка обоих систем */}
+        {/* Main form - support for both systems */}
         <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-700 p-4 sm:p-6 lg:p-8">
           {error && (
             <div className="bg-red-50 dark:bg-red-900/30 border-2 border-red-300 dark:border-red-700 rounded-lg p-3 mb-4 flex items-start gap-2">
@@ -668,7 +668,7 @@ Check:
             </div>
           )}
 
-          {/* System 1: Яркая CTA кнопка для входа через Google */}
+          {/* System 1: Bright CTA button for Google sign in */}
           <button
             onClick={handleSignInWithGoogle}
             disabled={loading}
@@ -696,7 +696,7 @@ Check:
             )}
           </button>
 
-          {/* System 1: Визуальные подсказки для быстрого сканирования */}
+          {/* System 1: Visual cues for quick scanning */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 md:gap-6 mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-700">
             <span className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
               <span className="text-green-500 text-sm sm:text-base">✓</span>
@@ -713,7 +713,7 @@ Check:
           </div>
         </div>
 
-        {/* System 1: Визуальное социальное доказательство для быстрого доверия */}
+        {/* System 1: Visual social proof for quick trust */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl text-center border-2 border-blue-200 dark:border-blue-700 transform hover:scale-105 transition cursor-default">
             <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-1 sm:mb-2">
@@ -739,7 +739,7 @@ Check:
           </div>
         </div>
 
-        {/* System 1: Визуальная подсказка срочности для эмоционального триггера */}
+        {/* System 1: Visual urgency cue for emotional trigger */}
         <div className="bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/30 dark:to-amber-900/30 border-2 border-orange-300 dark:border-orange-700 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-1">
             <span className="text-lg sm:text-xl animate-pulse">⚡</span>
@@ -752,7 +752,7 @@ Check:
             </p>
         </div>
 
-        {/* System 2: Дополнительная информация для обдуманного решения (скрыта по умолчанию) */}
+        {/* System 2: Additional information for deliberate decision (hidden by default) */}
         <details className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
           <summary className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer hover:text-gray-900 dark:hover:text-gray-100">
             ℹ️ {t('bot.welcome.moreAboutProcess')}
@@ -819,7 +819,7 @@ Check:
         </button>
       </div>
 
-      {/* Фразы поддержки в зависимости от уровня тревоги */}
+      {/* Support phrases depending on anxiety level */}
       {anxietyLevel > 0 && (() => {
         const supportMessages = {
           1: {
@@ -880,7 +880,7 @@ Check:
           CREATE ACTION FUNNEL: CUE, REACTION, EVALUATION, ABILITY, TIMING, EXECUTION
       ============================================ */}
       
-      {/* CUE: Яркий визуальный сигнал - персонализированное приветствие */}
+      {/* CUE: Bright visual signal - personalized greeting */}
       <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 dark:from-blue-500 dark:via-blue-600 dark:to-purple-500 text-white p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-white/10 rounded-full -mr-12 -mt-12 sm:-mr-16 sm:-mt-16 animate-pulse"></div>
         <div className="relative pr-16 sm:pr-20">
@@ -898,13 +898,13 @@ Check:
         <button
           onClick={handleLogout}
           className="absolute top-2 right-2 sm:top-4 sm:right-4 text-blue-100 dark:text-blue-200 hover:text-white text-xs sm:text-sm font-medium transition-colors px-2 py-1"
-          title="Выйти из аккаунта"
+          title="Sign out"
         >
           {t('bot.common.logout')}
         </button>
       </div>
 
-      {/* REACTION: Эмоциональный триггер - показываем ценность действий */}
+      {/* REACTION: Emotional trigger - show value of actions */}
       <div className="bg-gradient-to-r from-green-50 via-emerald-50 to-teal-50 dark:from-green-900/20 dark:via-emerald-900/20 dark:to-teal-900/20 border-2 border-green-200 dark:border-green-700 rounded-xl p-4">
         <div className="flex items-start gap-3">
           <span className="text-2xl">✨</span>
@@ -919,7 +919,7 @@ Check:
         </div>
       </div>
 
-      {/* EVALUATION: Показываем выгоды каждой функции - вертикальный layout */}
+      {/* EVALUATION: Show benefits of each function - vertical layout */}
       <div className="space-y-4">
         <button
           onClick={() => setScreen('instructors')}
@@ -1034,7 +1034,7 @@ Check:
         </button>
       </div>
 
-      {/* TIMING: Показываем, что сейчас правильное время для действия */}
+      {/* TIMING: Show that now is the right time for action */}
       <div className="bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 border-2 border-orange-200 dark:border-orange-700 rounded-xl p-4">
         <div className="flex items-center gap-3">
           <span className="text-2xl animate-pulse">⚡</span>
@@ -1049,14 +1049,14 @@ Check:
         </div>
       </div>
 
-      {/* ABILITY: Показываем простоту действия */}
+      {/* ABILITY: Show simplicity of action */}
       <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-3">
         <p className="text-xs text-blue-800 dark:text-blue-200 text-center">
           💡 <span className="font-medium">{t('bot.menu.simple')}</span>
         </p>
       </div>
 
-      {/* EXECUTION: Главная CTA кнопка - яркая и заметная */}
+      {/* EXECUTION: Main CTA button - bright and noticeable */}
       <button
         onClick={handleBookLesson}
         className="w-full bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 dark:from-blue-500 dark:via-blue-600 dark:to-purple-500 text-white py-3 sm:py-4 md:py-5 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base md:text-lg hover:from-blue-700 hover:via-blue-800 hover:to-purple-700 dark:hover:from-blue-600 dark:hover:via-blue-700 dark:hover:to-purple-600 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl hover:shadow-2xl flex items-center justify-center gap-2 sm:gap-3 relative overflow-hidden"
@@ -1093,17 +1093,17 @@ Check:
           </div>
         )}
 
-        {/* Подтверждение выбора */}
+        {/* Confirmation of selection */}
         {showConfirmation && confirmingInstructor && (
           <div className="bg-blue-50 dark:bg-blue-900/30 border-2 border-blue-300 dark:border-blue-600 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 mb-3 sm:mb-4">
             <div className="flex items-start gap-2 sm:gap-3">
               <span className="text-2xl sm:text-3xl flex-shrink-0">✅</span>
               <div className="flex-1 min-w-0">
                 <h3 className="font-bold text-sm sm:text-base text-blue-900 dark:text-blue-100 mb-2">
-                  Подтвердите выбор инструктора
+                  Confirm instructor selection
                 </h3>
                 <p className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 mb-3 sm:mb-4 break-words">
-                  Вы хотите выбрать <span className="font-semibold">{getSelectedInstructorName()}</span> в качестве вашего инструктора?
+                  Do you want to select <span className="font-semibold">{getSelectedInstructorName()}</span> as your instructor?
                 </p>
                 <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                   <button
@@ -1111,7 +1111,7 @@ Check:
                     disabled={loading}
                     className="flex-1 bg-blue-600 dark:bg-blue-500 text-white py-2 sm:py-2.5 rounded-lg font-semibold text-sm sm:text-base hover:bg-blue-700 dark:hover:bg-blue-600 transition disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed"
                   >
-                    {loading ? 'Сохранение...' : 'Да, выбрать'}
+                    {loading ? 'Saving...' : 'Yes, select'}
                   </button>
                   <button
                     onClick={() => {
@@ -1121,7 +1121,7 @@ Check:
                     disabled={loading}
                     className="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-2 sm:py-2.5 rounded-lg font-semibold text-sm sm:text-base hover:bg-gray-300 dark:hover:bg-gray-600 transition disabled:opacity-50"
                   >
-                    Отмена
+                    Cancel
                   </button>
                 </div>
               </div>
@@ -1129,7 +1129,7 @@ Check:
           </div>
         )}
 
-        {/* Индикатор выбранного инструктора */}
+        {/* Selected instructor indicator */}
         {selectedInstructor && !showConfirmation && (
           <div className="bg-green-50 dark:bg-green-900/30 border-2 border-green-300 dark:border-green-600 rounded-lg sm:rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
             <div className="flex items-center gap-2">
@@ -1174,7 +1174,7 @@ Check:
                       <h3 className="font-bold text-base sm:text-lg text-gray-800 dark:text-gray-100 break-words">{instructor.name}</h3>
                       {isSelected && (
                         <span className="bg-green-500 dark:bg-green-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full self-start sm:self-auto">
-                          ВЫБРАН
+                          SELECTED
                         </span>
                       )}
                     </div>
@@ -1187,12 +1187,12 @@ Check:
                       </span>
                       <span className="flex items-center gap-1">
                         <span>📝</span>
-                        <span>{instructor.reviews_count} отзывов</span>
+                        <span>{instructor.reviews_count} reviews</span>
                       </span>
                     </div>
 
                     <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-2 sm:p-3 mb-2 sm:mb-3">
-                      <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-1">Сдают с первого раза</div>
+                      <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mb-1">Pass on first try</div>
                       <div className="font-bold text-base sm:text-lg text-green-600 dark:text-green-400">{instructor.pass_rate}</div>
                     </div>
 
@@ -1214,20 +1214,20 @@ Check:
                       disabled={loading || showConfirmation}
                       className="flex-1 bg-blue-600 dark:bg-blue-500 text-white py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base hover:bg-blue-700 dark:hover:bg-blue-600 transition disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed"
                     >
-                      {isConfirming ? 'Подтверждение...' : 'Выбрать инструктора'}
+                      {isConfirming ? 'Confirming...' : 'Select instructor'}
                     </button>
                   ) : (
                     <button
                       disabled
                       className="flex-1 bg-green-600 dark:bg-green-500 text-white py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base cursor-default"
                     >
-                      ✓ Выбран
+                      ✓ Selected
                     </button>
                   )}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      // TODO: Открыть видеоотзывы
+                      // TODO: Open video testimonials
                     }}
                     className="px-3 sm:px-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-base hover:bg-gray-300 dark:hover:bg-gray-600 transition"
                   >
@@ -1242,21 +1242,16 @@ Check:
     );
   };
 
-  // Функция для локализации названий навыков
+  // Function to localize skill names
   const getLocalizedSkillName = (skillName: string): string => {
     const skillNameMap: { [key: string]: string } = {
-      'Парковка': t('bot.progress.skillNames.parking'),
-      'Перестроение': t('bot.progress.skillNames.laneChange'),
-      'Разворот': t('bot.progress.skillNames.uTurn'),
-      'Движение задним ходом': t('bot.progress.skillNames.reverse'),
-      'Экзаменационный маршрут': t('bot.progress.skillNames.examRoute'),
-      // Английские версии (на случай, если уже сохранены)
       'Parking': t('bot.progress.skillNames.parking'),
       'Lane change': t('bot.progress.skillNames.laneChange'),
       'U-turn': t('bot.progress.skillNames.uTurn'),
       'Reverse driving': t('bot.progress.skillNames.reverse'),
       'Exam route': t('bot.progress.skillNames.examRoute'),
-      // Эстонские версии
+      // English versions (in case already saved)
+      // Estonian versions
       'Parkimine': t('bot.progress.skillNames.parking'),
       'Ridade vahetamine': t('bot.progress.skillNames.laneChange'),
       'Tagurpidi sõitmine': t('bot.progress.skillNames.reverse'),
@@ -1278,13 +1273,13 @@ Check:
     const totalSkills = skills.length;
     const skillsPercentage = totalSkills > 0 ? (completedSkills / totalSkills) * 100 : 0;
 
-    // MOTIVATION: Мотивационные сообщения в зависимости от прогресса
+    // MOTIVATION: Motivational messages depending on progress
     const getMotivationMessage = () => {
       if (progressPercentage === 0) {
         return {
           icon: '🚀',
           title: 'Start your journey to freedom!',
-          message: "Your first lesson is your first step toward independence. You're already on the right path! Первое занятие - это первый шаг к независимости. Вы уже на правильном пути!",
+          message: "Your first lesson is your first step toward independence. You're already on the right path!",
           bgClass: 'bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30',
           borderClass: 'border-blue-200 dark:border-blue-700'
         };
@@ -1339,7 +1334,7 @@ Check:
             DUAL PROCESS THEORY: System 1 (Fast) + System 2 (Deliberate)
         ============================================ */}
         
-        {/* SYSTEM 1: Знакомый паттерн - кнопка "Назад" */}
+        {/* SYSTEM 1: Familiar pattern - "Back" button */}
         <button
           onClick={() => setScreen('menu')}
           className="text-blue-600 dark:text-blue-400 font-medium mb-1 flex items-center gap-1 hover:text-blue-700 dark:hover:text-blue-300 transition"
@@ -1347,7 +1342,7 @@ Check:
           <span>←</span> <span>{t('bot.common.back')}</span>
         </button>
 
-        {/* SYSTEM 1: Быстрое визуальное понимание - заголовок с иконкой */}
+        {/* SYSTEM 1: Quick visual understanding - header with icon */}
         <div className="text-center mb-3">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-1">
             {userName}
@@ -1358,11 +1353,11 @@ Check:
           </div>
         </div>
 
-        {/* SYSTEM 1: Быстрое визуальное понимание - цветовой индикатор статуса */}
+        {/* SYSTEM 1: Quick visual understanding - color status indicator */}
         <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 shadow-sm">
           <div className="flex items-center justify-between mb-2 sm:mb-3">
             <div className="flex items-center gap-1.5 sm:gap-2">
-              {/* SYSTEM 1: Цветовой индикатор для мгновенного понимания */}
+              {/* SYSTEM 1: Color indicator for instant understanding */}
               <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full animate-pulse ${
                 progressPercentage === 100 
                   ? 'bg-green-500 shadow-lg shadow-green-500/50' 
@@ -1372,11 +1367,11 @@ Check:
               }`}></div>
               <span className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300">{t('bot.progress.overall')}</span>
             </div>
-            {/* SYSTEM 1: Большое число для быстрого сканирования */}
+            {/* SYSTEM 1: Large number for quick scanning */}
             <div className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">{Math.round(progressPercentage)}%</div>
           </div>
           
-          {/* SYSTEM 1: Визуальный прогресс-бар с эмоциональной окраской */}
+          {/* SYSTEM 1: Visual progress bar with emotional coloring */}
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-5 sm:h-6 md:h-7 mb-2 sm:mb-3 shadow-inner">
             <div
               className={`rounded-full h-5 sm:h-6 md:h-7 transition-all duration-700 shadow-lg ${
@@ -1390,7 +1385,7 @@ Check:
             />
           </div>
           
-          {/* SYSTEM 1: Быстрое сканирование ключевых чисел */}
+          {/* SYSTEM 1: Quick scanning of key numbers */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-0 text-xs sm:text-sm mb-2 sm:mb-3">
             <span className="text-gray-600 dark:text-gray-400 font-medium">
               {progress.completed_lessons} / {progress.total_lessons} {t('bot.progress.lessons')}
@@ -1402,7 +1397,7 @@ Check:
             )}
           </div>
 
-          {/* Кнопки для самостоятельного обновления прогресса */}
+          {/* Buttons for manual progress update */}
           <div className="flex flex-wrap items-center gap-2 pt-2 sm:pt-3 border-t border-gray-200 dark:border-gray-700">
             <span className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 w-full sm:w-auto">{t('bot.progress.completedLessonsLabel')}</span>
             <div className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto justify-center sm:justify-start">
@@ -1454,7 +1449,7 @@ Check:
             </div>
           </div>
 
-          {/* SYSTEM 2: Кнопка для углубления в детали (опционально) */}
+          {/* SYSTEM 2: Button to dive into details (optional) */}
           <button
             onClick={() => setShowDetails(!showDetails)}
             className="w-full text-[10px] sm:text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center justify-center gap-1 mt-2"
@@ -1463,7 +1458,7 @@ Check:
             <span className="text-base sm:text-lg">{showDetails ? '↑' : '↓'}</span>
           </button>
 
-          {/* SYSTEM 2: Детальная информация для аналитического мышления */}
+          {/* SYSTEM 2: Detailed information for analytical thinking */}
           {showDetails && (
             <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
               <div className="grid grid-cols-2 gap-2 sm:gap-3 text-[10px] sm:text-xs">
@@ -1495,26 +1490,26 @@ Check:
           )}
         </div>
 
-        {/* SYSTEM 1: Визуальные карточки с цветовыми подсказками */}
+        {/* SYSTEM 1: Visual cards with color cues */}
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-white dark:bg-gray-800 border-2 border-blue-200 dark:border-blue-700 rounded-lg p-4 hover:border-blue-400 dark:hover:border-blue-500 transition cursor-pointer">
-            {/* SYSTEM 1: Иконка для быстрого распознавания */}
+            {/* SYSTEM 1: Icon for quick recognition */}
             <div className="flex items-center gap-2 mb-2">
               <div className="w-3 h-3 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50"></div>
               <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{t('bot.progress.theory')}</span>
             </div>
-            {/* SYSTEM 1: Большое число для быстрого сканирования */}
+            {/* SYSTEM 1: Large number for quick scanning */}
             <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
               {progress.theory_progress}%
             </div>
-            {/* SYSTEM 1: Визуальный прогресс-бар */}
+            {/* SYSTEM 1: Visual progress bar */}
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-1">
               <div
                 className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-full h-2.5 transition-all duration-500 shadow-sm"
                 style={{ width: `${progress.theory_progress}%` }}
               />
             </div>
-            {/* SYSTEM 2: Детальная информация при наведении */}
+            {/* SYSTEM 2: Detailed information on hover */}
             {progress.theory_progress < 100 && (
               <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {t('bot.progress.theoryRemaining', { percent: 100 - progress.theory_progress })}
@@ -1544,32 +1539,32 @@ Check:
           </div>
         </div>
 
-        {/* SYSTEM 1 + SYSTEM 2: Навыки с визуальными подсказками */}
+        {/* SYSTEM 1 + SYSTEM 2: Skills with visual cues */}
         <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-lg p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              {/* SYSTEM 1: Иконка для быстрого распознавания */}
+              {/* SYSTEM 1: Icon for quick recognition */}
               <div className="w-3 h-3 rounded-full bg-purple-500"></div>
               <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{t('bot.progress.skills')}</span>
             </div>
-            {/* SYSTEM 1: Быстрое сканирование прогресса */}
+            {/* SYSTEM 1: Quick progress scanning */}
             <span className="text-xs font-semibold text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
               {completedSkills}/{totalSkills}
             </span>
           </div>
-          {/* Подсказка для пользователя */}
+          {/* Hint for user */}
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-3 italic flex items-center gap-1">
             <span>💡</span>
             <span>{t('bot.progress.skillHint')}</span>
           </p>
-          {/* SYSTEM 1: Визуальный прогресс-бар */}
+          {/* SYSTEM 1: Visual progress bar */}
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-3">
             <div
               className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full h-2 transition-all duration-500 shadow-sm"
               style={{ width: `${skillsPercentage}%` }}
             />
           </div>
-          {/* SYSTEM 1: Чеклист с визуальными индикаторами */}
+          {/* SYSTEM 1: Checklist with visual indicators */}
           <div className="space-y-2">
             {skills.length === 0 ? (
               <div className="text-gray-400 dark:text-gray-500 text-xs text-center py-2">{t('bot.progress.loading')}</div>
@@ -1596,7 +1591,7 @@ Check:
                       : 'bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 hover:border-purple-300 dark:hover:border-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/10'
                   } ${loading ? 'opacity-50 cursor-wait' : 'hover:shadow-sm active:scale-[0.98]'}`}
                 >
-                  {/* SYSTEM 1: Интерактивный чекбокс для отметки навыка */}
+                  {/* SYSTEM 1: Interactive checkbox for skill marking */}
                   {skill.completed ? (
                     <div className="relative">
                       <CheckCircle className="text-green-500 dark:text-green-400 flex-shrink-0" size={24} />
@@ -1614,7 +1609,7 @@ Check:
                   }`}>
                     {getLocalizedSkillName(skill.skill_name)}
                   </span>
-                  {/* SYSTEM 2: Визуальная обратная связь */}
+                  {/* SYSTEM 2: Visual feedback */}
                   {skill.completed ? (
                     <span className="text-xs text-green-600 dark:text-green-400 font-bold bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
                       {t('bot.progress.completed')}
@@ -1630,11 +1625,11 @@ Check:
           </div>
         </div>
 
-        {/* SYSTEM 1: Эмоциональная мотивация (быстрое восприятие) */}
+        {/* SYSTEM 1: Emotional motivation (quick perception) */}
         {progressPercentage < 100 && progressPercentage > 0 && (
           <div className={`${motivation.bgClass} border-2 ${motivation.borderClass} rounded-lg p-4 shadow-sm`}>
             <div className="flex items-center gap-3">
-              {/* SYSTEM 1: Иконка для эмоционального отклика */}
+              {/* SYSTEM 1: Icon for emotional response */}
               <span className="text-2xl">{motivation.icon}</span>
               <div className="flex-1">
                 <p className="text-sm text-gray-800 dark:text-gray-200 font-semibold mb-1">
@@ -1648,21 +1643,21 @@ Check:
           </div>
         )}
 
-        {/* SYSTEM 1: Простая и понятная кнопка действия */}
+        {/* SYSTEM 1: Simple and clear action button */}
         {progressPercentage < 100 ? (
           <button 
             onClick={handleBookLesson}
             className="w-full bg-blue-600 dark:bg-blue-500 text-white py-4 rounded-lg font-semibold text-base hover:bg-blue-700 dark:hover:bg-blue-600 active:bg-blue-800 dark:active:bg-blue-700 transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
           >
-            {/* SYSTEM 1: Визуальная подсказка (иконка) */}
+            {/* SYSTEM 1: Visual cue (icon) */}
             <Calendar size={20} />
             <span>{t('bot.progress.bookLesson')}</span>
-            {/* SYSTEM 1: Направляющая стрелка */}
+            {/* SYSTEM 1: Directional arrow */}
             <span className="text-lg">→</span>
           </button>
         ) : (
           <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-2 border-green-300 dark:border-green-600 rounded-lg p-5 text-center shadow-sm">
-            {/* SYSTEM 1: Эмоциональный триггер (празднование) */}
+            {/* SYSTEM 1: Emotional trigger (celebration) */}
             <div className="text-4xl mb-2 animate-bounce">🎉</div>
             <p className="text-base text-green-800 dark:text-green-200 font-bold mb-1">
               {t('bot.progress.allDone')}
@@ -1670,7 +1665,7 @@ Check:
             <p className="text-xs text-green-700 dark:text-green-300 mb-4">
               {t('bot.progress.readyForExam')}
             </p>
-            {/* SYSTEM 1: Четкая кнопка следующего шага */}
+            {/* SYSTEM 1: Clear next step button */}
             <button 
               onClick={() => setScreen('support')}
               className="w-full bg-green-600 dark:bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-700 dark:hover:bg-green-600 active:bg-green-800 dark:active:bg-green-700 transition-all shadow-md hover:shadow-lg"
@@ -1684,7 +1679,7 @@ Check:
   };
 
   const renderTestimonials = () => {
-    // Получаем имена инструкторов из testimonials
+    // Get instructor names from testimonials
     const getInstructorName = (instructorId: string) => {
       const instructor = instructors.find((i) => i.id === instructorId);
       return instructor?.name || t('bot.instructors.title');
@@ -1707,7 +1702,7 @@ Check:
           </p>
         </div>
 
-        {/* Кнопка для добавления отзыва */}
+        {/* Button to add review */}
         <button
           onClick={() => setShowReviewForm(!showReviewForm)}
           className="w-full bg-blue-600 dark:bg-blue-500 text-white py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base hover:bg-blue-700 dark:hover:bg-blue-600 transition flex items-center justify-center gap-2 mb-3 sm:mb-4"
@@ -1716,13 +1711,13 @@ Check:
           <span>{showReviewForm ? t('bot.testimonials.hideForm') : t('bot.testimonials.leaveReview')}</span>
         </button>
 
-        {/* Форма для создания отзыва */}
+        {/* Form for creating review */}
         {showReviewForm && (
           <div className="bg-white dark:bg-gray-800 border-2 border-blue-200 dark:border-blue-700 rounded-lg p-3 sm:p-4 md:p-5 mb-3 sm:mb-4">
             <h3 className="font-bold text-base sm:text-lg text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">{t('bot.testimonials.leaveReviewTitle')}</h3>
             
             <div className="space-y-3 sm:space-y-4">
-              {/* Имя ученика */}
+              {/* Student name */}
               <div>
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
                   {t('bot.testimonials.yourName')}
@@ -1736,7 +1731,7 @@ Check:
                 />
               </div>
 
-              {/* Выбор инструктора */}
+              {/* Instructor selection */}
               <div>
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
                   {t('bot.testimonials.selectInstructor')}
@@ -1755,7 +1750,7 @@ Check:
                 </select>
               </div>
 
-              {/* Рейтинг */}
+              {/* Rating */}
               <div>
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
                   {t('bot.testimonials.rating')}
@@ -1783,7 +1778,7 @@ Check:
                 </div>
               </div>
 
-              {/* Текст отзыва */}
+              {/* Review text */}
               <div>
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
                   {t('bot.testimonials.yourReview')}
@@ -1797,7 +1792,7 @@ Check:
                 />
               </div>
 
-              {/* Кнопки */}
+              {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <button
                   onClick={() => {
@@ -1826,14 +1821,14 @@ Check:
                         text: reviewText.trim(),
                         rating: reviewRating,
                       });
-                      // Очищаем форму
+                      // Clear form
                       setReviewText('');
                       setReviewRating(5);
                       setReviewStudentName('');
                       setShowReviewForm(false);
-                      // Показываем сообщение об успехе
+                      // Show success message
                       alert(t('bot.testimonials.thanks'));
-                      // Обновляем список отзывов
+                      // Update reviews list
                       const updated = await BotService.getTestimonials(20);
                       setTestimonials(updated);
                     } catch (err) {
@@ -1941,7 +1936,7 @@ Check:
 
     return (
       <div className="space-y-6">
-        {/* Иконка успеха */}
+        {/* Success icon */}
         <div className="text-center">
           <div className="inline-block relative">
             <div className="text-7xl animate-bounce">🎉</div>
@@ -1949,7 +1944,7 @@ Check:
           </div>
         </div>
 
-        {/* Заголовок */}
+        {/* Header */}
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
             {t('bot.bookingSuccess.title')}
@@ -1959,7 +1954,7 @@ Check:
           </p>
         </div>
 
-        {/* Информация о записи */}
+        {/* Booking information */}
         <div className="bg-white dark:bg-gray-800 border-2 border-green-200 dark:border-green-700 rounded-xl p-6 shadow-lg">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -2006,7 +2001,7 @@ Check:
           </div>
         </div>
 
-        {/* Информационное сообщение */}
+        {/* Information message */}
         <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
           <div className="flex items-start gap-3">
             <span className="text-2xl">💬</span>
@@ -2021,7 +2016,7 @@ Check:
           </div>
         </div>
 
-        {/* Кнопка возврата в меню */}
+        {/* Back to menu button */}
         <button
           onClick={() => {
             setScreen('menu');
@@ -2105,7 +2100,7 @@ Check:
           </details>
         </div>
 
-        {/* Кнопка для открытия формы сообщения */}
+        {/* Button to open message form */}
         <button 
           onClick={() => setShowSupportForm(!showSupportForm)}
           className="w-full bg-green-600 dark:bg-green-500 text-white py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base hover:bg-green-700 dark:hover:bg-green-600 transition flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
@@ -2114,7 +2109,7 @@ Check:
           <span>{showSupportForm ? t('bot.support.hideForm') : t('bot.support.writePsychologist')}</span>
         </button>
 
-        {/* Форма для отправки сообщения психологу */}
+        {/* Form for sending message to psychologist */}
         {showSupportForm && (
           <div className="bg-white dark:bg-gray-800 border-2 border-green-200 dark:border-green-700 rounded-lg p-3 sm:p-4 md:p-5 mt-3 sm:mt-4">
             <h3 className="font-bold text-base sm:text-lg text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">
@@ -2122,14 +2117,14 @@ Check:
             </h3>
             
             <div className="space-y-3 sm:space-y-4">
-              {/* Информационное сообщение */}
+              {/* Information message */}
               <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-2.5 sm:p-3">
                 <p className="text-[10px] sm:text-xs text-blue-800 dark:text-blue-200">
                   💬 {t('bot.support.info')}
                 </p>
               </div>
 
-              {/* Поле для ввода сообщения */}
+              {/* Message input field */}
               <div>
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
                   {t('bot.support.yourMessage')}
@@ -2143,7 +2138,7 @@ Check:
                 />
               </div>
 
-              {/* Кнопки */}
+              {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <button
                   onClick={() => {
@@ -2165,12 +2160,12 @@ Check:
                       setLoading(true);
                       setError(null);
                       await BotService.sendSupportMessage(authUser.id, supportMessage.trim());
-                      // Очищаем форму
+                      // Clear form
                       setSupportMessage('');
                       setShowSupportForm(false);
-                      // Показываем сообщение об успехе
+                      // Show success message
                       alert(t('bot.support.thanks'));
-                      // Загружаем обновленный список сообщений
+                      // Load updated messages list
                       const updated = await BotService.getSupportMessages(authUser.id);
                       setSupportMessages(updated);
                     } catch (err) {
@@ -2196,7 +2191,7 @@ Check:
           </div>
         )}
 
-        {/* История сообщений */}
+        {/* Message history */}
         {supportMessages.length > 0 && (
           <div className="mt-4">
             <h3 className="font-bold text-gray-800 dark:text-gray-100 mb-3">{t('bot.support.yourMessages')}</h3>
@@ -2267,7 +2262,7 @@ Check:
       {screen === 'support' && renderSupport()}
       {screen === 'booking-success' && renderBookingSuccess()}
 
-      {/* Модальное окно для записи на занятие */}
+      {/* Modal window for lesson booking */}
       {showBookingForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 sm:p-4 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
@@ -2287,7 +2282,7 @@ Check:
             </div>
 
             <div className="space-y-3 sm:space-y-4">
-              {/* Информация об инструкторе */}
+              {/* Instructor information */}
               {selectedInstructor && (
                 <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-2 sm:p-3">
                   <p className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 break-words">
@@ -2297,7 +2292,7 @@ Check:
                 </div>
               )}
 
-              {/* Тип занятия */}
+              {/* Lesson type */}
               <div>
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t('bot.booking.lessonType')}
@@ -2332,7 +2327,7 @@ Check:
                 </div>
               </div>
 
-              {/* Дата */}
+              {/* Date */}
               <div>
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t('bot.booking.date')}
@@ -2346,7 +2341,7 @@ Check:
                 />
               </div>
 
-              {/* Время */}
+              {/* Time */}
               <div>
                 <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t('bot.booking.time')}
@@ -2359,7 +2354,7 @@ Check:
                 />
               </div>
 
-              {/* Информация */}
+              {/* Information */}
               <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg p-2 sm:p-3">
                 <p className="text-[10px] sm:text-xs text-yellow-800 dark:text-yellow-200">
                   💡 {t('bot.booking.info')}
@@ -2372,7 +2367,7 @@ Check:
                 </div>
               )}
 
-              {/* Кнопки */}
+              {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
                 <button
                   onClick={() => {

@@ -1,5 +1,6 @@
-// Сервис для работы с API бота
+// Service for working with bot API
 import { supabase } from '../lib/supabase';
+import { TelegramService } from './telegramService';
 import type {
   BotUser,
   Instructor,
@@ -38,7 +39,7 @@ export class BotService {
       return existingProfile;
     }
 
-    // Создаем новый профиль
+    // Create new profile
     const { data: newProfile, error: insertError } = await supabase
       .from('bot_users')
       .insert({
@@ -55,6 +56,17 @@ export class BotService {
       .single();
 
     if (insertError) throw insertError;
+
+    // Send Telegram notification about new user (non-blocking)
+    TelegramService.notifyNewUser({
+      name: newProfile.name,
+      email: newProfile.email,
+      phone: newProfile.phone,
+      anxietyLevel: newProfile.anxiety_level,
+    }).catch((err) => {
+      console.error('Failed to send Telegram notification for new user:', err);
+    });
+
     return newProfile;
   }
 
@@ -280,12 +292,21 @@ export class BotService {
     return data;
   }
 
-  // Записаться на занятие (используем auth_user_id)
+  // Book a lesson (using auth_user_id)
   static async bookLesson(authUserId: string, instructorId: string, date: string, type: 'theory' | 'driving'): Promise<Lesson> {
     const profile = await this.getBotProfile(authUserId);
     if (!profile) {
       throw new Error('Bot profile not found');
     }
+
+    // Get instructor information
+    const { data: instructor, error: instructorError } = await supabase
+      .from('bot_instructors')
+      .select('name')
+      .eq('id', instructorId)
+      .single();
+
+    const instructorName = instructor?.name || 'Unknown Instructor';
 
     const { data, error } = await supabase
       .from('bot_lessons')
@@ -300,6 +321,34 @@ export class BotService {
       .single();
 
     if (error) throw error;
+
+    // Format date and time for notification
+    const lessonDate = new Date(date);
+    const formattedDate = lessonDate.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      timeZone: 'Europe/Tallinn',
+    });
+    const formattedTime = lessonDate.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'Europe/Tallinn',
+    });
+
+    // Send Telegram notification about lesson booking (non-blocking)
+    TelegramService.notifyLessonBooking({
+      userName: profile.name,
+      userEmail: profile.email,
+      instructorName,
+      date: formattedDate,
+      time: formattedTime,
+      type,
+    }).catch((err) => {
+      console.error('Failed to send Telegram notification for lesson booking:', err);
+    });
+
     return data;
   }
 
@@ -320,7 +369,7 @@ export class BotService {
     return data || [];
   }
 
-  // Отправить сообщение в поддержку (используем auth_user_id)
+  // Send support message (using auth_user_id)
   static async sendSupportMessage(authUserId: string, message: string): Promise<SupportMessage> {
     const profile = await this.getBotProfile(authUserId);
     if (!profile) {
@@ -338,6 +387,17 @@ export class BotService {
       .single();
 
     if (error) throw error;
+
+    // Send Telegram notification about support message (non-blocking)
+    TelegramService.notifySupportMessage({
+      userName: profile.name,
+      userEmail: profile.email,
+      anxietyLevel: profile.anxiety_level,
+      messageText: message,
+    }).catch((err) => {
+      console.error('Failed to send Telegram notification for support message:', err);
+    });
+
     return data;
   }
 
