@@ -25,12 +25,30 @@ export const supabase = supabaseUrl && supabaseAnonKey
 
 // Проверяем наличие переменных и выводим предупреждение в консоль
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn(
-    '⚠️ Missing Supabase environment variables!\n' +
-    'Please create a .env.local file with:\n' +
-    'VITE_SUPABASE_URL=https://your-project-id.supabase.co\n' +
-    'VITE_SUPABASE_ANON_KEY=your-anon-key-here\n\n' +
-    'See SUPABASE_SETUP.md for instructions.'
-  );
+  const errorMessage = `
+⚠️ CRITICAL: Missing Supabase environment variables!
+
+Current values:
+- VITE_SUPABASE_URL: ${supabaseUrl || 'NOT SET'}
+- VITE_SUPABASE_ANON_KEY: ${supabaseAnonKey ? 'SET (but may be invalid)' : 'NOT SET'}
+
+For local development:
+Create a .env.local file with:
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key-here
+
+For Vercel deployment:
+1. Go to Vercel Dashboard → Settings → Environment Variables
+2. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
+3. Redeploy the project
+
+See SUPABASE_SETUP.md or ИСПРАВЛЕНИЕ_ОШИБКИ_VERCEL.md for instructions.
+  `;
+  console.error(errorMessage);
+  
+  // В production также показываем alert для пользователя
+  if (import.meta.env.PROD) {
+    console.error('Supabase is not configured. Please check environment variables in Vercel.');
+  }
 }
 
