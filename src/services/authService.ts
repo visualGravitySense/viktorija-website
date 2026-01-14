@@ -44,96 +44,132 @@ export class AuthService {
       // Проверяем наличие токена в URL hash
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
       const accessToken = hashParams.get('access_token');
+      const refreshToken = hashParams.get('refresh_token');
       
       if (!accessToken) {
         return { user: null, error: null };
       }
       
-      // Очищаем URL сразу для безопасности (токен уже в памяти Supabase)
-      window.history.replaceState({}, document.title, window.location.pathname);
+      console.log('OAuth callback: token found, processing...');
       
-      // Supabase автоматически обрабатывает токен из hash при инициализации
-      // Но нужно подождать, пока это произойдет
-      // Используем Promise с таймаутом и проверкой сессии
+      // НЕ очищаем URL сразу - Supabase должен обработать токен из hash
+      // Очистим после успешной обработки
+      
+      // Используем Promise с приоритетом на onAuthStateChange
       return new Promise((resolve) => {
         let resolved = false;
-        let attempts = 0;
-        const maxAttempts = 50; // 50 попыток по 300мс = максимум 15 секунд (для Vercel)
+        const timeout = 20000; // 20 секунд максимум
         
-        const checkSession = async () => {
-          attempts++;
+        // Приоритетный способ: слушаем событие SIGNED_IN
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+          console.log('Auth state change:', event, session?.user?.email);
           
-          // Пробуем getSession (быстрее, из localStorage)
-          let session = null;
-          let error = null;
-          
-          try {
-            const sessionResult = await supabase.auth.getSession();
-            session = sessionResult.data?.session;
-            error = sessionResult.error;
-          } catch (err) {
-            error = err as Error;
-          }
-          
-          // Если getSession не сработал, пробуем getUser (делает запрос к серверу)
-          if (!session?.user && attempts > 5) {
-            try {
-              const userResult = await supabase.auth.getUser();
-              if (userResult.data?.user) {
-                // Если getUser вернул пользователя, создаем сессию
-                const sessionResult = await supabase.auth.getSession();
-                session = sessionResult.data?.session;
-              }
-            } catch (err) {
-              // Игнорируем ошибку getUser, продолжаем с getSession
-            }
-          }
-          
-          if (session?.user) {
-            if (!resolved) {
-              resolved = true;
-              resolve({ user: session.user, error: null });
-            }
-            return;
-          }
-          
-          if (error && attempts > 10) {
-            // Только после нескольких попыток считаем ошибку критичной
-            if (!resolved) {
-              resolved = true;
-              console.error('Error getting session after OAuth:', error);
-              resolve({ user: null, error });
-            }
-            return;
-          }
-          
-          // Если сессия еще не получена, пробуем еще раз
-          if (attempts < maxAttempts && !resolved) {
-            setTimeout(checkSession, 300); // Увеличено до 300мс для Vercel
-          } else if (!resolved) {
-            resolved = true;
-            resolve({ user: null, error: new Error('Timeout waiting for session after OAuth') });
-          }
-        };
-        
-        // Начинаем проверку сразу
-        checkSession();
-        
-        // Также слушаем событие SIGNED_IN как резервный вариант
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
           if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user && !resolved) {
             resolved = true;
             subscription.unsubscribe();
+            // Очищаем URL после успешной обработки
+            window.history.replaceState({}, document.title, window.location.pathname);
+            console.log('OAuth callback: success via onAuthStateChange');
             resolve({ user: session.user, error: null });
           }
         });
         
-        // Таймаут для подписки (чтобы не висеть вечно)
+        // Резервный способ: polling getSession
+        let attempts = 0;
+        const maxAttempts = 40; // 40 попыток по 500мс = 20 секунд
+        
+        const checkSession = async () => {
+          if (resolved) return;
+          
+          attempts++;
+          console.log(`OAuth callback: checking session (attempt ${attempts})...`);
+          
+          try {
+            // Пробуем getSession
+            const { data: { session }, error } = await supabase.auth.getSession();
+            
+            if (session?.user) {
+              if (!resolved) {
+                resolved = true;
+                subscription.unsubscribe();
+                // Очищаем URL после успешной обработки
+                window.history.replaceState({}, document.title, window.location.pathname);
+                console.log('OAuth callback: success via getSession');
+                resolve({ user: session.user, error: null });
+              }
+              return;
+            }
+            
+            if (error && attempts > 5) {
+              console.error('Error getting session:', error);
+              // Не считаем это критичной ошибкой сразу - продолжаем попытки
+            }
+            
+            // Если есть refresh_token, пробуем использовать его
+            if (refreshToken && attempts > 3 && !session) {
+              try {
+                console.log('OAuth callback: trying to set session with refresh token...');
+                const { data: refreshData, error: refreshError } = await supabase.auth.setSession({
+                  access_token: accessToken,
+                  refresh_token: refreshToken,
+                });
+                
+                if (refreshData?.session?.user) {
+                  if (!resolved) {
+                    resolved = true;
+                    subscription.unsubscribe();
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    console.log('OAuth callback: success via setSession');
+                    resolve({ user: refreshData.session.user, error: null });
+                  }
+                  return;
+                }
+              } catch (setSessionErr) {
+                console.warn('setSession failed:', setSessionErr);
+              }
+            }
+            
+            // Продолжаем попытки
+            if (attempts < maxAttempts && !resolved) {
+              setTimeout(checkSession, 500);
+            } else if (!resolved) {
+              resolved = true;
+              subscription.unsubscribe();
+              // Очищаем URL даже при ошибке
+              window.history.replaceState({}, document.title, window.location.pathname);
+              console.error('OAuth callback: timeout after all attempts');
+              resolve({ user: null, error: new Error('Timeout waiting for session after OAuth') });
+            }
+          } catch (err) {
+            console.error('Error in checkSession:', err);
+            if (attempts < maxAttempts && !resolved) {
+              setTimeout(checkSession, 500);
+            } else if (!resolved) {
+              resolved = true;
+              subscription.unsubscribe();
+              window.history.replaceState({}, document.title, window.location.pathname);
+              resolve({ user: null, error: err as Error });
+            }
+          }
+        };
+        
+        // Начинаем проверку с небольшой задержкой, чтобы Supabase успел обработать hash
         setTimeout(() => {
           if (!resolved) {
-            subscription.unsubscribe();
+            checkSession();
           }
-        }, 20000); // 20 секунд максимум
+        }, 100);
+        
+        // Общий таймаут
+        setTimeout(() => {
+          if (!resolved) {
+            resolved = true;
+            subscription.unsubscribe();
+            window.history.replaceState({}, document.title, window.location.pathname);
+            console.error('OAuth callback: overall timeout');
+            resolve({ user: null, error: new Error('OAuth callback timeout') });
+          }
+        }, timeout);
       });
     } catch (err) {
       console.error('Error handling OAuth callback:', err);
