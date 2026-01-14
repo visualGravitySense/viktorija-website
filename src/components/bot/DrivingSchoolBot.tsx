@@ -131,10 +131,15 @@ const DrivingSchoolBot = () => {
         // If Supabase isn't configured in this environment, don't hang on auth calls.
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
         const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-        const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey);
+        const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey && 
+          supabaseUrl !== 'https://placeholder.supabase.co' && 
+          supabaseKey !== 'placeholder-key');
+        
         if (!isSupabaseConfigured) {
+          console.error('⚠️ Supabase environment variables are not configured!');
           setError('Supabase is not configured. Please check Vercel environment variables.');
           setScreen('welcome');
+          setAuthLoading(false);
           return;
         }
         
@@ -144,7 +149,15 @@ const DrivingSchoolBot = () => {
         
         if (hasAccessToken) {
           console.log('OAuth callback detected, processing...');
-          const oauthResult = await AuthService.handleOAuthCallback();
+          // Add timeout for OAuth callback (max 10 seconds)
+          const oauthPromise = AuthService.handleOAuthCallback();
+          const timeoutPromise = new Promise<{ user: null; error: Error }>((resolve) => {
+            setTimeout(() => {
+              resolve({ user: null, error: new Error('OAuth callback timeout') });
+            }, 10000);
+          });
+          
+          const oauthResult = await Promise.race([oauthPromise, timeoutPromise]);
           
           if (oauthResult.error) {
             console.error('OAuth callback error:', oauthResult.error);
@@ -192,8 +205,16 @@ const DrivingSchoolBot = () => {
           }
         }
         
-        // Check current session (for regular login)
-        const currentUser = await AuthService.getCurrentUser();
+        // Check current session (for regular login) with timeout
+        const getUserPromise = AuthService.getCurrentUser();
+        const timeoutPromise = new Promise<AuthUser | null>((resolve) => {
+          setTimeout(() => {
+            console.warn('getCurrentUser timeout - Supabase may not be responding');
+            resolve(null);
+          }, 5000); // 5 second timeout
+        });
+        
+        const currentUser = await Promise.race([getUserPromise, timeoutPromise]);
         
         if (currentUser) {
           setAuthUser(currentUser);
@@ -243,7 +264,18 @@ const DrivingSchoolBot = () => {
 
     initAuth();
 
-    // Subscribe to authentication changes
+    // Subscribe to authentication changes (only if Supabase is configured)
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey && 
+      supabaseUrl !== 'https://placeholder.supabase.co' && 
+      supabaseKey !== 'placeholder-key');
+    
+    if (!isSupabaseConfigured) {
+      console.warn('Skipping auth state change subscription - Supabase not configured');
+      return;
+    }
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       const user = session?.user ?? null;
       if (user) {
