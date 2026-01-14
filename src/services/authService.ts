@@ -10,6 +10,10 @@ export class AuthService {
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/bot`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
         },
       });
 
@@ -20,6 +24,52 @@ export class AuthService {
       // OAuth редирект происходит автоматически
       return { user: null, error: null };
     } catch (err) {
+      return { user: null, error: err as Error };
+    }
+  }
+  
+  // Обработка OAuth редиректа
+  static async handleOAuthCallback(): Promise<{ user: User | null; error: Error | null }> {
+    try {
+      // Проверяем наличие токена в URL hash
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const accessToken = hashParams.get('access_token');
+      const refreshToken = hashParams.get('refresh_token');
+      
+      if (accessToken) {
+        // Supabase автоматически обрабатывает токен из hash при инициализации
+        // Но нужно явно получить сессию
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Error getting session after OAuth:', error);
+          return { user: null, error };
+        }
+        
+        if (session?.user) {
+          // Очищаем URL от токена для безопасности
+          window.history.replaceState({}, document.title, window.location.pathname);
+          return { user: session.user, error: null };
+        } else {
+          // Если сессия не получена, возможно нужно подождать
+          // Supabase обрабатывает hash асинхронно
+          await new Promise(resolve => setTimeout(resolve, 500));
+          const { data: { session: retrySession }, error: retryError } = await supabase.auth.getSession();
+          
+          if (retryError) {
+            return { user: null, error: retryError };
+          }
+          
+          if (retrySession?.user) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+            return { user: retrySession.user, error: null };
+          }
+        }
+      }
+      
+      return { user: null, error: null };
+    } catch (err) {
+      console.error('Error handling OAuth callback:', err);
       return { user: null, error: err as Error };
     }
   }
