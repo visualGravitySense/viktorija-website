@@ -52,3 +52,31 @@ See SUPABASE_SETUP.md or ИСПРАВЛЕНИЕ_ОШИБКИ_VERCEL.md for instr
   }
 }
 
+// Проверяем, что URL правильный (не callback URL)
+if (supabaseUrl && (supabaseUrl.includes('/auth/v1/callback') || supabaseUrl.includes('/callback'))) {
+  const errorMessage = `
+⚠️ CRITICAL ERROR: VITE_SUPABASE_URL is set incorrectly!
+
+Current (WRONG): ${supabaseUrl}
+
+This is a callback URL, not the base project URL!
+
+CORRECT format should be:
+https://[your-project-id].supabase.co
+
+Example:
+https://pkwrduyxqsqnbtgplzzj.supabase.co
+
+NOT:
+https://pkwrduyxqsqnbtgplzzj.supabase.co/auth/v1/callback ❌
+
+How to fix:
+1. Go to Vercel Dashboard → Settings → Environment Variables
+2. Find VITE_SUPABASE_URL
+3. Change it to: https://pkwrduyxqsqnbtgplzzj.supabase.co (without /auth/v1/callback)
+4. Save and Redeploy
+
+See КРИТИЧЕСКАЯ_ОШИБКА_SUPABASE_URL.md for details.
+  `;
+  console.error(errorMessage);
+}
