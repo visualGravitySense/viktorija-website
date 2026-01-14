@@ -149,12 +149,12 @@ const DrivingSchoolBot = () => {
         
         if (hasAccessToken) {
           console.log('OAuth callback detected, processing...');
-          // Add timeout for OAuth callback (max 10 seconds)
+          // Add timeout for OAuth callback (max 20 seconds for Vercel)
           const oauthPromise = AuthService.handleOAuthCallback();
           const timeoutPromise = new Promise<{ user: null; error: Error }>((resolve) => {
             setTimeout(() => {
-              resolve({ user: null, error: new Error('OAuth callback timeout') });
-            }, 10000);
+              resolve({ user: null, error: new Error('OAuth callback timeout - please try again') });
+            }, 20000); // Увеличено до 20 секунд для Vercel
           });
           
           const oauthResult = await Promise.race([oauthPromise, timeoutPromise]);
