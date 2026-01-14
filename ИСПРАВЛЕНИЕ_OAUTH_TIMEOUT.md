@@ -20,6 +20,10 @@
    git push
    ```
 
+    https://viktorija-website.vercel.app
+    https://viktorija-website.vercel.app/bot
+    https://viktorija-website.vercel.app/bot/**
+
 2. **Vercel автоматически задеплоит** (или сделай Redeploy вручную)
 
 3. **Проверь работу**:

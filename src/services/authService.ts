@@ -6,18 +6,23 @@ export class AuthService {
   // Вход через Google OAuth
   static async signInWithGoogle(): Promise<{ user: User | null; error: Error | null }> {
     try {
+      // Используем полный URL с протоколом для redirectTo
       const redirectTo = `${window.location.origin}/bot`;
       
-      // Логирование для отладки (только в development)
-      if (import.meta.env.DEV) {
-        console.log('OAuth redirect URL:', redirectTo);
-        console.log('Current origin:', window.location.origin);
-      }
+      // Логирование для отладки (всегда, чтобы видеть на Vercel)
+      console.log('🔐 OAuth sign in:', {
+        redirectTo,
+        origin: window.location.origin,
+        href: window.location.href,
+        isProduction: import.meta.env.PROD,
+      });
 
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo,
+          // Важно: skipBrowserRedirect должен быть false для автоматического редиректа
+          skipBrowserRedirect: false,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
@@ -26,14 +31,16 @@ export class AuthService {
       });
 
       if (error) {
-        console.error('OAuth sign in error:', error);
+        console.error('❌ OAuth sign in error:', error);
         return { user: null, error };
       }
 
+      console.log('✅ OAuth redirect initiated:', data?.url);
+      
       // OAuth редирект происходит автоматически
       return { user: null, error: null };
     } catch (err) {
-      console.error('OAuth sign in exception:', err);
+      console.error('❌ OAuth sign in exception:', err);
       return { user: null, error: err as Error };
     }
   }
