@@ -1,0 +1,15 @@
+# Игнорируемые файлы для Vercel
+node_modules
+.git
+.github
+dist
+*.md
+!README.md
+.env.local
+.env
+*.log
+.DS_Store
+coverage
+.nyc_output
+.vscode
+.idea
