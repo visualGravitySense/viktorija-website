@@ -15,6 +15,7 @@ const CategoryAPage = lazy(() => import('./pages/CategoryAPage.tsx'));
 const CategoryBPage = lazy(() => import('./pages/CategoryBPage.tsx'));
 const FinalTestPage = lazy(() => import('./pages/FinalTestPage.tsx'));
 const MedicalClassPage = lazy(() => import('./pages/MedicalClassPage.tsx'));
+const TestContentPage = lazy(() => import('./pages/TestContentPage.tsx'));
 
 interface AppProps {
   toggleColorMode: () => void;
@@ -50,6 +51,7 @@ function App({ toggleColorMode }: AppProps) {
             <Route path="/b-kategooria" element={<CategoryBPage toggleColorMode={toggleColorMode} />} />
             <Route path="/final-test" element={<FinalTestPage toggleColorMode={toggleColorMode} />} />
             <Route path="/esmaabi" element={<MedicalClassPage toggleColorMode={toggleColorMode} />} />
+            <Route path="/test-content" element={<TestContentPage />} />
             <Route path="*" element={<MarketingPage toggleColorMode={toggleColorMode} />} />
           </Routes>
         </Suspense>
