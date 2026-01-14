@@ -29,9 +29,28 @@ https://viktorija-website.vercel.app/bot/**
 **Authorized redirect URIs** должен включать:
 ```
 https://pkwrduyxqsqnbtgplzzj.supabase.co/auth/v1/callback
+
 ```
 
-(Замени `pkwrduyxqsqnbtgplzzj` на твой Project ID из Supabase)
+**Где найти Project ID в Supabase:**
+
+1. Открой [Supabase Dashboard](https://app.supabase.com)
+2. Выбери свой проект
+3. Перейди в **Settings** (в левом меню)
+4. Выбери **General**
+5. Найди поле **"Project ID"** — это строка из букв и цифр
+   - Пример: `pkwrduyxqsqnbtgplzzj`
+6. Скопируй этот Project ID и замени `[твой-Project-ID]` в URL выше
+
+**Альтернативный способ:**
+- Project ID также виден в URL Supabase Dashboard:
+  - `https://app.supabase.com/project/[Project-ID]`
+  - Например: `https://app.supabase.com/project/pkwrduyxqsqnbtgplzzj`
+
+**Пример:** Если твой Project ID = `pkwrduyxqsqnbtgplzzj`, то:
+```
+https://pkwrduyxqsqnbtgplzzj.supabase.co/auth/v1/callback
+```
 
 ### 3. Проверь Environment Variables на Vercel
 
