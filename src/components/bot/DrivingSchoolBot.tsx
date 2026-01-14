@@ -129,40 +129,57 @@ const DrivingSchoolBot = () => {
         setAuthLoading(true);
         
         // Обработка OAuth редиректа - проверяем наличие токена в URL
-        const oauthResult = await AuthService.handleOAuthCallback();
-        if (oauthResult.user) {
-          // Пользователь успешно аутентифицирован через OAuth
-          setAuthUser(oauthResult.user);
+        const hashParams = new URLSearchParams(window.location.hash.substring(1));
+        const hasAccessToken = hashParams.get('access_token');
+        
+        if (hasAccessToken) {
+          console.log('OAuth callback detected, processing...');
+          const oauthResult = await AuthService.handleOAuthCallback();
           
-          // Получаем или создаем профиль бота
-          try {
-            const botProfile = await BotService.getOrCreateBotProfile(oauthResult.user);
-            setUser(botProfile);
-            setUserName(botProfile.name || oauthResult.user.email?.split('@')[0] || '');
-            
-            // Восстанавливаем выбранного инструктора, если он был
-            if (botProfile.selected_instructor_id) {
-              setSelectedInstructor(botProfile.selected_instructor_id);
-            }
-            
-            // Восстанавливаем уровень тревожности, если он был
-            if (botProfile.anxiety_level) {
-              setAnxietyLevel(botProfile.anxiety_level);
-            }
-            
-            // Определяем экран
-            if (botProfile.anxiety_level && botProfile.anxiety_level > 0) {
-              setScreen('menu');
-            } else {
-              setScreen('anxiety');
-            }
-          } catch (err) {
-            console.error('Error loading bot profile:', err);
-            setError('Failed to load profile. Please try again.');
+          if (oauthResult.error) {
+            console.error('OAuth callback error:', oauthResult.error);
+            setError(oauthResult.error.message || 'Failed to authenticate. Please try again.');
+            setAuthLoading(false);
+            return;
           }
           
-          setAuthLoading(false);
-          return;
+          if (oauthResult.user) {
+            console.log('OAuth authentication successful:', oauthResult.user.email);
+            // Пользователь успешно аутентифицирован через OAuth
+            setAuthUser(oauthResult.user);
+            
+            // Получаем или создаем профиль бота
+            try {
+              const botProfile = await BotService.getOrCreateBotProfile(oauthResult.user);
+              setUser(botProfile);
+              setUserName(botProfile.name || oauthResult.user.email?.split('@')[0] || '');
+              
+              // Восстанавливаем выбранного инструктора, если он был
+              if (botProfile.selected_instructor_id) {
+                setSelectedInstructor(botProfile.selected_instructor_id);
+              }
+              
+              // Восстанавливаем уровень тревожности, если он был
+              if (botProfile.anxiety_level) {
+                setAnxietyLevel(botProfile.anxiety_level);
+              }
+              
+              // Определяем экран
+              if (botProfile.anxiety_level && botProfile.anxiety_level > 0) {
+                setScreen('menu');
+              } else {
+                setScreen('anxiety');
+              }
+            } catch (err) {
+              console.error('Error loading bot profile:', err);
+              setError('Failed to load profile. Please try again.');
+            }
+            
+            setAuthLoading(false);
+            return;
+          } else {
+            console.warn('OAuth callback processed but no user found');
+          }
         }
         
         // Проверяем текущую сессию (для обычного входа)
@@ -687,7 +704,7 @@ Check:
             </span>
             <span className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
               <span className="text-green-500 text-sm sm:text-base">✓</span>
-              <span className="font-medium">Безопасный вход</span>
+              <span className="font-medium">Secure login</span>
             </span>
             <span className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
               <span className="text-green-500 text-sm sm:text-base">✓</span>
