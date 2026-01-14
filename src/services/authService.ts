@@ -6,10 +6,18 @@ export class AuthService {
   // Вход через Google OAuth
   static async signInWithGoogle(): Promise<{ user: User | null; error: Error | null }> {
     try {
+      const redirectTo = `${window.location.origin}/bot`;
+      
+      // Логирование для отладки (только в development)
+      if (import.meta.env.DEV) {
+        console.log('OAuth redirect URL:', redirectTo);
+        console.log('Current origin:', window.location.origin);
+      }
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/bot`,
+          redirectTo,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
@@ -18,12 +26,14 @@ export class AuthService {
       });
 
       if (error) {
+        console.error('OAuth sign in error:', error);
         return { user: null, error };
       }
 
       // OAuth редирект происходит автоматически
       return { user: null, error: null };
     } catch (err) {
+      console.error('OAuth sign in exception:', err);
       return { user: null, error: err as Error };
     }
   }
@@ -34,40 +44,66 @@ export class AuthService {
       // Проверяем наличие токена в URL hash
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
       const accessToken = hashParams.get('access_token');
-      const refreshToken = hashParams.get('refresh_token');
       
-      if (accessToken) {
-        // Supabase автоматически обрабатывает токен из hash при инициализации
-        // Но нужно явно получить сессию
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error('Error getting session after OAuth:', error);
-          return { user: null, error };
-        }
-        
-        if (session?.user) {
-          // Очищаем URL от токена для безопасности
-          window.history.replaceState({}, document.title, window.location.pathname);
-          return { user: session.user, error: null };
-        } else {
-          // Если сессия не получена, возможно нужно подождать
-          // Supabase обрабатывает hash асинхронно
-          await new Promise(resolve => setTimeout(resolve, 500));
-          const { data: { session: retrySession }, error: retryError } = await supabase.auth.getSession();
-          
-          if (retryError) {
-            return { user: null, error: retryError };
-          }
-          
-          if (retrySession?.user) {
-            window.history.replaceState({}, document.title, window.location.pathname);
-            return { user: retrySession.user, error: null };
-          }
-        }
+      if (!accessToken) {
+        return { user: null, error: null };
       }
       
-      return { user: null, error: null };
+      // Supabase автоматически обрабатывает токен из hash при инициализации
+      // Но нужно подождать, пока это произойдет
+      // Используем Promise с таймаутом и проверкой сессии
+      return new Promise((resolve) => {
+        let resolved = false;
+        let attempts = 0;
+        const maxAttempts = 10; // 10 попыток по 200мс = максимум 2 секунды
+        
+        const checkSession = async () => {
+          attempts++;
+          const { data: { session }, error } = await supabase.auth.getSession();
+          
+          if (session?.user) {
+            if (!resolved) {
+              resolved = true;
+              // Очищаем URL от токена для безопасности
+              window.history.replaceState({}, document.title, window.location.pathname);
+              resolve({ user: session.user, error: null });
+            }
+            return;
+          }
+          
+          if (error) {
+            if (!resolved) {
+              resolved = true;
+              console.error('Error getting session after OAuth:', error);
+              resolve({ user: null, error });
+            }
+            return;
+          }
+          
+          // Если сессия еще не получена, пробуем еще раз
+          if (attempts < maxAttempts && !resolved) {
+            setTimeout(checkSession, 200);
+          } else if (!resolved) {
+            resolved = true;
+            // Очищаем URL даже если не получилось получить сессию
+            window.history.replaceState({}, document.title, window.location.pathname);
+            resolve({ user: null, error: new Error('Timeout waiting for session') });
+          }
+        };
+        
+        // Начинаем проверку
+        checkSession();
+        
+        // Также слушаем событие SIGNED_IN как резервный вариант
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+          if (event === 'SIGNED_IN' && session?.user && !resolved) {
+            resolved = true;
+            subscription.unsubscribe();
+            window.history.replaceState({}, document.title, window.location.pathname);
+            resolve({ user: session.user, error: null });
+          }
+        });
+      });
     } catch (err) {
       console.error('Error handling OAuth callback:', err);
       return { user: null, error: err as Error };

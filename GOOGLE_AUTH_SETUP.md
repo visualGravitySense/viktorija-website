@@ -72,7 +72,29 @@ ON bot_users FOR UPDATE
 USING (auth_user_id = auth.uid());
 ```
 
-### 5. Проверка переменных окружения
+### 5. Настройка Redirect URLs в Supabase (ВАЖНО для Production!)
+
+**Критически важно** настроить Redirect URLs в Supabase для работы на Vercel:
+
+1. Перейдите в **Authentication** → **URL Configuration**
+2. В разделе **Site URL** укажите ваш production домен (Vercel):
+   ```
+   https://your-project.vercel.app
+   ```
+3. В разделе **Redirect URLs** добавьте:
+   ```
+   http://localhost:3000/bot
+   https://your-project.vercel.app/bot
+   ```
+   (замените `your-project.vercel.app` на ваш реальный Vercel домен)
+
+4. Нажмите **Save**
+
+⚠️ **Без этой настройки OAuth будет перенаправлять на localhost даже на Vercel!**
+
+Подробнее см. `VERCEL_OAUTH_SETUP.md`
+
+### 6. Проверка переменных окружения
 
 Убедитесь, что в `.env.local` (для локальной разработки) и в Vercel (для продакшена) установлены:
 
@@ -81,7 +103,7 @@ VITE_SUPABASE_URL=https://your-project-id.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key-here
 ```
 
-### 6. Тестирование
+### 7. Тестирование
 
 1. Запустите приложение локально: `npm run dev`
 2. Перейдите на страницу бота: `/bot`
