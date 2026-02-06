@@ -4,19 +4,24 @@ import { ThemeProvider, createTheme, CssBaseline } from '@mui/material'
 import { HelmetProvider } from 'react-helmet-async'
 import { getDesignTokens } from './theme'
 import './index.css'
-// Только i18n — без react-i18next до готовности (устраняет "Cannot access $t before initialization")
-import i18n, { initPromise } from './i18n/i18n'
 
 const root = createRoot(document.getElementById('root')!);
 
-// Рендер только после инициализации i18n; тогда подгружаем react-i18next и App
-initPromise.then(() => {
-  return Promise.all([
-    import('react-i18next'),
-    import('./App.tsx'),
-  ])
-}).then(([reactI18next, appModule]) => {
-  const { I18nextProvider } = reactI18next;
+// Порядок важен: сначала i18n (без react-i18next), потом react-i18next, потом init — иначе "Cannot access $t before initialization"
+import('./i18n/i18n')
+  .then((i18nModule) =>
+    import('react-i18next').then((reactI18next) => ({
+      i18nModule,
+      reactI18next,
+    }))
+  )
+  .then(({ i18nModule, reactI18next }) => {
+    const { default: i18n, initI18n } = i18nModule;
+    return initI18n(reactI18next.initReactI18next).then(() =>
+      import('./App.tsx').then((appModule) => ({ i18n, I18nextProvider: reactI18next.I18nextProvider, appModule }))
+    );
+  })
+  .then(({ i18n, I18nextProvider, appModule }) => {
   const App = appModule.default;
 
   const ThemeApp = () => {
