@@ -29,7 +29,8 @@ export default defineConfig(({ mode }) => ({
     // 1. Оптимизация изображений (Критично для вашего сайта!)
     ViteImageOptimizer({
       test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,
-      exclude: undefined,
+      // Исключаем файлы с нестандартным содержимым (Sharp не может их обработать)
+      exclude: /(pattern\.png|static[\\/]images[\\/]avatar[\\/]\d+\.jpg)$/i,
       include: undefined,
       includePublic: true,
       logStats: true,
