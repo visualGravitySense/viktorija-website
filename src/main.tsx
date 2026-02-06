@@ -5,35 +5,47 @@ import { HelmetProvider } from 'react-helmet-async'
 import { I18nextProvider } from 'react-i18next'
 import { getDesignTokens } from './theme'
 import './index.css'
-// i18n должен быть инициализирован до любого компонента, использующего useTranslation
-import i18n from './i18n/i18n'
-import App from './App.tsx'
+// Только i18n — без react-i18next до готовности (устраняет "Cannot access $t before initialization")
+import i18n, { initPromise } from './i18n/i18n'
 
-const ThemeApp = () => {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
-  
-  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
-  
-  const toggleColorMode = () => {
-    setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+const root = createRoot(document.getElementById('root')!);
+
+// Рендер только после инициализации i18n; тогда подгружаем react-i18next и App
+initPromise.then(() => {
+  return Promise.all([
+    import('react-i18next'),
+    import('./App.tsx'),
+  ])
+}).then(([reactI18next, appModule]) => {
+  const { I18nextProvider } = reactI18next;
+  const App = appModule.default;
+
+  const ThemeApp = () => {
+    const [mode, setMode] = useState<'light' | 'dark'>('light');
+    const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+    const toggleColorMode = () => {
+      setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+    };
+    return (
+      <I18nextProvider i18n={i18n}>
+        <HelmetProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <App toggleColorMode={toggleColorMode} />
+          </ThemeProvider>
+        </HelmetProvider>
+      </I18nextProvider>
+    );
   };
-  
-  return (
-    <I18nextProvider i18n={i18n}>
-      <HelmetProvider>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <App toggleColorMode={toggleColorMode} />
-        </ThemeProvider>
-      </HelmetProvider>
-    </I18nextProvider>
-  );
-};
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Suspense fallback={<div>Loading...</div>}>
-      <ThemeApp />
-    </Suspense>
-  </StrictMode>,
-)
+  root.render(
+    <StrictMode>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ThemeApp />
+      </Suspense>
+    </StrictMode>,
+  );
+}).catch((err) => {
+  console.error('App bootstrap failed:', err);
+  root.render(<div>Loading...</div>);
+});

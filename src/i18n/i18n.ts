@@ -35,17 +35,13 @@ const initPromise = i18n
     react: {
       useSuspense: false,
     },
-    initImmediate: true, // Немедленная синхронная инициализация
+    // false = синхронная инициализация до экспорта, избегаем "Cannot access $t before initialization"
+    initImmediate: false,
   });
 
-// Убеждаемся, что инициализация завершена
-if (!i18n.isInitialized) {
-  // Если по какой-то причине не инициализирован, ждем
-  initPromise.then(() => {
-    console.log('i18n initialized');
-  }).catch((err) => {
-    console.error('i18n initialization error:', err);
-  });
-}
+initPromise.catch((err) => {
+  console.error('i18n initialization error:', err);
+});
 
-export default i18n; 
+export default i18n;
+export { initPromise }; 
