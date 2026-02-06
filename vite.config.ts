@@ -4,8 +4,27 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import compression from 'vite-plugin-compression2';
 
+// Проверка env при production-сборке (Vercel и др.): без переменных билд упадёт с явной ошибкой
+function checkSupabaseEnv() {
+  return {
+    name: 'check-supabase-env',
+    configResolved(config) {
+      if (config.mode !== 'production') return;
+      const url = process.env.VITE_SUPABASE_URL;
+      const key = process.env.VITE_SUPABASE_ANON_KEY;
+      if (!url || !key || url.includes('placeholder')) {
+        throw new Error(
+          '[Vite] Production build: VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY must be set and valid. ' +
+          'On Vercel: Settings → Environment Variables, then Redeploy without build cache (Redeploy → do NOT check "Use existing cache").'
+        );
+      }
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => ({
   plugins: [
+    checkSupabaseEnv(),
     react(),
     // 1. Оптимизация изображений (Критично для вашего сайта!)
     ViteImageOptimizer({

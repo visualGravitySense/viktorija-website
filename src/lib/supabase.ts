@@ -3,8 +3,16 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+/** True только если заданы оба значения и URL не placeholder (для проверок до запросов). */
+export const isSupabaseConfigured = Boolean(
+  supabaseUrl &&
+  supabaseAnonKey &&
+  typeof supabaseUrl === 'string' &&
+  !supabaseUrl.includes('placeholder')
+);
+
 // Создаем клиент Supabase, даже если переменные не заданы (для разработки)
-// В этом случае запросы будут падать, но приложение не упадет при загрузке
+// В этом случае запросы не должны выполняться — проверяйте isSupabaseConfigured перед вызовами
 export const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {

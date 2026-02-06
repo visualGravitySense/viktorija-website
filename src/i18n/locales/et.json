@@ -43,6 +43,43 @@
       "description": "õpid siis, kui sulle sobib"
     }
   },
+  "botAnnounce": {
+    "badge": "UUDIS",
+    "headline": "Tutvuge: teie isiklik ",
+    "headlineAccent": "AI-assistent",
+    "headlineEnd": "!",
+    "description": "Meie tark bot aitab teid igal õppetapil — alates esimese tunni broneerimisest kuni juhiloa saamiseni. Saadaval 24/7 Telegramis ja veebisaidil.",
+    "benefits": {
+      "instant": "Kohesed vastused küsimustele",
+      "booking": "Tundide broneerimine ja ümberplaneerimine võrgus",
+      "progress": "Teie edenemise jälgimine",
+      "theory": "Juurdepääs teooriale ja testidele",
+      "reminders": "Targad meeldetuletused tundide kohta",
+      "support": "Tugi Telegramis ja veebisaidil"
+    },
+    "cta": "Alusta vestlust botiga",
+    "ctaSecondary": "Kuidas see töötab?",
+    "ctaHint": "On juba aidanud üle 500 õpilase",
+    "chatLabel": "Vestlus botiga",
+    "chat": {
+      "1": "Tere! Aitan sind tundidele registreeruda 👋",
+      "2": "Millal sulle sobib õppida?",
+      "3": "Vali allpool variant ↓"
+    },
+    "chatTitle": "AI-assistent",
+    "chatStatus": "Online • vastab kohe",
+    "chatOptions": {
+      "morning": "Hommik (8:00–12:00)",
+      "day": "Päev (12:00–17:00)",
+      "evening": "Õhtu (17:00–21:00)",
+      "weekend": "Nädalavahetusel"
+    },
+    "howItWorks": {
+      "title": "Kuidas see töötab",
+      "text": "Vajuta «Alusta vestlust botiga» — avaneb vestlus veebisaidil. Logi sisse Google’iga või alusta ilma sisselogimata. Bot küsib mõned küsimused ja aitab tundidele registreeruda või vastata õppimise kohta küsimustele.",
+      "close": "Selge"
+    }
+  },
   "requirements": {
     "title": "Mida vaja registreerumiseks",
     "subtitle": "Lihtne registreerumise protsess - vaid 3 sammu",

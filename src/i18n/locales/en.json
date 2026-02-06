@@ -43,6 +43,43 @@
       "description": "you learn when it suits you"
     }
   },
+  "botAnnounce": {
+    "badge": "NEW",
+    "headline": "Meet your personal ",
+    "headlineAccent": "AI assistant",
+    "headlineEnd": "!",
+    "description": "Our smart bot helps you at every step of learning — from booking your first lesson to getting your license. Available 24/7 on Telegram and the website.",
+    "benefits": {
+      "instant": "Instant answers to your questions",
+      "booking": "Book and reschedule lessons online",
+      "progress": "Track your progress",
+      "theory": "Access to theory and practice tests",
+      "reminders": "Smart reminders for your lessons",
+      "support": "Support on Telegram and the website"
+    },
+    "cta": "Start chatting with the bot",
+    "ctaSecondary": "How does it work?",
+    "ctaHint": "Already helped 500+ students",
+    "chatLabel": "Chat with the bot",
+    "chat": {
+      "1": "Hi! I'll help you book lessons 👋",
+      "2": "When are you free to have lessons?",
+      "3": "Pick an option below ↓"
+    },
+    "chatTitle": "AI Assistant",
+    "chatStatus": "Online • replies instantly",
+    "chatOptions": {
+      "morning": "Morning (8:00–12:00)",
+      "day": "Day (12:00–17:00)",
+      "evening": "Evening (17:00–21:00)",
+      "weekend": "Weekends"
+    },
+    "howItWorks": {
+      "title": "How does it work",
+      "text": "Click «Start chatting with the bot» — a chat will open on the website. Sign in with Google or start without logging in. The bot will ask a few questions and help you book a lesson or answer questions about the course.",
+      "close": "Got it"
+    }
+  },
   "requirements": {
     "title": "What You Need to Register",
     "subtitle": "Simple registration process - just 3 steps",

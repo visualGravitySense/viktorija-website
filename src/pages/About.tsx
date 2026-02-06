@@ -12,6 +12,7 @@ import Features from '../components/marketing-page/components/Features.tsx';
 import Testimonials from '../components/marketing-page/components/Testimonials.tsx';
 import FAQ from '../components/marketing-page/components/FAQ.tsx';
 import Footer from '../components/marketing-page/components/Footer.tsx';
+import BenefitsSection from '../components/marketing-page/components/BenefitsSection.tsx';
 // import PainPoints from '../components/marketing-page/components/PainPoints.tsx'
 // import AIAssistant from '../components/marketing-page/components/AIAssistant.tsx'
 // import AdministrativeAutomation from '../components/marketing-page/components/AdministrativeAutomation.tsx'
@@ -25,6 +26,7 @@ import SEOHeading from '../components/shared/SEOHeading.tsx';
 import { LocalBusinessSchema } from '../components/shared/StructuredData.tsx';
 import { useTranslation } from 'react-i18next';
 import ourMissionImg from '/our-mission.jpg';
+import { Suspense } from 'react';
 
 
 export default function MarketingPage(props: { disableCustomTheme?: boolean, toggleColorMode?: () => void }) {
@@ -88,7 +90,11 @@ export default function MarketingPage(props: { disableCustomTheme?: boolean, tog
       />
       <div>
 
-      <UrgencySection 
+
+      
+      
+
+      {/* <UrgencySection 
           title={t('about.team.title')}
           subtitle={t('about.team.subtitle')}
           mainText={t('about.team.main_text')}
@@ -99,15 +105,20 @@ export default function MarketingPage(props: { disableCustomTheme?: boolean, tog
           buttonText={t('about.team.button')}
           buttonLink="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
           limitText={t('about.team.limit_text')}
-        />
+        /> */}
 
-        <Features />
+        {/* <Features /> */}
         
         {/* Instructors */}
         <Instructors 
           title={t('about.instructors_component.default_title')}
           subtitle={t('about.instructors_component.default_subtitle')}
         />
+
+        {/* Benefits Section */}
+        <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+          <BenefitsSection />
+        </Suspense>
 
         <PhotoGallery
           title={t('about.gallery.title')}

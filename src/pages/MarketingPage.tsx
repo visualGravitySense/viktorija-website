@@ -19,7 +19,8 @@ const FAQ = lazy(() => import('../components/marketing-page/components/FAQ.tsx')
 const Footer = lazy(() => import('../components/marketing-page/components/Footer.tsx'));
 const PainPoints = lazy(() => import('../components/marketing-page/components/PainPoints.tsx'));
 const FloatingActionButton = lazy(() => import('../components/marketing-page/components/FloatingActionButton.tsx'));
-const BenefitsSection = lazy(() => import('../components/marketing-page/components/BenefitsSection.tsx'));
+const BenefitsAnnounc = lazy(() => import('../components/marketing-page/components/BenefitsAnnounc.tsx'));
+// const BenefitsSection = lazy(() => import('../components/marketing-page/components/BenefitsSection.tsx'));
 const RequirementsSection = lazy(() => import('../components/marketing-page/components/RequirementsSection.tsx'));
 const CourseTimer = lazy(() => import('../components/marketing-page/components/CourseTimer.tsx'));
 import aCatImg from '/a-cat.jpg';
@@ -141,9 +142,9 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
         nextCourseDate={new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)}
       />
 
-        <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+        {/* <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
           <BenefitsSection />
-        </Suspense>
+        </Suspense> */}
         
       {/* Hero categories info/price  */}
       <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
@@ -198,6 +199,11 @@ export default function MarketingPage({ disableCustomTheme, toggleColorMode }: M
           ]}
         />
       </Suspense>
+
+      <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+          <BenefitsAnnounc />
+        </Suspense>
+
       <Suspense fallback={<div style={{ minHeight: '200px' }} />}>
         <LogoCollection />
       </Suspense>
