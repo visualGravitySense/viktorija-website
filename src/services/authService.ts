@@ -1,10 +1,13 @@
 // Сервис для аутентификации через Supabase Auth
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import type { User } from '@supabase/supabase-js';
 
 export class AuthService {
   // Вход через Google OAuth
   static async signInWithGoogle(): Promise<{ user: User | null; error: Error | null }> {
+    if (!isSupabaseConfigured) {
+      return { user: null, error: new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel.') };
+    }
     try {
       // Используем полный URL с протоколом для redirectTo
       const redirectTo = `${window.location.origin}/bot`;
@@ -47,6 +50,9 @@ export class AuthService {
   
   // Обработка OAuth редиректа
   static async handleOAuthCallback(): Promise<{ user: User | null; error: Error | null }> {
+    if (!isSupabaseConfigured) {
+      return { user: null, error: null };
+    }
     try {
       // Проверяем наличие токена в URL hash
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
@@ -237,6 +243,7 @@ export class AuthService {
 
   // Получить текущего пользователя
   static async getCurrentUser(): Promise<User | null> {
+    if (!isSupabaseConfigured) return null;
     try {
       const { data: { user } } = await supabase.auth.getUser();
       return user;
@@ -248,6 +255,7 @@ export class AuthService {
 
   // Получить текущую сессию
   static async getSession() {
+    if (!isSupabaseConfigured) return null;
     try {
       const { data: { session } } = await supabase.auth.getSession();
       return session;
@@ -259,6 +267,10 @@ export class AuthService {
 
   // Подписаться на изменения аутентификации
   static onAuthStateChange(callback: (user: User | null) => void) {
+    if (!isSupabaseConfigured) {
+      callback(null);
+      return { data: { subscription: { unsubscribe: () => {} } } };
+    }
     return supabase.auth.onAuthStateChange((_event, session) => {
       callback(session?.user ?? null);
     });

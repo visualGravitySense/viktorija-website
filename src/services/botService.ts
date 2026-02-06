@@ -1,5 +1,5 @@
 // Service for working with bot API
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { TelegramService } from './telegramService';
 import type {
   BotUser,
@@ -19,6 +19,9 @@ import type { User } from '@supabase/supabase-js';
 export class BotService {
   // Получить или создать профиль пользователя бота из auth.users
   static async getOrCreateBotProfile(authUser: User): Promise<BotUser> {
+    if (!isSupabaseConfigured) {
+      throw new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel.');
+    }
     // Проверяем, есть ли уже профиль в bot_users
     const { data: existingProfile, error: fetchError } = await supabase
       .from('bot_users')
@@ -72,6 +75,7 @@ export class BotService {
 
   // Получить профиль пользователя бота по auth_user_id
   static async getBotProfile(authUserId: string): Promise<BotUser | null> {
+    if (!isSupabaseConfigured) return null;
     const { data, error } = await supabase
       .from('bot_users')
       .select('*')
@@ -87,6 +91,7 @@ export class BotService {
 
   // Сохранить результат теста на тревожность
   static async saveAnxietyTest(authUserId: string, anxietyLevel: number): Promise<void> {
+    if (!isSupabaseConfigured) return;
     // Сначала получаем профиль бота
     const profile = await this.getBotProfile(authUserId);
     if (!profile) {
@@ -103,6 +108,7 @@ export class BotService {
 
   // Сохранить выбранного инструктора
   static async saveSelectedInstructor(authUserId: string, instructorId: string): Promise<void> {
+    if (!isSupabaseConfigured) return;
     const { error } = await supabase
       .from('bot_users')
       .update({ selected_instructor_id: instructorId })
@@ -113,6 +119,7 @@ export class BotService {
 
   // Получить список инструкторов
   static async getInstructors(): Promise<Instructor[]> {
+    if (!isSupabaseConfigured) return [];
     const { data, error } = await supabase
       .from('bot_instructors')
       .select('*')
@@ -125,6 +132,7 @@ export class BotService {
 
   // Получить отзывы об инструкторе
   static async getInstructorReviews(instructorId: string): Promise<Review[]> {
+    if (!isSupabaseConfigured) return [];
     const { data, error } = await supabase
       .from('bot_reviews')
       .select('*')
@@ -138,6 +146,7 @@ export class BotService {
 
   // Получить все одобренные отзывы (для страницы testimonials)
   static async getTestimonials(limit: number = 10): Promise<Review[]> {
+    if (!isSupabaseConfigured) return [];
     const { data, error } = await supabase
       .from('bot_reviews')
       .select('*')
@@ -157,6 +166,9 @@ export class BotService {
     rating: number;
     video_url?: string;
   }): Promise<Review> {
+    if (!isSupabaseConfigured) {
+      throw new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Vercel.');
+    }
     const profile = await this.getBotProfile(authUserId);
     if (!profile) {
       throw new Error('Bot profile not found');
@@ -181,6 +193,7 @@ export class BotService {
 
   // Получить прогресс пользователя (используем auth_user_id)
   static async getProgress(authUserId: string): Promise<Progress | null> {
+    if (!isSupabaseConfigured) return null;
     try {
       // Получаем профиль бота
       const profile = await this.getBotProfile(authUserId);

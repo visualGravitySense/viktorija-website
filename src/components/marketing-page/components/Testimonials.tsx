@@ -72,37 +72,35 @@ const TestimonialCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const AvatarBox = styled(Box)<{ avatarIndex: number }>(({ avatarIndex, theme }) => {
-  const gradients = [
-    'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-    'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
-    'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-  ];
-  
-  return {
-    width: { xs: '60px', sm: '70px' },
-    height: { xs: '60px', sm: '70px' },
+// Градиенты для аватаров
+const avatarGradients = [
+  'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+  'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+  'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+];
+
+const AvatarBox = styled(Box)({
+  width: { xs: '60px', sm: '70px' },
+  height: { xs: '60px', sm: '70px' },
+  borderRadius: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: { xs: '1.5rem', sm: '1.75rem' },
+  fontWeight: 700,
+  color: 'white',
+  flexShrink: 0,
+  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.15)',
+  position: 'relative',
+  transition: 'all 0.3s ease',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    inset: '-4px',
     borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: { xs: '1.5rem', sm: '1.75rem' },
-    fontWeight: 700,
-    color: 'white',
-    flexShrink: 0,
-    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.15)',
-    position: 'relative',
-    background: gradients[avatarIndex - 1] || gradients[0],
-    transition: 'all 0.3s ease',
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      inset: '-4px',
-      borderRadius: '50%',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      zIndex: -1,
-    },
-  };
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    zIndex: -1,
+  },
 });
 
 export default function Testimonials() {
@@ -238,7 +236,11 @@ export default function Testimonials() {
                   }}
                 >
                   <Box className="avatar-box">
-                    <AvatarBox avatarIndex={index + 1}>
+                    <AvatarBox 
+                      sx={{ 
+                        background: avatarGradients[index % avatarGradients.length] || avatarGradients[0],
+                      }}
+                    >
                       {testimonial.initials}
                     </AvatarBox>
                   </Box>

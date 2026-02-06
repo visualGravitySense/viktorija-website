@@ -484,7 +484,7 @@ export default function Hero({
                     src={imageUrl}
                     alt={imageAlt || displayTitle}
                     loading="eager"
-                    fetchPriority="high"
+                    fetchpriority="high"
                     width="1200"
                     height="400"
                     style={{
