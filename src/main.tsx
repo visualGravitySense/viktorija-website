@@ -2,6 +2,7 @@ import { StrictMode, useState, useMemo, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material'
 import { HelmetProvider } from 'react-helmet-async'
+import { I18nextProvider } from 'react-i18next'
 import { getDesignTokens } from './theme'
 import './index.css'
 // Только i18n — без react-i18next до готовности (устраняет "Cannot access $t before initialization")
