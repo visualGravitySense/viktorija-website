@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meie kategooriad - A ja B juhiload</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 80px 20px;
+            min-height: 100vh;
+        }
+
+        .courses-section {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 24px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: #64748b;
+            font-weight: 500;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin: 32px 0 60px;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #475569;
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .badge-icon {
+            font-size: 1.25rem;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease-out backwards;
+            position: relative;
+        }
+
+        .course-card:nth-child(1) { animation-delay: 0.1s; }
+        .course-card:nth-child(2) { animation-delay: 0.2s; }
+        .course-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .course-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .course-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-content {
+            padding: 32px;
+        }
+
+        .course-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 16px;
+            line-height: 1.3;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .course-icon {
+            font-size: 1.75rem;
+        }
+
+        .course-description {
+            font-size: 1rem;
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 28px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .feature-icon {
+            color: #22c55e;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .pricing {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .price-label {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .price-value {
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .price-highlight {
+            font-size: 1.1rem;
+            color: #3b82f6;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1e293b;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .highlight-note {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #78350f;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1200px) {
+            .courses-grid {
+                grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 60px 16px;
+            }
+
+            .section-title {
+                font-size: 2.25rem;
+            }
+
+            .section-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .trust-badges {
+                gap: 16px;
+            }
+
+            .badge {
+                padding: 10px 18px;
+                font-size: 0.875rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .card-content {
+                padding: 24px;
+            }
+
+            .course-title {
+                font-size: 1.35rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.85rem;
+            }
+
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .badge {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Добавляем пульс для кнопок */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        .btn-primary:hover {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="courses-section">
+        <div class="section-header">
+            <h2 class="section-title">Meie kategooriad - A ja B juhiload</h2>
+            <p class="section-subtitle">
+                Kui õpid meie instruktoritega parkima, ei ole paralleelparkimine enam sinu õudusunenägu, vaid hommikune soojendus. 18+ aastat kogemust, 1000+ õpilast ja 95% edu!
+            </p>
+        </div>
+
+        <div class="trust-badges">
+            <div class="badge">
+                <span class="badge-icon">🔒</span>
+                <span>SSL turvailine</span>
+            </div>
+            <div class="badge">
+                <span class="badge-icon">✅</span>
+                <span>Garantiitud tulemus</span>
+            </div>
+            <div class="badge">
+                <span class="badge-icon">⏰</span>
+                <span>24/7 tugi</span>
+            </div>
+        </div>
+
+        <div class="courses-grid">
+            <!-- A-kategooria kaart -->
+            <div class="course-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&h=600&fit=crop" alt="Motorcycle training">
+                    <div class="card-badge">
+                        🏍️ A-kategooria
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3 class="course-title">
+                        <span class="course-icon">🏍️</span>
+                        A-kategooria — Kui kaks pedaali on juba liiga palju!
+                    </h3>
+                    <p class="course-description">
+                        Sisaldab teoreetilisi tunde seillest, kuidas igas olukorras lahe välja näha. Ideaalne neile, kes plaanivad vedada reisjaid, kes teesklevad, et nad pole üldse hirmul.
+                    </p>
+                    
+                    <ul class="features-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>100% tagatud tulemus</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Kogenud instruktorid</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Kaasaegsed mootorrattad</span>
+                        </li>
+                    </ul>
+
+                    <div class="pricing">
+                        <div class="price-row">
+                            <span class="price-label">Teooria:</span>
+                            <span class="price-value">120 eurot</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Üks tund:</span>
+                            <span class="price-value">45 eurot</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Kokku:</span>
+                            <span class="price-value price-highlight">570 eurot</span>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <span>🏍️</span>
+                            <span>Alusta täna - 30 päevaga valmis!</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>✉️</span>
+                            <span>Saada email</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B-kategooria kaart -->
+            <div class="course-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&h=600&fit=crop" alt="Car driving training">
+                    <div class="card-badge">
+                        🚗 B-kategooria
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3 class="course-title">
+                        <span class="course-icon">🚗</span>
+                        B-kategooria. Neile, kes on väsinud juhile ütlemast "vale tee!"
+                    </h3>
+                    <p class="course-description">
+                        Kõige populaarsem kategooria tavalistele surelikele! Õpid, et kollane footmist ei tähenda signaal "sõida kiiremini!" ✅ 95% edu esimesel korral ✅ Individuaalne lähenemine ✅ Paindlik ajakava ✅
+                    </p>
+                    
+                    <ul class="features-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>95% edu esimesel korral</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Individuaalne lähenemine</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Paindlik ajakava</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Kaasaegsed autod</span>
+                        </li>
+                    </ul>
+
+                    <div class="pricing">
+                        <div class="price-row">
+                            <span class="price-label">Teooria:</span>
+                            <span class="price-value">160 eurot</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Üks tund:</span>
+                            <span class="price-value">25 eurot</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Manuaalkäigukast kokku:</span>
+                            <span class="price-value">700 eurot</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Automaatkäigukast kokku:</span>
+                            <span class="price-value price-highlight">840 eurot</span>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <span>😊</span>
+                            <span>Juhiluba 30 päevaga - Alusta kohe!</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>✉️</span>
+                            <span>Saada email</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lõppkursus kaart -->
+            <div class="course-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&h=600&fit=crop" alt="Final course">
+                    <div class="card-badge">
+                        🎓 Lõppkursus
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3 class="course-title">
+                        <span class="course-icon">🎓</span>
+                        Lõppkursus. Viimane tõuge unistuste juhiloani!
+                    </h3>
+                    <p class="course-description">
+                        Viimane sirge titillini "Inimene juhiloaga"! Individuaaliseed tunnid instruktoritega, kes kannatlikult selgitab 10. korda, et ringristmik ei ole koht loomingulisuse väljendamiseks. ✅ 100% tagatud tulemus ✅ Kogenud instruktorid ✅ Individuaalne lähenemine ✅ Paindlik ajakava
+                    </p>
+                    
+                    <ul class="features-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>100% tagatud tulemus</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Kogenud instruktorid</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Individuaalne lähenemine</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Paindlik ajakava</span>
+                        </li>
+                    </ul>
+
+                    <div class="pricing">
+                        <div class="price-row">
+                            <span class="price-label">Lõppkursus:</span>
+                            <span class="price-value price-highlight">150 eurot</span>
+                        </div>
+                    </div>
+
+                    <div class="highlight-note">
+                        Hindamatu neile, kes soovivad eksami esimese korral läbida, mitte kordusüüde kollektsioneerida!
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <span>🎉</span>
+                            <span>Juhiluba 30 päevaga - Alusta täna!</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>✉️</span>
+                            <span>Saada email</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

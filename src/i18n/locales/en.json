@@ -1,0 +1,1060 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "login": "Login",
+    "logout": "Logout",
+    "settings": "Settings",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "loading": "Loading...",
+    "send_email": "Send email",
+    "call": "Call",
+    "scroll_to_top": "Scroll to top"
+  },
+  "benefits": {
+    "title": "What You'll Get",
+    "subtitle": "Benefits of learning at our driving school",
+    "freedom": {
+      "title": "highest indicator in Tallinn",
+      "description": "98% of students pass the exam on the first attempt"
+    },
+    "savings": {
+      "title": "driving school with guarantee",
+      "description": "Driver's license in 4-5 weeks if you're in a hurry"
+    },
+    "travel": {
+      "title": "professional and patient",
+      "description": "Experienced teachers with over 15 years of experience"
+    },
+    "confidence": {
+      "title": "individual approach",
+      "description": "Every student receives 100% attention"
+    },
+    "career": {
+      "title": "modern training cars",
+      "description": "With manual and automatic transmission"
+    },
+    "independence": {
+      "title": "flexible schedule",
+      "description": "you learn when it suits you"
+    }
+  },
+  "requirements": {
+    "title": "What You Need to Register",
+    "subtitle": "Simple registration process - just 3 steps",
+    "docs_title": "Documents",
+    "process_title": "Registration Process",
+    "passport": "Passport or ID card",
+    "medical": "Medical certificate for category A or B",
+    "payment": "Payment (can be in installments)",
+    "step1": "Choose category",
+    "step1_desc": "A, B or C",
+    "step2": "Fill out form or call",
+    "step2_desc": "Takes only 2 minutes",
+    "step3": "Pay and start learning",
+    "step3_desc": "Secure payment via Stripe",
+    "register_button": "Register Now"
+  },
+  "timer": {
+    "title": "Next Course Starts",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds",
+    "subtitle": "Register before the course starts!"
+  },
+  "languages": {
+    "ru": "Russian",
+    "et": "Estonian", 
+    "en": "English"
+  },
+  "seo": {
+    "default_keywords": "driving school, viktorija, driving lessons, driving courses, Estonia, Tallinn, driving license, category A, category B, category C"
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "about": "About",
+    "services": "Services",
+    "category_a": "Category A (Motorcycle)",
+    "category_b": "Category B (Car)",
+    "first_aid": "First Aid",
+    "final_test": "Final Test",
+    "reviews": "Reviews",
+    "advantages": "Advantages",
+    "prices": "Prices",
+    "questions": "Questions",
+    "signin": "Sign in",
+    "signup": "Sign up",
+    "contacts": "Contacts",
+    "call_now": "Contact us",
+    "book_lesson": "Book a lesson",
+    "schedule": "Schedule",
+    "theory": "Theory",
+    "practical": "Practice",
+    "exam_preparation": "Exam preparation",
+    "view_schedule": "View all",
+    "packages": "Packages",
+    "payment": "Payment methods",
+    "bank_transfer": "Bank Transfer",
+    "bank_account_details": "Bank Account Details",
+    "account_holder": "Account Holder",
+    "account_number": "Account Number",
+    "bank_name": "Bank Name",
+    "reference": "Reference",
+    "payment_reference": "Payment Reference",
+    "copy_details": "Copy Details",
+    "copied": "Copied!",
+    "payment_instructions": "Payment Instructions",
+    "payment_instructions_text": "Please transfer the amount to our bank account. Use the reference number provided below. Your order will be processed once we receive the payment.",
+    "reference_number": "Reference Number",
+    "generate_reference": "Generate Reference",
+          "payment_confirmation": "Payment Confirmation",
+      "payment_confirmation_text": "After making the bank transfer, please send us a confirmation email with your order details and payment reference.",
+      "confirm_payment": "Confirm Payment"
+  },
+  "footer": {
+    "subscribe": "Subscribe to newsletter",
+    "weekly_updates": "Get weekly updates. No spam!",
+    "email": "Email",
+    "your_email": "Your email",
+    "subscribe_button": "Subscribe",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "jobs": "Jobs",
+    "press": "Press",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "contacts": "Contacts",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service",
+    "copyright": "Copyright ©",
+    "contact_us": "Contact Us",
+    "phone": "Phone/Viber/WhatsApp",
+    "email_address": "Email Address",
+    "facebook": "Facebook"
+  },
+  "hero": {
+    "home": {
+      "title": "Viktorija Driving School Nõmme - Professional Driving Training in Tallinn",
+      "subtitle": "Learn to drive so well that even your GPS will applaud your maneuvers!",
+      "description": "Tired of being a passenger in your own life? At our driving school, you won't just get a license - you'll become a driver who isn't afraid of roundabouts and confidently takes the left lane!",
+      "button": "License is Close → Click to Find Out How!"
+    },
+    "about": {
+      "title": "ABOUT US",
+      "subtitle": "DRIVING SCHOOL Viktorija — TRAINING DRIVERS, NOT PASSENGERS!",
+      "description": "Once upon a time in a small Estonian town, a dream was born: to create a place where people would not just get a driver's license, but truly learn how to drive a car.",
+      "button": "Your license — our mission. Let's start together! →"
+    },
+    "features": {
+      "title": "Turning pedestrians into drivers since 1998!",
+      "subtitle": "🚗 Don't know how to drive? That's temporary!",
+      "description": "Our driving school will help you master the art of driving and get your category B license. Experienced instructors, modern cars, and an individual approach to each student.",
+      "button": "Park with us — and get your license! →",
+      "image_alt": "Driving School Services"
+    },
+    "category_b": {
+      "title": "Master the Road with Category B!",
+      "subtitle": "Welcome to Viktorija Driving School Nõmme! Ready to get your driver's license? Our driving school offers professional training for categories A (motorcycle) and B (passenger car) for over 15 years. Our unique guarantee: a driver's license in 4-5 weeks or we'll give you your money back!",
+      "course_image_alt": "Category B Course",
+      "theory": "Theory - 28 academic hours",
+      "driving": "Driving - 28 academic hours",
+      "special_courses": "Dark and slippery road driving courses",
+      "cta_text": "Start your journey to a driver's license today – the road awaits you!",
+      "course_date": "Course start dates: 03.02.2025 - 17.30",
+      "button_text": "Maneuver towards your dream — register for the course!",
+      "urgency_spots": "Spots left: {{spots}}",
+      "urgency_today": "{{count}} people registered today"
+    }
+  },
+  "urgency": {
+    "category_b": {
+      "title": "🚗 Master the Road with Category B!",
+      "subtitle": "Category B is your key 🔑 to freedom and independence! Drive passenger cars 🏎️ and conquer new horizons 🌍. Personal car, rental for trips, work or leisure – everything is possible now!",
+      "main_text": "What's included in the courses? • Theory – 28 academic lessons • Driving – 28 academic lessons • First aid courses – 16 hours • Dark and slippery driving courses",
+      "highlight_text": "📋 What do you need to register?",
+      "main_text_continuation": "🆔 Passport or ID card 🩺 Medical certificate for category B",
+      "offer_title": "🔥 Start your journey to a driver's license today – the road is waiting for you! 🚦",
+      "offer_text": "Course start dates: 03.02.2025 – 17.30",
+      "button_text": "Maneuver to your dream — sign up for the course! →",
+      "limit_text": "Your license — our mission. Let's start together!",
+      "course_contents_title": "What's included in the courses?",
+      "theory": "Theory - 28 academic hours",
+      "driving": "Driving - 28 academic hours",
+      "first_aid": "First aid courses - 16 hours",
+      "special_courses": "Dark and slippery road driving courses",
+      "requirements_title": "What do you need for registration?",
+      "cta_text": "Start your journey to a driver's license today – the road awaits you!",
+      "course_date": "Course start dates: 03.02.2025 - 17.30",
+      "footer_text": "Your license — our mission. Let's start together!",
+      "urgency_spots": "Spots left: {{spots}}",
+      "urgency_today": "{{count}} people registered today"
+    },
+    "exam_prep": {
+      "title": "🚦 PREPARATION FOR THE DMV EXAM",
+      "subtitle": "The DMV exam is like a blind date: you never know how it will end.",
+      "main_text": "But with us, you'll definitely have a second date! We'll prepare you so well that the inspector will doubt their own authority.",
+      "highlight_text": "Our secret recipe for success:",
+      "main_text_continuation": "• Exam route simulator • Psychological preparation 'The inspector is human too' • Parallel parking (better open your eyes) • Good luck mantra from the director",
+      "offer_title": "📱 ONLINE COURSES: THEORY WITHOUT BOREDOM",
+      "offer_text": "Study in your pajamas! Our courses are for those who want to learn traffic rules with a cat and a cup of tea. Forget about boring lectures! Includes: • Interactive lessons • Tests without the desire to jump out the window • Animated road situations • 24/7 access",
+      "button_text": "Start learning →",
+      "limit_text": "Overtake everyone on the road to your license!"
+    },
+    "category_a": {
+      "title": "🏍️ Feel the freedom on two wheels with Category A!",
+      "subtitle": "Category A is your opportunity to become a master of motorcycle control 🏁. Enjoy speed, maneuverability and unforgettable emotions 🌟.",
+      "main_text": "📋 What do you need to register? 🆔 Passport or ID card 🩺 Medical certificate for category A",
+      "highlight_text": "🔥 Become a real biker – start training today! 🛣️",
+      "main_text_continuation": "Theory and Practice FULL COURSE: 570 €",
+      "offer_title": "📅 Choose a convenient start date:",
+      "offer_text": "🎯 First group: 10.02.2025 – 09.00 🎯 Second group: 25.02.2025 – 09.00",
+      "button_text": "Sign up for the motorcycle course →",
+      "limit_text": "Limited number of places!",
+      "offer_text_2": "Second group: 25.02.2025 - 09.00",
+      "urgency_spots": "Spots left: {{spots}}",
+      "urgency_today": "{{count}} people registered today"
+    },
+    "first_aid": {
+      "title": "🚑 First aid courses – an important step towards your safety!",
+      "subtitle": "In our driving school, you will learn skills that will help you respond correctly in emergency situations on the road and save lives.",
+      "main_text": "✨ Why is this important? 💔 Help before the ambulance arrives can save a life. 🧠 You will learn to act in accidents, injuries and other critical cases. 🎓 A certificate of completing the courses is required for taking the exam.",
+      "highlight_text": "What's included in the courses?",
+      "main_text_continuation": "📚 Theory and practice: real scenarios and working with mannequins. 🩺 Basic skills: resuscitation, stopping bleeding, and shock assistance.",
+      "offer_title": "🔥 Register today and become a confident driver! 🚦",
+      "offer_text": "Course start dates: 01.02.2025",
+      "button_text": "Sign up for the courses →",
+      "limit_text": "Limited number of places!",
+      "why_title": "Why is this important?",
+      "why_text": "Help before the ambulance arrives can save a life. You will learn to act in accidents, injuries and other critical cases. A certificate of completing the courses is required for taking the exam.",
+      "urgency_spots": "Spots left: {{spots}}",
+      "urgency_today": "{{count}} people registered today",
+      "success_label": "Completion rate",
+      "students_label": "Completed"
+    },
+    "final_course": {
+      "title": "🏁 The final stage on the way to your permanent license – get ready for victory!",
+      "subtitle": "The final training course, winter driving – this is your last push towards successfully passing the exams for category A or B. We will do everything to make you feel confident and ready for any challenges on the road.",
+      "main_text": "📋 What do you need to register? 🆔 Passport or ID card 🩺 Medical certificate for category A or B",
+      "highlight_text": "🔥 Take the decisive step – start training and get your license soon! 🚦",
+      "main_text_continuation": "FULL COURSE: 150 €",
+      "offer_title": "📅 Choose a convenient start date:",
+      "offer_text": "🎯 First group: 07.02.2025 – 08.00 🎯 Second group: 22.02.2025 – 08.00",
+      "button_text": "Sign up for the final course →",
+      "limit_text": "Limited number of places!",
+      "page_title": "PREPARATION FOR THE DMV EXAM",
+      "intro": "The DMV exam is like a blind date: you never know how it will end.",
+      "recipe_title": "Our secret recipe for success:",
+      "recipe_1": "Exam route simulator",
+      "recipe_2": "Psychological preparation 'The inspector is human too'",
+      "recipe_3": "Parallel parking (better open your eyes)",
+      "recipe_4": "Good luck mantra from the director",
+      "web_courses_title": "ONLINE COURSES: THEORY WITHOUT BOREDOM",
+      "web_courses_text": "Study in your pajamas! Our courses are for those who want to learn traffic rules with a cat and a cup of tea. Forget about boring lectures!",
+      "includes_title": "Includes:",
+      "includes_1": "Interactive lessons",
+      "includes_2": "Tests without the desire to jump out the window",
+      "includes_3": "Animated road situations",
+      "includes_4": "24/7 access",
+      "urgency_spots": "Spots left: {{spots}}",
+      "urgency_today": "{{count}} people registered today"
+    }
+  },
+  "create": {
+    "benefits": {
+      "title": "What You'll Get?",
+      "subtitle": "Your benefits after completing the course",
+      "subtitle_final": "Your benefits after preparation",
+      "subtitle_medical": "Your benefits after completing the course",
+      "freedom": {
+        "title": "Freedom of Movement",
+        "desc": "Go wherever you want, whenever you want"
+      },
+      "speed": {
+        "title": "Speed and Adrenaline",
+        "desc": "Feel true freedom on two wheels"
+      },
+      "confidence": {
+        "title": "Confidence",
+        "desc": "Become a master of motorcycle control"
+      },
+      "expertise": {
+        "title": "Professional Training",
+        "desc": "Experienced instructors with 15+ years of experience"
+      },
+      "confidence": {
+        "title": "Confidence",
+        "desc": "Become a master of motorcycle control",
+        "desc_final": "Pass the exam on the first try",
+        "desc_medical": "Feel safer on the road"
+      },
+      "psychological": {
+        "title": "Psychological Preparation",
+        "desc": "Overcome fear of the exam"
+      },
+      "practice": {
+        "title": "Practice",
+        "desc": "Practice all difficult elements"
+      },
+      "lifesaving": {
+        "title": "Life Saving",
+        "desc": "Learn to act in emergency situations"
+      },
+      "certificate": {
+        "title": "Certificate",
+        "desc": "Get an official certificate"
+      }
+    },
+    "process": {
+      "title": "How It Works?",
+      "subtitle": "Just 4 simple steps to your license",
+      "subtitle_final": "Just 4 simple steps to passing the exam",
+      "subtitle_medical": "Just 4 simple steps to your certificate",
+      "step1": "Fill out the form or call",
+      "step2": "Pay for the course",
+      "step3": "Start learning",
+      "step4": "Get your license!",
+      "step4_final": "Take the exam and get your license!",
+      "step4_medical": "Get your certificate!"
+    },
+    "reaction": {
+      "title": "Success Story",
+      "subtitle": "Real story from our student",
+      "story": "\"I've always dreamed of a motorcycle, but was afraid to start training. Viktorija instructors helped me overcome my fear and in just 4 weeks I got my Category A license. Now I'm free!\"",
+      "author": "— Martin, 28 years old",
+      "story_b": "\"I got my Category B license in just 5 weeks! The instructors were patient and professional. Now I can drive to work in my own car. Thanks Viktorija!\"",
+      "author_b": "— Katrin, 34 years old",
+      "story_final": "\"The ARK exam was scary for me, but Viktorija's preparation helped me pass it successfully. Now I have a permanent license!\"",
+      "author_final": "— Jaan, 25 years old",
+      "story_medical": "\"The first aid courses were very useful. Now I feel safer on the road and know what to do in an emergency.\"",
+      "author_medical": "— Liis, 30 years old"
+    },
+    "execution": {
+      "ready": "✅ Ready to start? Registration takes just 2 minutes!"
+    }
+  },
+  "spectrum": {
+    "habits": {
+      "title": "Quick Check: Are You Ready?",
+      "subtitle": "If all items are checked - you're ready to start!",
+      "check1": "I have a passport or ID card",
+      "check2": "I am 18 years old",
+      "check3": "I'm ready to start learning"
+    },
+    "active": {
+      "title": "Comparison: Manual vs Automatic",
+      "subtitle": "Choose the option that suits you",
+      "table": {
+        "feature": "Feature",
+        "manual": "Manual",
+        "auto": "Automatic"
+      },
+      "feature1": "Learning difficulty",
+      "manual1": "Medium",
+      "auto1": "Easy",
+      "feature2": "Cost",
+      "feature3": "Learning time",
+      "manual3": "4-5 weeks",
+      "auto3": "4-5 weeks",
+      "feature4": "License",
+      "manual4": "Manual only",
+      "auto4": "Manual + Automatic"
+    },
+    "heuristics": {
+      "title": "Quick Decision Rules",
+      "subtitle": "Simple guide for choosing",
+      "rule": "Rule",
+      "rule1": {
+        "condition": "If you have a limited budget",
+        "action": "→ Choose manual (700€)"
+      },
+      "rule2": {
+        "condition": "If you want to drive any car",
+        "action": "→ Choose automatic (840€)"
+      },
+      "rule3": {
+        "condition": "If you're unsure",
+        "action": "→ Start with manual, add automatic later"
+      }
+    },
+    "focused": {
+      "title": "Detailed Information",
+      "subtitle": "Answers to important questions for decision making",
+      "faq1": {
+        "q": "How long does the training take?",
+        "a": "Training takes 4-5 weeks, including theory (28 hours), practice (28 hours) and first aid courses (16 hours)."
+      },
+      "faq2": {
+        "q": "Can I pay in installments?",
+        "a": "Yes, we offer the possibility of payment in installments. Contact us to clarify the conditions."
+      },
+      "faq3": {
+        "q": "What is included in the course price?",
+        "a": "The price includes: theory (28 hours), practice (28 hours), first aid courses (16 hours), driving courses on slippery roads and in the dark."
+      },
+      "faq4": {
+        "q": "What is the exam pass rate?",
+        "a": "98% of our students pass the exam on the first try thanks to quality preparation and experienced instructors."
+      }
+    }
+  },
+  "dual": {
+    "system1": {
+      "title": "⚡ Quick decision? Choose in 30 seconds!",
+      "quick_manual": "Manual",
+      "quick_manual_desc": "Fast and affordable",
+      "quick_auto": "Automatic",
+      "quick_auto_desc": "More options",
+      "quick_theory": "Paid Theory",
+      "quick_theory_desc": "Theory only",
+      "toggle_detailed": "Need details? (System 2)",
+      "visual_cue": "💡 Visual cues: Blue = safe, Green = recommended, Orange = urgent"
+    },
+    "system2": {
+      "title": "🧠 Detailed information for deliberate decision",
+      "considerations": "What to consider:",
+      "consideration1": "Budget: manual is 140€ cheaper",
+      "consideration2": "Flexibility: automatic gives rights for both types",
+      "consideration3": "Learning time is the same: 4-5 weeks",
+      "warnings": "Important to know:",
+      "warning1": "With manual license you cannot drive automatic",
+      "warning2": "With automatic license you can drive both types"
+    },
+    "validation": {
+      "title": "✅ Quality guarantee",
+      "message": "We guarantee getting a license in 4-5 weeks or money back. All instructors are certified."
+    }
+  },
+  "admin_automation": {
+    "learning": {
+      "title": "Stages of learning at the driving school",
+      "subtitle": "Go from novice to confident driver with our support",
+      "button_text": "Start learning →",
+      "benefits": {
+        "assessment": {
+          "title": "Quick assessment",
+          "description": "Initial consultation and assessment of driving level (30 minutes)"
+        },
+        "plan": {
+          "title": "Individual plan",
+          "description": "Get a personalized driving training program"
+        },
+        "instructor": {
+          "title": "Instructor support",
+          "description": "Our instructor will conduct all necessary lessons for successful exam passing"
+        }
+      }
+    },
+    "time_saving": {
+      "title": "Save time on driving lessons",
+      "subtitle": "The average student spends 15+ hours on organizational issues that our driving school solves automatically.",
+      "button_text": "Move from passenger to driver — sign up now! →",
+      "benefits": {
+        "schedule": {
+          "title": "Smart scheduling",
+          "description": "Prevents conflicts and optimizes class schedule"
+        },
+        "reminders": {
+          "title": "Automatic reminders",
+          "description": "Reduce missed classes by 78%"
+        },
+        "documentation": {
+          "title": "Digital documentation",
+          "description": "Safe and compliant record keeping"
+        },
+        "payments": {
+          "title": "Integrated payments",
+          "description": "Automatic invoices and payment tracking"
+        },
+        "analytics": {
+          "title": "Performance analytics",
+          "description": "Identify problem areas in learning"
+        }
+      }
+    }
+  },
+  "ai_assistant": {
+    "title": "Your reliable partner in driving education",
+    "subtitle": "Our driving school offers a modern approach to driving education — from theory to successful exam passing",
+    "button_text": "Get in the driver's lane — click here! →",
+    "features": {
+      "answers": {
+        "title": "Instant answers",
+        "description": "To all questions about courses, prices, and requirements"
+      },
+      "schedule": {
+        "title": "Flexible schedule",
+        "description": "Synchronization with your personal schedule in real time"
+      },
+      "approach": {
+        "title": "Individual approach",
+        "description": "For maximum effective learning"
+      },
+      "support": {
+        "title": "Personal support",
+        "description": "Based on your success and progress"
+      },
+      "multilingual": {
+        "title": "Multilingual support",
+        "description": "For teaching students from different countries"
+      }
+    },
+    "quote": {
+      "text": "Thanks to the individual approach and flexible schedule, I was able to get my license in just 2 months! The instructors are always available and ready to help.",
+      "author": "Anna Petrova",
+      "position": "Driving school graduate"
+    }
+  },
+  "painpoints": {
+    "title": "Driving Categories - Choose Your Path to Freedom!",
+    "subtitle": "Once you learn to park with our instructors, parallel parking will no longer be your nightmare, but your morning warm-up.",
+    "no_categories": "No categories available",
+    "theory": "Theory",
+    "lesson": "One lesson",
+    "total": "Total",
+    "euro": "EUR",
+    "categories": {
+      "a": {
+        "title": "🏍️ Category A — When Two Pedals are Already Too Many!",
+        "description": "Includes theoretical lessons on how to look cool in any situation. Perfect for those planning to carry passengers who will pretend they're not scared at all.",
+        "button": "The Road Awaits Heroes — Become One!",
+        "price_label": "The Price Point:"
+      },
+      "b": {
+        "title": "🚗 Category B. For Those Who Are Tired of Telling the Driver \"Wrong Way!\"",
+        "description": "The most popular category for ordinary mortals! You'll learn that yellow at a traffic light is not a signal to \"go faster!\" (includes free philosophy lessons at traffic lights when you stall).",
+        "button": "Shift to Dream Speed — Start Now!",
+        "price_label": "The Cost of Freedom:",
+        "manual_total": "Manual transmission total:",
+        "auto_total": "Automatic transmission total:"
+      },
+      "c": {
+        "title": "🎓 Final Course. The Last Dash to Your Dream License!",
+        "description": "The home stretch to becoming \"A Person with a License\"! Individual lessons with instructors who will patiently explain for the 10th time that a roundabout is not a place to express creativity.",
+        "button": "License is Close — Find Out How!",
+        "price_label": "Investment in a Future Without Fear:",
+        "after_price": "Priceless for those who want to pass the exam on the first try, rather than collecting retakes.",
+        "final_label": "Final course:"
+      }
+    },
+    "instructors": {
+      "title": "Our Experienced Instructors",
+      "subtitle": "Professional team with many years of teaching experience",
+      "button": "Sign up for a lesson"
+    }
+  },
+  "about": {
+    "team": {
+      "title": "OUR TEAM: PEOPLE WHO LOVE THEIR WORK",
+      "subtitle": "For more than 15 years, we've been turning uncertain pedestrians into confident drivers. During this time, our graduates have put so many kilometers on their car wheels that they could have reached the Moon and back... several times!",
+      "main_text": "Our driving school employs not just instructors, but true steering wheel wizards.",
+      "instructor_name": "Igor Nagorsky",
+      "instructor_description": "— head and founder of the school, a legendary figure, theory guru, knows traffic rules better than his own home address. A driving instructor whose patience could be entered in the Guinness Book of Records. Even if you stall ten times in a row at a traffic light, he'll just smile and say: Let's try an eleventh time!",
+      "why_title": "WHY US? BECAUSE WE ARE THE BEST!",
+      "testimonial": "They truly care about each student here. My instructor Andrei took all my fears into account and helped me overcome them. Now I drive with such pleasure, as if I've been behind the wheel all my life! — Katrin, 34 years old",
+      "button": "Maneuver towards your dream — sign up for a course! →",
+      "limit_text": "We don't have teaching templates because each student is unique. Some are afraid of speed, some of turns, and some simply can't remember where the turn signal is. And that's normal!"
+    },
+    "gallery": {
+      "title": "Driving School Photo Gallery",
+      "captions": {
+        "1": "Motorcycle practice",
+        "2": "Classroom",
+        "3": "Learning process",
+        "4": "Lessons with an instructor",
+        "5": "Ice driving area",
+        "6": "Winter driving"
+      },
+      "images": {
+        "motorcycle_practice": "Motorcycle practice",
+        "classroom_1": "Classroom 1",
+        "classroom_2": "Classroom 2", 
+        "classroom_3": "Classroom 3",
+        "ice_area_1": "Ice driving area 1",
+        "ice_area_2": "Ice driving area 2"
+      }
+    },
+    "instructors": {
+      "1": {
+        "title": "👨‍🏫 Igor Nagorsky",
+        "description": "Founder and head of \"Viktorija\" driving school, experienced driving instructor. Car: Toyota Corolla"
+      },
+      "2": {
+        "title": "👨‍🏫 Maxim Fedorenko",
+        "description": "Driving instructor, patient and caring teacher. Car: Volkswagen Golf"
+      },
+      "3": {
+        "title": "👨‍🏫 Stanislav Zigadlo",
+        "description": "Driving instructor with 18 years of teaching experience. Car: Skoda Octavia"
+      },
+      "4": {
+        "title": "👨‍🏫 Ivan Skorobogatov",
+        "description": "Experienced instructor, worked as an ARK examiner for over 2.5 years. Car: Toyota Yaris"
+      },
+      "5": {
+        "title": "👨‍🏫 Andrei Naan",
+        "description": "Highly qualified driving instructor for categories B and A. Car: Volkswagen Polo"
+      }
+    },
+    "instructors_component": {
+      "default_title": "Our Instructors",
+      "default_subtitle": "Experienced instructors will help you master driving",
+      "sign_up_button": "Sign up for a lesson",
+      "instructors": {
+        "igor": {
+          "name": "Igor Nagorsky",
+          "description": "Founder and head of \"Viktorija\" driving school, experienced driving instructor. Car: Toyota Corolla"
+        },
+        "maksim": {
+          "name": "Maxim Fedorenko", 
+          "description": "Driving instructor, patient and caring teacher. Car: Volkswagen Golf"
+        },
+        "stanislav": {
+          "name": "Stanislav Zigadlo",
+          "description": "Driving instructor with 18 years of teaching experience. Car: Skoda Octavia"
+        },
+        "ivan": {
+          "name": "Ivan Skorobogatov",
+          "description": "Experienced instructor, worked as an ARK examiner for over 2.5 years. Car: Toyota Yaris"
+        },
+        "andrei": {
+          "name": "Andrei Naan",
+          "description": "Highly qualified driving instructor for categories B and A. Car: Volkswagen Polo"
+        }
+      }
+    }
+  },
+  "features": {
+    "title": "Why Choose Our Driving School?",
+    "subtitle": "We offer a unique approach to driver education",
+    "feature1": "Experienced Instructors",
+    "feature1_desc": "Our team consists of certified instructors with years of experience",
+    "feature2": "Modern Training Vehicles",
+    "feature2_desc": "Learn on well-maintained, modern vehicles with dual controls",
+    "feature3": "Flexible Schedule",
+    "feature3_desc": "Choose lesson times that fit your busy schedule",
+    "feature4": "Comprehensive Curriculum",
+    "feature4_desc": "Learn all aspects of driving from basics to advanced techniques",
+    "feature5": "Individual Approach",
+    "feature5_desc": "Personalized attention for each student's unique needs",
+    "feature6": "High Pass Rates",
+    "feature6_desc": "Excellent success rates for first-time exam takers",
+    "view_document": "View Document",
+    "pdf_document": "Credit Rating Document",
+    "view_report": "View report"
+  },
+  "testimonials": {
+    "title": "What Our Students Say",
+    "testimonial1": {
+      "text": "Best driving school in town! I passed my exam on the first try thanks to the patient and professional instructors.",
+      "author": "Maria K.",
+      "role": "Category B License Holder"
+    },
+    "testimonial2": {
+      "text": "I was terrified of driving, but my instructor helped me overcome my fears. Now I drive with confidence every day!",
+      "author": "Thomas L.",
+      "role": "Category B License Holder"
+    },
+    "testimonial3": {
+      "text": "The lessons were both educational and fun. I learned not just to pass the test, but to be a truly good driver.",
+      "author": "Anna S.",
+      "role": "Category A License Holder"
+    }
+  },
+  "highlights": {
+    "title": "Our Advantages",
+    "subtitle": "What makes our driving school special",
+    "highlight1": "Personalized Approach",
+    "highlight1_desc": "We adapt to each student's learning style and needs",
+    "highlight2": "Modern Methods",
+    "highlight2_desc": "Our teaching methods combine traditional expertise with modern technology",
+    "highlight3": "Supportive Environment",
+    "highlight3_desc": "Learn in a stress-free, encouraging atmosphere",
+    "highlight4": "Comprehensive Training",
+    "highlight4_desc": "We cover all aspects of driving, from theory to practical skills",
+    "highlight5": "Experienced Instructors",
+    "highlight5_desc": "Our team consists of certified professionals with years of experience",
+    "highlight6": "High Pass Rates",
+    "highlight6_desc": "Excellent success rates for first-time exam takers",
+    "cta_button": "Start Your Journey Today!"
+  },
+  "pricing": {
+    "title": "Our Pricing Plans",
+    "subtitle": "Transparent pricing with no hidden fees",
+    "category_a": "Category A",
+    "category_b": "Category B",
+    "category_c": "Category C",
+    "theory": "Theory Course",
+    "practice": "Practical Lessons",
+    "exam_prep": "Exam Preparation",
+    "per_hour": "per hour",
+    "button": "Choose Plan",
+    "most_popular": "Most Popular",
+    "features": "What's included",
+    "feature1": "Comprehensive theory course",
+    "feature2": "Practical driving lessons",
+    "feature3": "Study materials",
+    "feature4": "Mock exams",
+    "feature5": "Free retake if you fail",
+    "feature6": "Exam registration assistance",
+    "total": "total"
+  },
+  "pricing_data": {
+    "title": "Choose Your Plan",
+    "subtitle": "Comprehensive training with our most zen instructors who stay calm even when you confuse gas with brake.",
+    "tiers": {
+      "a": {
+        "title": "🏍️ Category A",
+        "description": [
+          "Complete training course",
+          "Comfortable practice",
+          "Flexible schedule",
+          "Full support"
+        ],
+        "button_text": "Green light to rights — click!"
+      },
+      "b": {
+        "title": "🚗 Category B",
+        "subheader": "Most Popular",
+        "description": [
+          "28 academic hours of theory",
+          "28 academic hours of driving",
+          "16 hours of first aid courses",
+          "Dark and slippery driving courses",
+          "Individual approach",
+          "Full support"
+        ],
+        "button_text": "Buckle up for success — start!"
+      },
+      "final": {
+        "title": "🎓 Final Course",
+        "description": [
+          "Flexible class schedule",
+          "Study materials",
+          "Extreme situation practice",
+          "Driving readiness guarantee"
+        ],
+        "button_text": "Get the maximum — sign up!"
+      }
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to common questions about our driving school",
+    "question1": "How long does it take to get a license?",
+    "answer1": "The time it takes to get a license varies depending on the category and your learning pace. On average, it takes 1-3 months for Category B.",
+    "question2": "How many driving lessons will I need?",
+    "answer2": "The number of lessons depends on your previous experience and how quickly you learn. Most students need 20-30 hours for Category B.",
+    "question3": "What documents do I need to start learning?",
+    "answer3": "You'll need your ID, a medical certificate, and a passport photo. We'll help you with the paperwork.",
+    "question4": "When do I pay for the lessons?",
+    "answer4": "You can pay for the full course upfront with a discount, or pay in installments as you progress.",
+    "question5": "Can I take lessons in the evening or on weekends?",
+    "answer5": "Yes, we offer flexible scheduling including evenings and weekends to accommodate your busy schedule.",
+    "question6": "What if I fail my exam?",
+    "answer6": "If you fail your exam, we offer additional support and practice before you retake it. We're committed to your success.",
+    "show_more": "Show more questions"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "serverError": "Server error",
+    "notFound": "Page not found"
+  },
+  "logo_collection": {
+    "title": "Trusted by those who value professionalism on the road",
+    "description": "When it comes to road safety, there are no random partners. That's why we collaborate with companies for whom driver professionalism is not just words, but a daily necessity."
+  },
+  "driving_categories": {
+    "page_title": "Choose Your Driving Category",
+    "page_subtitle": "Select the perfect course for your needs",
+    "categories": {
+      "a": {
+        "title": "🏍️ Category A",
+        "description": "We offer a complete training course including theoretical classes and individual practical lessons on modern motorcycles with experienced instructors."
+      },
+      "b": {
+        "title": "🚗 Category B", 
+        "description": "We offer a complete training course including theoretical classes and individual practical lessons on modern cars with experienced instructors."
+      },
+      "c": {
+        "title": "🚚 Category C",
+        "description": "We offer a complete training course including theoretical classes and individual practical lessons on modern trucks with experienced instructors."
+      }
+    }
+  },
+  "social_proof": {
+    "rating": {
+      "value": "4.9/5",
+      "label": "Rating",
+      "sublabel": "1000+ reviews"
+    },
+    "experience": {
+      "value": "18+",
+      "label": "Years of experience",
+      "sublabel": "Since 1998"
+    },
+    "students": {
+      "value": "1000+",
+      "label": "Students",
+      "sublabel": "Successfully graduated"
+    },
+    "success_rate": {
+      "value": "95%",
+      "label": "Success on first try",
+      "sublabel": "Estonian record"
+    }
+  },
+  "checkout": {
+    "steps": {
+      "shipping": "Shipping address",
+      "payment": "Payment details",
+      "review": "Review your order"
+    },
+    "products": {
+      "theory_a": {
+        "name": "Theory Course A",
+        "desc": "Basic theory training"
+      },
+      "theory_b": {
+        "name": "Theory Course B",
+        "desc": "Advanced theory training"
+      },
+      "theory": {
+        "desc": "Theory course fee"
+      },
+      "lessons_a": {
+        "name": "Driving Lessons A",
+        "desc": "Basic driving lessons"
+      },
+      "lessons_b": {
+        "name": "Driving Lessons B",
+        "desc": "Advanced driving lessons"
+      },
+      "lessons": {
+        "desc": "Per lesson"
+      },
+      "manual_a": {
+        "name": "Manual Training A",
+        "desc": "Basic manual driving training"
+      },
+      "manual_b": {
+        "name": "Manual Training B",
+        "desc": "Advanced manual driving training"
+      },
+      "manual": {
+        "desc": "Complete course"
+      },
+      "final_course": {
+        "name": "Final Course",
+        "desc": "Comprehensive final driving course"
+      }
+    },
+    "transmission_type": "Transmission type",
+    "manual_transmission": "Manual transmission total",
+    "automatic_transmission": "Automatic transmission total",
+    "make_gift": "Make it a gift",
+    "gift_message": "We'll send a beautiful gift card with your personalized message to the recipient",
+    "recipient_email": "Recipient's email",
+    "recipient_email_placeholder": "Enter recipient's email address",
+    "invalid_email": "Please enter a valid email address",
+    "selected_products": "Selected products",
+    "thank_you": "Thank you for your order!",
+    "order_number": "Your order number is",
+    "email_confirmation": "We have emailed your order confirmation and will update you once its shipped.",
+    "go_to_orders": "Go to my orders",
+    "previous": "Previous",
+    "back": "Back",
+    "next": "Next",
+    "place_order": "Place order",
+    "view_details": "View details",
+    "address": {
+      "first_name": "First name",
+      "first_name_placeholder": "John",
+      "last_name": "Last name",
+      "last_name_placeholder": "Snow",
+      "address_line1": "Address line 1",
+      "address_line1_placeholder": "Street name and number",
+      "address_line2": "Address line 2",
+      "address_line2_placeholder": "Apartment, suite, unit, etc. (optional)",
+      "city": "City",
+      "city_placeholder": "New York",
+      "state": "State",
+      "state_placeholder": "NY",
+      "zip": "Zip / Postal code",
+      "zip_placeholder": "12345",
+      "country": "Country",
+      "country_placeholder": "United States",
+      "use_shipping_address": "Use this address for payment details"
+    },
+    "payment": {
+      "card": "Card",
+      "bank_account": "Bank account",
+      "credit_card": "Credit card",
+      "secure_card": "Secure Card Payment",
+      "secure_card_payment": "Secure Card Payment",
+      "payment_successful": "Payment Successful!",
+      "receipt_email": "A receipt has been sent to your email.",
+      "processing": "Processing...",
+      "pay_now": "Pay Now",
+      "card_element_error": "Card element not found",
+      "generic_error": "An error occurred. Please try again.",
+      "secure_payment_message": "Your payment information is secure and encrypted.",
+      "card_number": "Card number",
+      "cvv": "CVV",
+      "expiry_date": "Expiration date",
+      "name_on_card": "Name on card",
+      "name_placeholder": "John Smith",
+      "remember_card": "Remember credit card details for next time",
+      "test_mode_message": "This is a test mode. You will not be charged.",
+      "bank_info_message": "Your order will be processed once we receive the funds.",
+      "account_name": "Account name",
+      "account_name_placeholder": "John Smith",
+      "account_number": "Account number",
+      "account_number_placeholder": "123456789",
+      "routing_number": "Routing number",
+      "routing_number_placeholder": "987654321",
+      "save_account_info": "Save account information for future purchases",
+      "bank_transfer": "Bank Transfer",
+      "bank_account_details": "Bank Account Details",
+      "account_holder": "Account Holder",
+      "bank_name": "Bank Name",
+      "reference": "Reference",
+      "payment_reference": "Payment Reference",
+      "copy_details": "Copy Details",
+
+      "copied": "Copied!",
+      "payment_instructions": "Payment Instructions",
+      "payment_instructions_text": "Please transfer the amount to our bank account. Use the reference number provided below. Your order will be processed once we receive the payment.",
+      "reference_number": "Reference Number",
+      "generate_reference": "Generate Reference",
+      "payment_confirmation": "Payment Confirmation",
+      "payment_confirmation_text": "After making the bank transfer, please send us a confirmation email with your order details and payment reference."
+    },
+    "review": {
+      "payment_successful": "Payment successful!",
+      "confirmation_email": "Order confirmation has been sent to your email",
+      "order_summary": "Order summary",
+      "service": "Service",
+      "driving_lessons": "Driving lessons",
+      "total": "Total",
+      "shipment_details": "Shipment details",
+      "payment_details": "Payment details",
+      "products": "Products",
+      "products_selected": "{{count}} selected",
+      "shipping": "Shipping",
+      "plus_taxes": "Plus taxes",
+      "payment": {
+        "card type": "Card type",
+        "card holder": "Card holder",
+        "card number": "Card number",
+        "expiry date": "Expiry date"
+      }
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "🚗 Become a Bolt Driver! Viktorija Driving School Nõmme - Professional Driving Training in Tallinn",
+      "subtitle": "Professional driver training and all necessary documents\nStart earning in just 2 weeks",
+      "button": "Register now →"
+    },
+    "why_choose": {
+      "title": "Why choose Viktorija Autokool?",
+      "quick_start": {
+        "title": "Quick start",
+        "description": "Complete training in 2 weeks. All documents and license in order"
+      },
+      "earn_money": {
+        "title": "Earn money immediately",
+        "description": "Bolt drivers earn an average of 15-25€/hour. Flexible work schedule"
+      },
+      "all_in_one": {
+        "title": "Everything from one place",
+        "description": "We help obtain a taxi license, register with Bolt and start working"
+      },
+      "experienced_instructors": {
+        "title": "Experienced instructors",
+        "description": "We teach all practical tips and the best routes in the city"
+      }
+    },
+    "stats": {
+      "training_time": {
+        "value": "2 weeks",
+        "label": "Training and document processing"
+      },
+      "success_rate": {
+        "value": "100%",
+        "label": "We help prepare for all exams"
+      },
+      "graduates": {
+        "value": "500+",
+        "label": "Graduates already work at Bolt"
+      }
+    },
+    "how_it_works": {
+      "title": "How does this happen?",
+      "step1": {
+        "title": "Registration and consultation",
+        "description": "We'll discuss all the details and check your documents. Free consultation!"
+      },
+      "step2": {
+        "title": "Theory and exams",
+        "description": "5 hours of taxi driver theory: traffic rules, customer service, tax system. Online and on-site."
+      },
+      "step3": {
+        "title": "Practical driving lessons",
+        "description": "10 hours of practice with an experienced instructor. You'll learn the best routes and customer communication."
+      },
+      "step4": {
+        "title": "Document formalization",
+        "description": "We help obtain a taxi license, register as an entrepreneur (FIE) and join Bolt."
+      },
+      "step5": {
+        "title": "Start earning!",
+        "description": "You are ready to start. Our support team is always available even after the course ends."
+      }
+    },
+    "pricing": {
+      "title": "Price",
+      "price": "690€",
+      "package_description": "Full package: theory + practice + license processing",
+      "installment": "Possible to pay in installments",
+      "special_offer": "The first 5 registrants get a -50€ discount!",
+      "button_theory": "Pay for theory",
+      "button_full_course": "Pay for full course and get discount"
+    },
+    "cta": {
+      "title": "Ready to start?",
+      "subtitle": "Register today and start earning in just a couple of weeks!",
+      "button_whatsapp": "WhatsApp",
+      "button_call": "Call now",
+      "email": "viktorijaautokool@hot.ee"
+    },
+    "testimonials": {
+      "title": "What Our Students Say",
+      "testimonial1": {
+        "text": "Best driving school in town! I passed my exam on the first try thanks to the patient and professional instructors.",
+        "name": "Maria K.",
+        "license": "Category B License Holder"
+      },
+      "testimonial2": {
+        "text": "I was terrified of driving, but my instructor helped me overcome my fears. Now I drive with confidence every day!",
+        "name": "Thomas L.",
+        "license": "Category A License Holder"
+      },
+      "testimonial3": {
+        "text": "The lessons were both educational and fun. I learned not just to pass the test, but to be a truly good driver.",
+        "name": "Anna S.",
+        "license": "Category B License Holder"
+      },
+      "send_email": "Send email"
+    }
+  }
+} 
