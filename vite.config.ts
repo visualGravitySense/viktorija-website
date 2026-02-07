@@ -4,12 +4,13 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import compression from 'vite-plugin-compression2';
 
-// Проверка env при production-сборке (Vercel и др.): без переменных билд упадёт с явной ошибкой
+// Проверка env только на Vercel: локально .env.local подхватывается Vite при билде, но не попадает в process.env здесь
 function checkSupabaseEnv() {
   return {
     name: 'check-supabase-env',
     configResolved(config) {
       if (config.mode !== 'production') return;
+      if (process.env.VERCEL !== '1') return; // локальный билд — не проверяем (переменные из .env.local подхватит Vite)
       const url = process.env.VITE_SUPABASE_URL;
       const key = process.env.VITE_SUPABASE_ANON_KEY;
       if (!url || !key || url.includes('placeholder')) {
@@ -86,13 +87,14 @@ export default defineConfig(({ mode }) => ({
         entryFileNames: 'assets/[name]-[hash].js',
         // 4. Умное разделение на чанки (Chunk Splitting)
         manualChunks(id) {
-          // КРИТИЧНО: i18n НЕ должен быть в отдельном чанке
-          // Проверяем i18n ПЕРВЫМ, чтобы он попал в основной бандл
-          if (id.includes('i18next') || id.includes('react-i18next') || id.includes('i18next-browser-languagedetector')) {
-            // Возвращаем undefined - i18n будет в основном бандле
-            return undefined;
+          // react-i18next — отдельный чанк; загружается после нашего i18n (где уже есть i18next), иначе TDZ "$t before initialization"
+          if (id.includes('react-i18next')) {
+            return 'vendor-react-i18next';
           }
-          
+          // i18next и LanguageDetector — в чанк по запросу (наш import('./i18n/i18n')), не в общий vendor
+          if (id.includes('i18next-browser-languagedetector')) return undefined;
+          if (id.includes('node_modules') && id.includes('i18next')) return undefined;
+
           if (id.includes('node_modules')) {
             // Stripe - отдельный чанк (загружается только на checkout)
             if (id.includes('@stripe')) {
