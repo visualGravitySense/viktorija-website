@@ -50,7 +50,7 @@ export default function MarketingPage(props: { disableCustomTheme?: boolean, tog
         telephone="+37253464508"
         email="viktorijaautokool@hot.ee"
         address={{
-          streetAddress: "Jaama 1a (2 korrus)",
+          streetAddress: "Jaama tn 1, Nõmme",
           addressLocality: "Tallinn",
           addressRegion: "Harjumaa",
           postalCode: "11615",

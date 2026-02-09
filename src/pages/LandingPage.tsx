@@ -98,7 +98,7 @@ export default function LandingPage({ disableCustomTheme, toggleColorMode }: Lan
         telephone="+37253464508"
         email="viktorijaautokool@hot.ee"
         address={{
-          streetAddress: "Jaama tn 1",
+          streetAddress: "Jaama tn 1, Nõmme",
           addressLocality: "Tallinn",
           addressRegion: "Harjumaa",
           postalCode: "11615",

@@ -8,11 +8,11 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
 import SitemarkIcon from './SitemarkIcon';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
@@ -30,10 +30,6 @@ function Copyright() {
       </Link>
       &nbsp;
       {new Date().getFullYear()}
-      {' • '}
-      <Link color="text.secondary" href="https://github.com/visualGravitySense" target="_blank" rel="noopener noreferrer">
-        Created by Dmitri Gornakov
-      </Link>
     </Typography>
   );
 }
@@ -88,6 +84,12 @@ export default function Footer() {
           <FacebookIcon fontSize="small" />
           <Typography variant="body2" sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
             {t('footer.facebook')}: <Link href="https://www.facebook.com/viktorija.autokool" target="_blank" rel="noopener noreferrer" sx={{ color: 'inherit', fontWeight: 'bold' }}>viktorija.autokool</Link>
+          </Typography>
+        </Stack>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <LocationOnIcon fontSize="small" />
+          <Typography variant="body2" sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
+            {t('footer.address')}
           </Typography>
         </Stack>
       </Box>
@@ -230,6 +232,9 @@ export default function Footer() {
           <Link color="text.secondary" variant="body2" href="https://www.facebook.com/viktorija.autokool" target="_blank" rel="noopener noreferrer">
             {t('footer.facebook')}: viktorija.autokool
           </Link>
+          <Typography color="text.secondary" variant="body2">
+            {t('footer.address')}
+          </Typography>
         </Box>
       </Box>
 
@@ -306,20 +311,6 @@ export default function Footer() {
             }}
           >
             <PhoneIcon />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            size="small"
-            href="https://github.com/visualGravitySense"
-            aria-label="GitHub"
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{ 
-              alignSelf: 'center',
-              '& svg': { fontSize: { xs: '1.5rem', sm: '1.25rem' } }
-            }}
-          >
-            <GitHubIcon />
           </IconButton>
         </Stack>
       </Box>
