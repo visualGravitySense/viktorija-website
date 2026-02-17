@@ -81,6 +81,47 @@ export default function LogoCollection() {
             />
           </Grid>
         ))}
+        <Grid>
+          <Box
+            component="a"
+            href="https://www.kursify.ee/provider/124112123"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              width: 200,
+              height: 180,
+              margin: '0 32px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              opacity: 0.7,
+              color: 'inherit',
+              textDecoration: 'none',
+              '&:hover': { opacity: 0.9 },
+            }}
+          >
+            <img
+              src="/kursify-logo-1.png"
+              alt="Kursify.ee"
+              loading="lazy"
+              width="200"
+              height="140"
+              style={{ ...logoStyle, height: 140, marginBottom: 8 }}
+              onError={handleImageError}
+            />
+            <Typography
+              variant="caption"
+              sx={{
+                fontWeight: 600,
+                color: 'text.secondary',
+                textAlign: 'center',
+              }}
+            >
+              premium user
+            </Typography>
+          </Box>
+        </Grid>
       </Grid>
     </Box>
   );
