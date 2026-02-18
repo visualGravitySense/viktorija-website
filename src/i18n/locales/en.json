@@ -813,6 +813,23 @@
       "sublabel": "Estonian record"
     }
   },
+  "registration": {
+    "title": "Register for the course",
+    "subtitle": "Fill in the form and we will contact you. After registration you can pay if you wish.",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "phone": "Phone",
+    "email": "Email",
+    "message": "Message (optional)",
+    "message_placeholder": "Your wish, question or category (A/B/C)...",
+    "submit": "Register",
+    "submitting": "Sending...",
+    "success_title": "Thank you! You are registered.",
+    "success_text": "We will contact you soon. Want to pay now and secure your spot?",
+    "pay_now": "Pay now",
+    "pay_later": "Later",
+    "error_send": "Error sending. Please try again or call 5346 4508."
+  },
   "checkout": {
     "steps": {
       "shipping": "Shipping address",

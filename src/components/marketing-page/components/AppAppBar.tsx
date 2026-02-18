@@ -367,15 +367,14 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
               color="primary" 
               variant="contained" 
               size="small"
-              component="a"
-              href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
-              target="_blank"
+              component={RouterLink}
+              to="/register"
               onClick={() => trackButtonClick(
                 'navbar_signup',
-                'payment',
+                'info',
                 'navbar',
                 t('navigation.signup'),
-                'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00'
+                '/register'
               )}
               sx={{
                 fontWeight: 600,
@@ -698,16 +697,18 @@ export default function AppAppBar({ toggleColorMode }: AppAppBarProps) {
                     color="primary" 
                     variant="contained" 
                     fullWidth
-                    component="a"
-                    href="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
-                    target="_blank"
-                    onClick={() => trackButtonClick(
-                      'mobile_menu_signup',
-                      'payment',
-                      'mobile_menu',
-                      t('navigation.signup'),
-                      'https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00'
-                    )}
+                    component={RouterLink}
+                    to="/register"
+                    onClick={() => {
+                      handleLinkClick();
+                      trackButtonClick(
+                        'mobile_menu_signup',
+                        'info',
+                        'mobile_menu',
+                        t('navigation.signup'),
+                        '/register'
+                      );
+                    }}
                     sx={{
                       fontWeight: 600,
                       minHeight: 48,
