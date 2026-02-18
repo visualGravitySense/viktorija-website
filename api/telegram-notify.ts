@@ -75,6 +75,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         `.trim();
         break;
 
+      case 'website_registration':
+        message = `
+📝 <b>Registratsioon veebilehel</b>
+
+👤 <b>Nimi:</b> ${data?.name ?? 'Not provided'}
+📧 <b>Email:</b> ${data?.email ?? 'Not provided'}
+📱 <b>Telefon:</b> ${data?.phone ?? 'Not provided'}
+
+⏰ <b>Aeg:</b> ${new Date().toLocaleString('et-EE', { timeZone: 'Europe/Tallinn' })}
+        `.trim();
+        break;
+
       case 'lesson_booking':
         const lessonTypeEmoji = data.type === 'theory' ? '📚' : '🚗';
         const lessonTypeText = data.type === 'theory' ? 'Theory' : 'Practice';

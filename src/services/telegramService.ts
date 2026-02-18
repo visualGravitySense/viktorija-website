@@ -12,7 +12,7 @@ export class TelegramService {
    * Send notification via Vercel API route (recommended) or direct API (fallback)
    */
   private static async sendViaAPI(
-    type: 'new_user' | 'lesson_booking' | 'support_message',
+    type: 'new_user' | 'website_registration' | 'lesson_booking' | 'support_message',
     data: any
   ): Promise<{ success: boolean; error?: string }> {
     if (!ADMIN_CHAT_ID) {
@@ -104,6 +104,17 @@ export class TelegramService {
 ⏰ <b>Time:</b> ${new Date().toLocaleString('en-US', { timeZone: 'Europe/Tallinn' })}
         `.trim();
 
+      case 'website_registration':
+        return `
+📝 <b>Registratsioon veebilehel</b>
+
+👤 <b>Nimi:</b> ${data.name || 'Not provided'}
+📧 <b>Email:</b> ${data.email || 'Not provided'}
+📱 <b>Telefon:</b> ${data.phone || 'Not provided'}
+
+⏰ <b>Aeg:</b> ${new Date().toLocaleString('et-EE', { timeZone: 'Europe/Tallinn' })}
+        `.trim();
+
       case 'lesson_booking':
         const lessonTypeEmoji = data.type === 'theory' ? '📚' : '🚗';
         const lessonTypeText = data.type === 'theory' ? 'Theory' : 'Practice';
@@ -158,12 +169,33 @@ ${messageText}
     phone: string | null;
     anxietyLevel: number | null;
   }): Promise<void> {
-    await this.sendViaAPI('new_user', {
+    const result = await this.sendViaAPI('new_user', {
       name: user.name,
       email: user.email,
       phone: user.phone,
       anxietyLevel: user.anxietyLevel,
     });
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to send Telegram notification');
+    }
+  }
+
+  /**
+   * Send notification to admin about website registration (form on site)
+   */
+  static async notifyWebsiteRegistration(user: {
+    name: string | null;
+    email: string | null;
+    phone: string | null;
+  }): Promise<void> {
+    const result = await this.sendViaAPI('website_registration', {
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+    });
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to send Telegram notification');
+    }
   }
 
   /**

@@ -817,6 +817,23 @@
       "sublabel": "Eesti rekord"
     }
   },
+  "registration": {
+    "title": "Registreeru kursusele",
+    "subtitle": "Täida vorm ja võtame sinuga ühendust. Pärast registreerumist saad soovi korral tasuda.",
+    "first_name": "Eesnimi",
+    "last_name": "Perekonnanimi",
+    "phone": "Telefon",
+    "email": "E-post",
+    "message": "Sõnum (valikuline)",
+    "message_placeholder": "Soov, küsimus või kategooria (A/B/C)...",
+    "submit": "Registreeru",
+    "submitting": "Saadan...",
+    "success_title": "Täname! Oled registreeritud.",
+    "success_text": "Võtame sinuga peagi ühendust. Soovid kohe maksta ja koha kinnitada?",
+    "pay_now": "Maksa nüüd",
+    "pay_later": "Hiljem",
+    "error_send": "Viga saatmisel. Proovi uuesti või helista 5346 4508."
+  },
   "checkout": {
     "steps": {
       "shipping": "Tarneaadress",
