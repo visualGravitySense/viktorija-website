@@ -3,6 +3,9 @@
 
 const ADMIN_CHAT_ID = import.meta.env.VITE_TELEGRAM_ADMIN_CHAT_ID || '';
 
+// Base URL for API (e.g. https://viktorija-website.vercel.app) — for GitHub Pages / static hosts without /api
+const API_BASE_URL = (import.meta.env.VITE_TELEGRAM_API_URL || '').replace(/\/$/, '');
+
 // Use Vercel API route in production (always on Vercel)
 // In development, try Vercel API first, fallback to direct API (may fail due to CORS)
 const USE_VERCEL_API = import.meta.env.PROD || import.meta.env.VITE_USE_VERCEL_API === 'true';
@@ -21,9 +24,9 @@ export class TelegramService {
     }
 
     try {
-      // Try Vercel API route first (works in production)
+      // Vercel API: относительный URL на Vercel, полный URL при наличии API_BASE_URL (GitHub Pages и др.)
       const apiUrl = USE_VERCEL_API
-        ? '/api/telegram-notify'
+        ? (API_BASE_URL ? `${API_BASE_URL}/api/telegram-notify` : '/api/telegram-notify')
         : 'https://api.telegram.org/bot8098211455:AAHgn_Tnl23c5Vr2AE2c1GuhuyUXKgj27N4/sendMessage';
 
       if (USE_VERCEL_API) {
