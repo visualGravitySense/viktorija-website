@@ -6,6 +6,25 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 const TELEGRAM_BOT_TOKEN = '8098211455:AAHgn_Tnl23c5Vr2AE2c1GuhuyUXKgj27N4';
 const TELEGRAM_API_URL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
 
+const ALLOWED_ORIGINS = [
+  'https://viktorijaautokool.ee',
+  'https://www.viktorijaautokool.ee',
+  'https://viktorija-website.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000',
+];
+
+function setCorsHeaders(req: VercelRequest, res: VercelResponse) {
+  const origin = req.headers.origin;
+  const allowOrigin = origin && ALLOWED_ORIGINS.includes(origin)
+    ? origin
+    : ALLOWED_ORIGINS[0];
+  res.setHeader('Access-Control-Allow-Origin', allowOrigin);
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Max-Age', '86400');
+}
+
 interface TelegramMessage {
   chat_id: string | number;
   text: string;
@@ -47,7 +66,13 @@ async function sendTelegramMessage(
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Only allow POST requests
+  setCorsHeaders(req, res);
+
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
