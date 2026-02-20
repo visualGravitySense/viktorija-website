@@ -22,7 +22,7 @@ export class TelegramService {
       console.warn('Admin chat ID not configured, skipping Telegram notification');
       return { success: false, error: 'Chat ID not configured' };
     }
-
+ 
     try {
       // Vercel API: относительный URL на Vercel, полный URL при наличии API_BASE_URL (GitHub Pages и др.)
       const apiUrl = USE_VERCEL_API
