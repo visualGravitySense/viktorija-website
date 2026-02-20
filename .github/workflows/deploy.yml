@@ -39,6 +39,8 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_STRIPE_PUBLISHABLE_KEY: ${{ secrets.VITE_STRIPE_PUBLISHABLE_KEY }}
+          VITE_TELEGRAM_ADMIN_CHAT_ID: ${{ vars.VITE_TELEGRAM_ADMIN_CHAT_ID }}
+          VITE_TELEGRAM_API_URL: ${{ vars.VITE_TELEGRAM_API_URL }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
