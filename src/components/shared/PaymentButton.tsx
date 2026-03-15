@@ -69,7 +69,7 @@ export default function PaymentButton({
       case 'category-a':
         return '570€';
       case 'category-b':
-        return transmissionType === 'manual' ? '700€' : '840€';
+        return transmissionType === 'manual' ? '840€' : '840€';
       case 'category-c':
         return '150€';
       default:

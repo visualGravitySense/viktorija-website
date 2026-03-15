@@ -15,7 +15,7 @@ export const getPricingData = (t: (key: string) => string) => ({
     {
       title: t('pricing_data.tiers.b.title'),
       subheader: t('pricing_data.tiers.b.subheader'),
-      price: '700',
+      price: '840',
       description: t('pricing_data.tiers.b.description', { returnObjects: true }) as string[],
       buttonText: t('pricing_data.tiers.b.button_text'),
       buttonVariant: 'contained' as const,

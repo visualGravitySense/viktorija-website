@@ -138,7 +138,7 @@ export default function CategoryBPage({ disableCustomTheme, toggleColorMode }: C
     },
     {
       feature: t('spectrum.active.feature2', { defaultValue: 'Стоимость' }),
-      manual: '700€',
+      manual: '840€',
       auto: '840€',
     },
     {
@@ -157,7 +157,7 @@ export default function CategoryBPage({ disableCustomTheme, toggleColorMode }: C
   const decisionRules = [
     {
       condition: t('spectrum.heuristics.rule1.condition', { defaultValue: 'Если у тебя ограниченный бюджет' }),
-      action: t('spectrum.heuristics.rule1.action', { defaultValue: '→ Выбери механику (700€)' }),
+      action: t('spectrum.heuristics.rule1.action', { defaultValue: '→ Выбери механику (840€)' }),
       icon: <DirectionsCarIcon />,
     },
     {
@@ -214,7 +214,7 @@ export default function CategoryBPage({ disableCustomTheme, toggleColorMode }: C
         provider="Viktorija Autokool Nõmme"
         url="https://viktorijaautokool.ee/b-kategooria"
         image={bCatImg}
-        price={700}
+        price={840}
       />
       
       <CssBaseline enableColorScheme />
@@ -304,7 +304,7 @@ export default function CategoryBPage({ disableCustomTheme, toggleColorMode }: C
                       {t('dual.system1.quick_manual', { defaultValue: 'Механика' })}
                     </Typography>
                     <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main', mb: 1 }}>
-                      700€
+                      840€
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                       {t('dual.system1.quick_manual_desc', { defaultValue: 'Быстро и выгодно' })}

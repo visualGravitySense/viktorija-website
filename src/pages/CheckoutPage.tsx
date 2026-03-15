@@ -42,7 +42,7 @@ export default function CheckoutPage({ disableCustomTheme, toggleColorMode }: Ch
     courseName = t('painpoints.categories.b.title');
     courseDescription = t('painpoints.categories.b.description');
     courseImage = bCatImg;
-    coursePrice = 700;
+    coursePrice = 840;
   } else if (category === 'category-c') {
     title = t('painpoints.categories.c.title');
     description = t('painpoints.categories.c.description');
