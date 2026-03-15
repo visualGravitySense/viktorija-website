@@ -21,8 +21,7 @@ import { Link } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import { keyframes } from '@emotion/react';
 import mainHeroImg from '/main-hero-1.jpg';
-import CourseTimer from './CourseTimer.tsx';
-import { trackButtonClick, trackLinkClick } from '../../../lib/analytics';
+import { trackButtonClick } from '../../../lib/analytics';
 
 const pulseAnimation = keyframes`
   0% {
@@ -454,64 +453,202 @@ export default function Hero({
             </Stack>
           </Grid>
 
-          {/* Right Column - Image and Timer */}
+          {/* Right Column - One block: image background + B card overlay (original design) */}
           <Grid size={{ xs: 12, md: 6 }}>
             <Box
               sx={{
                 position: 'relative',
                 animation: `${fadeInRight} 1s ease-out`,
+                borderRadius: '20px',
+                overflow: 'hidden',
+                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4)',
+                minHeight: { xs: 380, sm: 420 },
+                border: isLanding ? '2px solid rgba(52, 209, 134, 0.35)' : '2px solid rgba(59, 130, 246, 0.3)',
+                background: '#0f2027',
               }}
             >
-              {/* Image Container */}
+              {/* Background image - full block */}
               {showImage && (
-                <Box
-                  sx={{
-                    position: 'relative',
-                    borderRadius: '24px',
-                    overflow: 'hidden',
-                    boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4)',
-                    '&::before': {
-                      content: '""',
+                <>
+                  <Box
+                    sx={{
                       position: 'absolute',
                       inset: 0,
-                      background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%)',
-                      zIndex: 1,
-                      pointerEvents: 'none',
-                    }
+                      zIndex: 0,
+                    }}
+                  >
+                    <img
+                      src={imageUrl}
+                      alt={imageAlt || displayTitle}
+                      loading="eager"
+                      fetchPriority="high"
+                      style={{
+                        display: 'block',
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                      }}
+                    />
+                  </Box>
+                  {/* No overlay on image — road/photo stays visible; only the card at bottom has its own background */}
+                </>
+              )}
+
+              {/* Category B card - only the card has background; no glass layer, image stays visible above */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  zIndex: 2,
+                  px: { xs: 2.5, sm: 3 },
+                  pb: { xs: 2.5, sm: 3 },
+                  pt: 2,
+                  fontFamily: 'sans-serif',
+                }}
+              >
+              <Box
+                sx={{
+                  padding: { xs: '16px 20px', sm: '20px 24px' },
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 0,
+                  borderRadius: '12px',
+                  border: '0.5px solid rgba(255,255,255,0.12)',
+                  maxWidth: 420,
+                  mx: 'auto',
+                  background: '#1a2a3a',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                }}
+              >
+                {/* Header */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    mb: 1.75,
                   }}
                 >
-                  <img
-                    src={imageUrl}
-                    alt={imageAlt || displayTitle}
-                    loading="eager"
-                    fetchPriority="high"
-                    width="1200"
-                    height="400"
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      height: 'auto',
-                      objectFit: 'cover',
-                      objectPosition: 'center',
-                      transform: 'scale(1.05)',
+                  <Box>
+                    <Typography
+                      component="p"
+                      sx={{
+                        color: '#90b8d8',
+                        fontSize: 11,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em',
+                        m: 0,
+                      }}
+                    >
+                      {t('hero.category_b_label', { defaultValue: 'Sõiduauto' })}
+                    </Typography>
+                    <Typography
+                      component="h2"
+                      sx={{
+                        color: '#fff',
+                        fontSize: 20,
+                        fontWeight: 500,
+                        m: 0,
+                      }}
+                    >
+                      {t('painpoints.categories.b.card_title', { defaultValue: 'Kategooria B juhiluba' })}
+                    </Typography>
+                  </Box>
+                  <Chip
+                    label={t('hero.category_b_badge', { defaultValue: 'B-kategooria' })}
+                    size="small"
+                    sx={{
+                      background: 'rgba(30,144,255,0.15)',
+                      border: '1px solid rgba(30,144,255,0.3)',
+                      borderRadius: 1,
+                      color: '#5eaff5',
+                      fontSize: 12,
+                      height: 28,
                     }}
                   />
                 </Box>
-              )}
 
-              {/* Course Timer Card - positioned over image */}
-              <Box
-                sx={{
-                  mt: showImage ? { xs: 2, md: '-80px' } : 0,
-                  position: 'relative',
-                  zIndex: 2,
-                }}
-              >
-                <CourseTimer 
-                  nextCourseDate={nextCourseDate}
-                  variant={variant}
-                />
+                {/* Prices */}
+                <Box
+                  sx={{
+                    background: 'rgba(255,255,255,0.04)',
+                    borderRadius: 1,
+                    py: 1.25,
+                    px: 1.75,
+                    border: '0.5px solid rgba(255,255,255,0.07)',
+                    mb: 2,
+                  }}
+                >
+                  {[
+                    { label: t('painpoints.theory'), value: '160 €', highlight: false },
+                    { label: t('painpoints.lesson'), value: '30 €', highlight: false },
+                    { label: t('hero.category_b.manual_total_short', { defaultValue: 'Manuaal kokku' }), value: '840 €', highlight: false },
+                    { label: t('hero.category_b.auto_total_short', { defaultValue: 'Automaat kokku' }), value: '840 €', highlight: true },
+                  ].map((p, i, arr) => (
+                    <Box
+                      key={p.label}
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        py: 0.5,
+                        borderBottom: i < arr.length - 1 ? '0.5px solid rgba(255,255,255,0.06)' : 'none',
+                      }}
+                    >
+                      <Typography component="span" sx={{ color: '#7a9db8', fontSize: 12 }}>
+                        {p.label}
+                      </Typography>
+                      <Typography
+                        component="span"
+                        sx={{
+                          color: p.highlight ? '#1e90ff' : '#c8dff0',
+                          fontSize: p.highlight ? 13 : 12,
+                          fontWeight: 500,
+                        }}
+                      >
+                        {p.value}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+
+                {/* CTA */}
+                <Button
+                  component="a"
+                  href={buttonLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  fullWidth
+                  onClick={() => {
+                    const isPayment = buttonLink && buttonLink.includes('buy.stripe.com');
+                    trackButtonClick(
+                      'hero_category_b_cta',
+                      isPayment ? 'payment' : 'info',
+                      'hero',
+                      t('painpoints.categories.b.button', { defaultValue: 'Juhiluba lihtsalt!' }),
+                      buttonLink
+                    );
+                  }}
+                  sx={{
+                    background: 'linear-gradient(90deg, #1a6fc4, #1e90ff)',
+                    color: '#fff',
+                    borderRadius: 1,
+                    py: 1.375,
+                    px: 2.5,
+                    fontSize: 14,
+                    fontWeight: 500,
+                    textTransform: 'none',
+                    '&:hover': {
+                      background: 'linear-gradient(90deg, #1557a0, #1a7ad4)',
+                    },
+                  }}
+                >
+                  {t('painpoints.categories.b.button', { defaultValue: 'Juhiluba lihtsalt!' })}
+                </Button>
               </Box>
+            </Box>
             </Box>
           </Grid>
         </Grid>

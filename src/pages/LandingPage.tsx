@@ -129,7 +129,7 @@ export default function LandingPage({ disableCustomTheme, toggleColorMode }: Lan
         provider="Viktorija Autokool Nõmme"
         url="https://buy.stripe.com/14A28s0Fs4lycgtg1i3ZK00"
         image={bCatImg}
-        price={700}
+        price={840}
       />
       
       <CssBaseline enableColorScheme />
@@ -210,8 +210,8 @@ export default function LandingPage({ disableCustomTheme, toggleColorMode }: Lan
                   imageUrl: bCatImg,
                   price: {
                     theory: 160,
-                    lesson: 25, 
-                    total: 700,
+                    lesson: 30, 
+                    total: 840,
                     manualTotalLabel: t('painpoints.categories.b.manual_total'),
                     autoTotalLabel: t('painpoints.categories.b.auto_total'),
                     autoTotal: 840

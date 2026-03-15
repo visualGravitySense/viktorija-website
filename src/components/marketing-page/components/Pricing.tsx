@@ -61,7 +61,7 @@ export default function Pricing({
     {
       title: t('pricing.category_b'),
       subheader: t('pricing.most_popular'),
-      price: "700",
+      price: "840",
       description: [
         t('pricing.theory') + " - €150",
         t('pricing.practice') + " - €50 " + t('pricing.per_hour'),

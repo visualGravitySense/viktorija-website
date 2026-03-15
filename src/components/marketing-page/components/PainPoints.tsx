@@ -97,12 +97,12 @@ export default function PainPoints({
       description: t('painpoints.categories.b.description'),
       imageUrl: 'https://placehold.co/320x180?text=After',
       price: {
-        theory: 150,
-        lesson: 50,
-        total: 650,
+        theory: 160,
+        lesson: 30,
+        total: 840,
         manualTotalLabel: t('painpoints.categories.b.manual_total'),
         autoTotalLabel: t('painpoints.categories.b.auto_total'),
-        autoTotal: 780
+        autoTotal: 840
       },
       buttonText: t('painpoints.categories.b.button'),
       priceLabel: t('painpoints.categories.b.price_label')
